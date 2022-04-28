@@ -9,11 +9,17 @@ public class Test {
 
 
     public static void main(String[] args) {
-        int[] arr = {5,1,3,7,7,2};
-        Arrays.sort(arr);
-        for (int i : arr) {
-            System.out.println(i);
-        }
+        Set<String> b = new HashSet<>();
+        b.add("a");
+        b.add("b");
+
+        Set<String> a = new HashSet<>();
+        a.add("a");
+
+
+        boolean b1 = b.containsAll(a);
+        boolean b2 = a.containsAll(b);
+        System.out.println(b1 && b2);
 
 
     }
