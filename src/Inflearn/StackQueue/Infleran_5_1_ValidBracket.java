@@ -47,7 +47,6 @@ public class Infleran_5_1_ValidBracket {
                 stack.pop();
             }
         }
-
         String result = stack.empty() ? "YES" : "NO";
         System.out.println(result);
     }
