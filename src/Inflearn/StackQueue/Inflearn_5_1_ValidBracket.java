@@ -3,7 +3,7 @@ package Inflearn.StackQueue;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Infleran_5_1_ValidBracket {
+public class Inflearn_5_1_ValidBracket {
     public static void answer(String[] args) {
         Scanner sc = new Scanner(System.in);
         String con = sc.next();
