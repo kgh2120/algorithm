@@ -3,22 +3,29 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int nOfHero = sc.nextInt();
-        int die = sc.nextInt();
-        Queue<Integer> queue = new ArrayDeque<>();
-        for (int i = 0; i < nOfHero; i++) {
-            queue.add(i+1);
-        }
 
-        while (queue.size() != 1) {
-            int count = 1;
-            while (count < die) {
-                queue.add(queue.poll());
-                count++;
-            }
-            queue.poll();
+        Queue<Character> queue = new LinkedList<>();
+        String sequence = sc.next();
+        String fullPlan = sc.next();
+
+        for (char c : sequence.toCharArray()) {
+            queue.add(c);
         }
-        System.out.println(queue.poll());
+        for (char c : fullPlan.toCharArray()) {
+            if (queue.contains(c)) {
+                if (queue.peek().equals(c)) {
+                    queue.poll();
+                } else {
+                    System.out.println("NO");
+                    return;
+                }
+            }
+        }
+        if (!queue.isEmpty()) {
+            System.out.println("NO");
+            return;
+        }
+        System.out.println("YES");
     }
 
 

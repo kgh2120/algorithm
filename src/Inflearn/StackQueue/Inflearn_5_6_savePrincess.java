@@ -77,7 +77,7 @@ public class Inflearn_5_6_savePrincess {
             queue.add(i+1);
         }
 
-        while (queue.size() != 1) {
+        while (!queue.isEmpty()) {
             int count = 1;
             while (count < die) {
                 queue.add(queue.poll());
