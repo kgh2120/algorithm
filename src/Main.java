@@ -5,10 +5,13 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int nOfNum = sc.nextInt();
         int[] arr = new int[nOfNum];
+        Arrays.fill(arr,-1);
         for (int i = 0; i < nOfNum; i++) {
-            arr[i] = sc.nextInt();
+            int target = sc.nextInt();
+            arr[i] = target;
+            insertionSort(arr, i);
         }
-        sorting(arr);
+
 
         StringBuffer sb = new StringBuffer();
         for (int i : arr) {
@@ -19,16 +22,20 @@ public class Main {
     }
 
 
-    private static void sorting(int[]arr) {
-        int max = arr.length;
 
-        for (int i = 0; i < max - 1; i++) {
-            for (int j =0; j < max-(i+1); j++) {
-                if (arr[j] > arr[j + 1]) {
-                    swap(arr,j,j+1);
-                }
+
+    private static void insertionSort(int[]arr, int index) {
+        int temp = arr[index];
+        int k = 0;
+        for (int i = index-1; i >=0 ; i--) {
+            if (arr[i] > temp) {
+                arr[i + 1] = arr[i];
+            } else {
+               k = i+1;
+                break;
             }
         }
+        arr[k] = temp;
     }
 
 
