@@ -11,12 +11,12 @@ public class Test {
         Scanner sc = new Scanner(System.in);
         MessageUtil.printMenu("menu","보험상품조회","보험사고접수","보상담당자변경","시벌이건그냥예시야");
         
-//        String a = sc.next();
-//        switch (a) {
-//            case "1" :
-//                FileChooseFrame f = new FileChooseFrame();
-//
-//        }
+        String a = sc.next();
+        switch (a) {
+            case "1" :
+                FileChooseFrame f = new FileChooseFrame();
+
+        }
 
 
     }

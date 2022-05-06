@@ -38,7 +38,7 @@ public class Inflearn_5_7_studyPlanning {
 
     /**
      * sequence.contains 에서 queue.contain 으로 수정함.
-     *
+     * if-else 문을 if문 하나로 수정.
      */
     public static void solution(String[] args) {
             Scanner sc = new Scanner(System.in);
@@ -52,14 +52,12 @@ public class Inflearn_5_7_studyPlanning {
             }
             for (char c : fullPlan.toCharArray()) {
                 if (queue.contains(c)) {
-                    if (queue.peek().equals(c)) {
-                        queue.poll();
-                    } else {
+                   if(queue.poll()!=c)
                         System.out.println("NO");
                         return;
                     }
                 }
-            }
+
             if (!queue.isEmpty()) {
                 System.out.println("NO");
                 return;

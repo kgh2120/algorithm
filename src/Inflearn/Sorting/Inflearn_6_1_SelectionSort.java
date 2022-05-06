@@ -1,7 +1,9 @@
-import java.util.*;
+package Inflearn.Sorting;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.Scanner;
+
+public class Inflearn_6_1_SelectionSort {
+    public static void summit(String[] args) {
         Scanner sc = new Scanner(System.in);
         int nOfNum = sc.nextInt();
         int[] arr = new int[nOfNum];
@@ -23,9 +25,11 @@ public class Main {
         int max = arr.length;
 
         for (int i = 0; i < max - 1; i++) {
+            int m = arr[i];
             int mi = i;
             for (int j = i+1; j < max; j++) {
-                if (arr[mi] > arr[j]) {
+                if (m > arr[j]) {
+                    m = arr[j];
                     mi = j;
                 }
             }
