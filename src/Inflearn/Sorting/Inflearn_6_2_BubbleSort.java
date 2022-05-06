@@ -1,7 +1,9 @@
-import java.util.*;
+package Inflearn.Sorting;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.Scanner;
+
+public class Inflearn_6_2_BubbleSort {
+    public static void summit(String[] args) {
         Scanner sc = new Scanner(System.in);
         int nOfNum = sc.nextInt();
         int[] arr = new int[nOfNum];
