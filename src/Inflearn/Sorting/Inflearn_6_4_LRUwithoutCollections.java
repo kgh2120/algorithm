@@ -1,6 +1,8 @@
-import java.util.*;
+package Inflearn.Sorting;
 
-public class Main {
+import java.util.Scanner;
+
+public class Inflearn_6_4_LRUwithoutCollections {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -59,7 +61,4 @@ public class Main {
         }
         arr[0] = temp;
     }
-
-
-
 }
