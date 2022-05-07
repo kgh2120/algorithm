@@ -1,13 +1,16 @@
-import java.util.*;
+package Inflearn.Sorting;
 
-public class Main {
-    public static void main(String[] args) {
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Inflearn_6_6_CoordianteSort {
+    public static void submit(String[] args) {
         Scanner sc = new Scanner(System.in);
         int nOfNode = sc.nextInt();
-        Node[] nodes = new Node[nOfNode];
+        Main.Node[] nodes = new Main.Node[nOfNode];
 
         for (int i = 0; i < nOfNode; i++) {
-            nodes[i] = new Node(sc.nextInt(), sc.nextInt());
+            nodes[i] = new Main.Node(sc.nextInt(), sc.nextInt());
         }
 
         Object[] objects = Arrays.stream(nodes).sorted((n1, n2) -> {
@@ -47,7 +50,4 @@ public class Main {
             return x +" "+y;
         }
     }
-
-
-
 }

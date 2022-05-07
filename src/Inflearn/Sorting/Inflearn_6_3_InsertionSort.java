@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Inflearn_6_3_InsertionSort {
 
-    public static void summit(String[] args) {
+    public static void submit(String[] args) {
         Scanner sc = new Scanner(System.in);
         int nOfNum = sc.nextInt();
         int[] arr = new int[nOfNum];

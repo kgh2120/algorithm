@@ -8,8 +8,7 @@ import java.util.Optional;
 public class TTEst {
     public static void main(String[] args) {
 
-        LinkedList<Integer> list = new LinkedList<>();
-        list.removeLast();
+        System.out.println(Integer.compare(1,2));
     }
 
 }
