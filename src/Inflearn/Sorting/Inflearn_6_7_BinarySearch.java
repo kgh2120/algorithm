@@ -1,6 +1,9 @@
-import java.util.*;
+package Inflearn.Sorting;
 
-public class Main {
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Inflearn_6_7_BinarySearch {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int nOfNum = sc.nextInt();
@@ -33,7 +36,4 @@ public class Main {
 
         return -1;
     }
-
-
-
 }
