@@ -1,7 +1,8 @@
-import java.util.*;
+package Inflearn.recursiveBFSDFS;
 
-public class Main {
+import java.util.Scanner;
 
+public class Inflearn_7_4_fibonacci {
     static int [] memo;
     public static void main(String[] args) {
 
@@ -39,28 +40,18 @@ public class Main {
     }
 
 
-        public static int fiboMemo(int n) {
-            if (n <= 0) return -1;
-            if (n <= 2) {
-                if(memo[n] == 0)
-                    memo[n] = 1;
+    public static int fiboMemo(int n) {
+        if (n <= 0) return -1;
+        if (n <= 2) {
+            if(memo[n] == 0)
+                memo[n] = 1;
 
-                return  memo[n];
-            } else {
-                if(memo[n] == 0)
-                    memo[n] = fiboMemo(n - 2) + fiboMemo(n - 1);
+            return  memo[n];
+        } else {
+            if(memo[n] == 0)
+                memo[n] = fiboMemo(n - 2) + fiboMemo(n - 1);
 
-                return memo[n];
-            }
+            return memo[n];
         }
-
+    }
 }
-
-
-
-
-
-
-
-
-
