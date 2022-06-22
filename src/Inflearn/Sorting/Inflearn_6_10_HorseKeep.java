@@ -1,6 +1,16 @@
+package Inflearn.Sorting;
+
 import java.util.*;
 
-public class Main {
+/**
+ * 결정 알고리즘을 사용하는 문제
+ * BinarySearch를 사용해서 범위를 좁혀가고, 해당 값이 사용가능한지를
+ * 검증하는 과정으로 진행된다.
+ * binary-search는 많이들 하는 방법을 알고 있기 때문에,
+ * 검증을 하는 과정이 더욱 중요하다고 한다.
+ */
+
+public class Inflearn_6_10_HorseKeep {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
