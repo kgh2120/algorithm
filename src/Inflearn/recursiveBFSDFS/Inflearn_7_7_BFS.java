@@ -1,7 +1,9 @@
+package Inflearn.recursiveBFSDFS;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class Main {
+public class Inflearn_7_7_BFS {
     static class Node{
         int value;
         Node left;
@@ -54,20 +56,11 @@ public class Main {
                 Node n = d.pop();
                 System.out.print(n.value + " ");
                 if(n.left != null)
-                 d.add(n.left);
+                    d.add(n.left);
                 if(n.right != null)
-                 d.add(n.right);
+                    d.add(n.right);
             }
         }
 
     }
 }
-
-
-
-
-
-
-
-
-
