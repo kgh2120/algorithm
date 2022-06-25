@@ -1,6 +1,11 @@
-import java.util.*;
+package Inflearn.recursiveBFSDFS;
 
-public class Main {
+import com.sun.tools.javac.Main;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class inflearn_7_12_findRoute_DFS {
 
 
     int[][] matrix;
@@ -45,7 +50,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Main g = new Main();
+        inflearn_7_12_findRoute_DFS g = new inflearn_7_12_findRoute_DFS();
         int n = sc.nextInt();
         int c = sc.nextInt();
         g.matrix = new int[n + 1][c + 1];
@@ -67,15 +72,4 @@ public class Main {
 
 
     }
-
-
 }
-
-
-
-
-
-
-
-
-
