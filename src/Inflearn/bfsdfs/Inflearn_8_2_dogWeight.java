@@ -1,8 +1,8 @@
-
+package Inflearn.bfsdfs;
 
 import java.util.Scanner;
 
-public class Main {
+public class Inflearn_8_2_dogWeight {
 
     int max = Integer.MIN_VALUE;
 
@@ -24,7 +24,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Main m = new Main();
+        Inflearn_8_2_dogWeight m = new Inflearn_8_2_dogWeight();
         Scanner scanner = new Scanner(System.in);
         int lim = scanner.nextInt();
         int nOfDog = scanner.nextInt();
