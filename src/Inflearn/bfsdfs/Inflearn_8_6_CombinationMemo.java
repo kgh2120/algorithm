@@ -1,6 +1,8 @@
+package Inflearn.bfsdfs;
+
 import java.util.Scanner;
 
-public class Main {
+public class Inflearn_8_6_CombinationMemo {
     static int[][] memo;
 
     public static void main(String[] args) {
