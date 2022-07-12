@@ -1,12 +1,15 @@
+package Inflearn.bfsdfs;
+
+import com.sun.tools.javac.Main;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main {
+public class Inflearn_8_11_TomatoBox {
 
     static class Coordinate{
         int row;
@@ -104,7 +107,7 @@ public class Main {
         int col = Integer.parseInt(s[0]);
         int row = Integer.parseInt(s[1]);
 
-        Main m = new Main();
+        Inflearn_8_11_TomatoBox m = new Inflearn_8_11_TomatoBox();
         m.matrix = new int[row][col];
         m.rMax = row;
         m.cMax = col;

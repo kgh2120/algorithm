@@ -43,3 +43,5 @@ m
 =src/Inflearn/recursiveBFSDFS/Inflearn_7_14_MinRouteGraph.java,d\7\d754dc3c9731277accb787e45746191b2ec9996e
 q
 Asrc/Inflearn/recursiveBFSDFS/Inflearn_7_14_MinRouteGraph_dis.java,1\0\1085c564adc119143e0f8197b2ae37c8b3005494
+e
+5src/Inflearn/bfsdfs/Inflearn_8_1_SameTotalSubSet.java,e\1\e19e217b0718d1b57ac18d5899823074e983c2bd
