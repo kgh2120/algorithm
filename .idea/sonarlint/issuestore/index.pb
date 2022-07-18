@@ -45,3 +45,9 @@ q
 Asrc/Inflearn/recursiveBFSDFS/Inflearn_7_14_MinRouteGraph_dis.java,1\0\1085c564adc119143e0f8197b2ae37c8b3005494
 e
 5src/Inflearn/bfsdfs/Inflearn_8_1_SameTotalSubSet.java,e\1\e19e217b0718d1b57ac18d5899823074e983c2bd
+_
+/src/Inflearn/bfsdfs/Inflearn_8_7_FindArray.java,8\0\808645ed03de650a481810e4bc34b69898305ddb
+e
+5src/Inflearn/bfsdfs/Inflearn_8_6_CombinationMemo.java,f\f\ff4f42914db75e8aa701e86a81e25721ff8ceecf
+=
+src/Test.java,a\8\a862b92d10f810e224187403c322cb8e01f5e244

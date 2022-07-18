@@ -1,10 +1,10 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+package Inflearn.bfsdfs;
+
+import com.sun.tools.javac.Main;
+
 import java.util.*;
 
-public class Main {
+public class Inflearn_8_12_Island {
 
     static class Coordinate{
         int row;
@@ -81,7 +81,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main m = new Main();
+        Inflearn_8_12_Island m = new Inflearn_8_12_Island();
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
 
