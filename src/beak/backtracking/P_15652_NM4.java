@@ -1,6 +1,12 @@
+package beak.backtracking;
+
 import java.io.*;
 
-public class Main {
+/*
+    비 내림차순이라는 개념이 도입된 문제
+     비 내림차순이란 수열에 있어서 n번째 수가 n-1보다 크거나 같은 구조를 지닌 수열의 구조이다.
+ */
+public class P_15652_NM4 {
 
     static BufferedWriter bw;
     public static void main(String[] args) throws IOException {
