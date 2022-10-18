@@ -1,6 +1,11 @@
+package Inflearn.integer;
+
 import java.io.*;
 
-public class Main {
+/**
+ * matrix를 한번만 만들어 두고 필요한 좌표값을 꺼내다 쓰는 방식으로 해결
+ */
+public class p1010 {
 
 
     public static void main(String[] args) throws IOException {
