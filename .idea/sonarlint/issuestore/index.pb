@@ -57,3 +57,15 @@ O
 src/Inflearn/integer/p2609.java,d\3\d32c8c45a670667f9ba9ab5b1fc78865cec5e596
 O
 src/Inflearn/integer/p5086.java,2\c\2cca8fbfd9d366e9a9a15844bd781c83801ffbe1
+O
+src/Inflearn/integer/p2981.java,a\6\a6176d3343151e6a7ce4fd96fa1558babb0cabb2
+O
+src/Inflearn/integer/p1934.java,9\1\911bca4facaa8be0a997bb4589c44d57d4051ab7
+U
+%src/Inflearn/integer/p3060_br_sy.java,c\c\cc8bee49d05aac979a1d699f8a350de4ff7c1ec3
+U
+%src/Inflearn/integer/p3060_sc_sb.java,4\8\48c041e3763cf9114c05c4371e9b1548cb6b6b8a
+U
+%src/Inflearn/integer/p3060_sc_sy.java,8\6\866834de46f8d72e69d5ee7a52edee67ebcee77a
+P
+ src/Inflearn/integer/p11050.java,f\0\f00f88fcc5e845c556500ac0cdb0366cf3456427

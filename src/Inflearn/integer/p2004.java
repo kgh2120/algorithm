@@ -1,6 +1,16 @@
+package Inflearn.integer;
+
 import java.util.Scanner;
 
-public class Main {
+/**
+ *  끝자리에 0이 나오는 규칙을 생각해서 풀었던 문제.
+ *  코드 자체는 좀더 깔끔하게 할 수 있을 거 같은데
+ *  귀찮아서 그냥 했다.
+ *  이전 팩토리얼에서는 2를 신경쓸 필요 없이 많아서 5만 신경썻는데
+ *  조합 문제에서는 깎여 나가는 부분이 많아서 2도 신경써 주어야 했다.
+ */
+
+public class p2004 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
