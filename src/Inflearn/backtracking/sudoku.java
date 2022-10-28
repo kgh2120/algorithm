@@ -1,3 +1,5 @@
+package Inflearn.backtracking;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,7 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+/**
+ *  수도쿠 문제
+ *  엔퀸이랑 비슷한 방법으로 풀었어야 했음.
+ *  유추하는 방법은 잘 찾아갔는데, N퀸과 다르게 무조건 해당 row에서 최적해를 찾을 수 있다고
+ *  생각해버렸음.
+ *  N퀸은 무조건 찾을 수 있어서 값을 채울 수 있었는데, 얘는 아니었음.
+ *  그래서 돌아올 때 값을 초기화 시켜 줘야 풀렸던 문제.
+ *  N퀸도 사실은 초기화를 해줬어야 했을 거 같다.
+ */
+public class sudoku {
     static boolean flag = false;
 
     public static void main(String[] args) throws IOException {

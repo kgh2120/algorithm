@@ -69,3 +69,11 @@ U
 %src/Inflearn/integer/p3060_sc_sy.java,8\6\866834de46f8d72e69d5ee7a52edee67ebcee77a
 P
  src/Inflearn/integer/p11050.java,f\0\f00f88fcc5e845c556500ac0cdb0366cf3456427
+U
+%src/Inflearn/backtracking/p15649.java,2\7\27674c8e4bbc0c2275477162e187b0049a480f32
+U
+%src/Inflearn/backtracking/p15650.java,d\2\d247294cb0f55dc1e0d60c018e85e521d975dfa9
+U
+%src/Inflearn/backtracking/p15651.java,1\7\1718db238c1d78bf3d242378ff1c8f297bc1420a
+U
+%src/Inflearn/backtracking/p15652.java,e\3\e307da956b1875598d178e31000e83f71d450ebe

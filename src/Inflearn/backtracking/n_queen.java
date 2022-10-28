@@ -42,8 +42,6 @@ public class n_queen {
         for (int i = 0; i < n; i++) {
             if(q[i]==q[n]) return false;
             if(Math.abs(q[i]-q[n])==Math.abs(i-n)) return false;
-//            if ((q[i] - q[n]) == (n - i)) return false;   // '\' 방향
-//            if ((q[n] - q[i]) == (n - i)) return false;   // '/' 방향
         }
         return true;
     }
