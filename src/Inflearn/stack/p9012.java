@@ -1,12 +1,18 @@
+package Inflearn.stack;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
+/**
+ * stack의 원리르 사용해서 문자열을 분석하는 문제.
+ * 이미 한 번 풀어봐서 좀 쉽게 풀 수 있었다.
+ */
+public class p9012 {
 
     StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
-        new Main().solution();
+        new p9012().solution();
     }
 
     public void solution() throws IOException {
