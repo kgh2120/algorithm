@@ -1,10 +1,18 @@
+package Inflearn.backtracking;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+/**
+ * 서로의 시너지 값을 구하는 문제.
+ * 전체를 루핑돌아야 할 것 같지만, 순서가 상관 없고, 절반만 구해도 되서
+ * 해당 부분을 고려해야 시간 내에 풀 수 있었던 거 같기도 하고..
+ *
+ */
+public class p14889 {
 
 
 
