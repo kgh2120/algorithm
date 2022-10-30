@@ -1,9 +1,16 @@
+package Inflearn.stack;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class Main {
+/**
+ *  스택의 개념을 활용해서 푸는 문제였음.
+ *  근데 문제 방향을 잘못 생각해서 레퍼런스를 본 후에야 풀었다.
+ *  알고리즘은 역시 방법을 빨리 생각해 내는 것이 중요한 것 같다.
+ */
+public class p1874 {
 
     StringBuilder sb = new StringBuilder();
 
@@ -41,6 +48,6 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        new Main().solution();
+        new p1874().solution();
     }
 }
