@@ -75,3 +75,9 @@ U
 %src/Inflearn/backtracking/p15651.java,1\7\1718db238c1d78bf3d242378ff1c8f297bc1420a
 U
 %src/Inflearn/backtracking/p15652.java,e\3\e307da956b1875598d178e31000e83f71d450ebe
+M
+src/Inflearn/stack/p9012.java,0\6\06593f935e8af680a181fb9f24d9b3fd5a3c866a
+N
+src/Inflearn/stack/p10773.java,1\3\1390c090a58695207b0541ab6c3c6152883d4835
+N
+src/Inflearn/stack/p10828.java,d\a\da8be5009ce339e17fec9547aa6223e2b8951369

@@ -1,11 +1,11 @@
-/* Java(자바) Hello, World! 예제 */
+package beak.collectionMap;/* Java(자바) Hello, World! 예제 */
 
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    public static void main(String []args) throws Exception {
-        new Main().solution();
+public class p10815 {
+	public static void main(String []args) throws Exception {
+		new p10815().solution();
     }
 
     public void solution() throws Exception {
@@ -23,7 +23,7 @@ public class Main {
         while(st.hasMoreTokens()){
             if(cards.contains(st.nextToken()))
                 sb.append(1).append(" ");
-            else
+            else 
                 sb.append(0).append(" ");
         }
         System.out.println(sb.toString());
