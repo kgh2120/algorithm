@@ -54,10 +54,6 @@ O
 O
 src/Inflearn/integer/p2609.java,d\3\d32c8c45a670667f9ba9ab5b1fc78865cec5e596
 O
-src/Inflearn/integer/p5086.java,2\c\2cca8fbfd9d366e9a9a15844bd781c83801ffbe1
-O
-src/Inflearn/integer/p2981.java,a\6\a6176d3343151e6a7ce4fd96fa1558babb0cabb2
-O
 src/Inflearn/integer/p1934.java,9\1\911bca4facaa8be0a997bb4589c44d57d4051ab7
 U
 %src/Inflearn/integer/p3060_br_sy.java,c\c\cc8bee49d05aac979a1d699f8a350de4ff7c1ec3
@@ -65,8 +61,6 @@ U
 %src/Inflearn/integer/p3060_sc_sb.java,4\8\48c041e3763cf9114c05c4371e9b1548cb6b6b8a
 U
 %src/Inflearn/integer/p3060_sc_sy.java,8\6\866834de46f8d72e69d5ee7a52edee67ebcee77a
-P
- src/Inflearn/integer/p11050.java,f\0\f00f88fcc5e845c556500ac0cdb0366cf3456427
 U
 %src/Inflearn/backtracking/p15649.java,2\7\27674c8e4bbc0c2275477162e187b0049a480f32
 U
@@ -81,3 +75,13 @@ N
 src/Inflearn/stack/p10773.java,1\3\1390c090a58695207b0541ab6c3c6152883d4835
 N
 src/Inflearn/stack/p10828.java,d\a\da8be5009ce339e17fec9547aa6223e2b8951369
+M
+src/Inflearn/stack/p1874.java,f\9\f90d0f6ebc0cf9076a2715a60cbb78258f224cd9
+=
+src/Test.java,a\8\a862b92d10f810e224187403c322cb8e01f5e244
+U
+%src/Inflearn/backtracking/p14889.java,d\7\d702b3c6cda79dea3b2300520313ae5c29e81fd7
+U
+%src/Inflearn/backtracking/p14888.java,f\8\f89f78cb3f6b496fa03a880a82e469cfd3fd7729
+U
+%src/Inflearn/backtracking/sudoku.java,a\b\abe3f315b91bc840d416e85b497c5e07a5a28df8

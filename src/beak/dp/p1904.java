@@ -1,12 +1,14 @@
+package beak.dp;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Main {
+public class p1904 {
 
 
     int[]m;
     public static void main(String []args) throws Exception {
-        new Main().solution();
+        new p1904().solution();
     }
 
     public void solution() throws Exception {
