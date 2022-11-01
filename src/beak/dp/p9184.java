@@ -4,6 +4,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/**
+ * 재귀 연산에 DP를 적용한 문제.
+ * 문제에 적힌 대로 식을 작성하고 DP를 사용
+ *
+ */
+
 public class p9184 {
 
 
