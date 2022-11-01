@@ -85,3 +85,23 @@ U
 %src/Inflearn/backtracking/p14888.java,f\8\f89f78cb3f6b496fa03a880a82e469cfd3fd7729
 U
 %src/Inflearn/backtracking/sudoku.java,a\b\abe3f315b91bc840d416e85b497c5e07a5a28df8
+R
+"src/beak/collectionMap/p10815.java,8\e\8ec82117e34634bf81414a1b52048e4d2e79456c
+R
+"src/beak/collectionMap/p14425.java,7\f\7f914377cbe19bf96f7a642e73c0000fcfed458d
+Q
+!src/beak/collectionMap/p1620.java,8\8\881098c44e85eb1f8deb3e2d67462c7989f27b8d
+R
+"src/beak/collectionMap/p10816.java,d\0\d04175fbdafccdc1f6337b79e937b1607a9d687b
+Q
+!src/beak/collectionMap/p1764.java,9\c\9c2129e563a042c8b42e868c70ec233e26ab41f1
+Q
+!src/beak/collectionMap/p1269.java,c\e\ce65f7b3d4f8697de6dfe5186d031ed95592c328
+R
+"src/beak/collectionMap/p11478.java,3\e\3e83c84510195f6c8cc82ae5728999feacd8c5fd
+M
+src/Inflearn/stack/p4949.java,7\4\74a896f835da2856036983338c1da8d1ef3a0069
+V
+&src/Inflearn/backtracking/n_queen.java,f\4\f4b409151dee9054bdd91c173b038cce0055bef2
+O
+src/Inflearn/integer/p5086.java,2\c\2cca8fbfd9d366e9a9a15844bd781c83801ffbe1
