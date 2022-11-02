@@ -1,16 +1,25 @@
+package beak.dp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+/**
+ * 정수 삼각형.
+ * 솔직히 문제 자체가 어렵지는 않았던거 같은데 이해를 너무 늦게했다.
+ * matrix문제 처럼 사전 준비를 할 수 있는 상황 (한 방향으로만 가는 경우)가 있어서
+ * 실제 로직은 간단했음.
+ * 다만 삼각형을 matrix로 옮기는 과정에서 대각선 이동을 row,col 이동으로 표현함에 있어서
+ * 헷갈려서 오래걸렸다.
+ */
+public class p1932 {
 
     long[][]m;
     long[][]dp;
     int n;
     public static void main(String []args) throws Exception {
-        new Main().solution();
+        new p1932().solution();
     }
 
     public void solution() throws Exception {
