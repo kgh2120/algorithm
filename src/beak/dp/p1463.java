@@ -1,20 +1,20 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+package beak.dp;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Main {
+public class p1463 {
 
     int[]m;
     int[]dp;
     int n;
     public static void main(String []args) throws Exception {
-        new Main().solution();
+        new p1463().solution();
     }
 
     public void solution() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        n = Integer.parseInt(br.readLine());
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
         dp = new int[n+1];
 
         Arrays.fill(dp,Integer.MAX_VALUE);
@@ -43,9 +43,6 @@ public class Main {
 
 
     }
-
-
-
     }
 
 
