@@ -1,7 +1,14 @@
+package beak.dp;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Main {
+/**
+ * 각 숫자의 경우의 수를 구하는 부분 집합을 쉽게 찾았지만, %연산 위치를 헷갈려서
+ * 좀 더 걸린듯.
+ * 근데 점화식으로 규칙을 찾아서 푸는 사람들도 있던데, 그게 더 쉬웠던 거 같다.
+ */
+public class p10844 {
 
     long[][]m;
     int n;
@@ -43,7 +50,7 @@ public class Main {
     }
 
     public static void main(String []args) throws Exception {
-        new Main().solution();
+        new p10844().solution();
     }
 }
 
