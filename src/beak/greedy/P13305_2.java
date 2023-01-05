@@ -1,10 +1,11 @@
+package beak.greedy;
+
+import com.sun.tools.javac.Main;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P13305_2 {
 
     public void solution() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,7 +29,7 @@ public class Main {
             if(prices[i+1] > prices[i])
                 prices[i+1] = prices[i];
         }
-
+        
         long sum = 0;
         int c = 0;
         for (Integer price : prices) {
@@ -44,7 +45,7 @@ public class Main {
 
 
     public static void main(String []args) throws Exception {
-        new Main().solution();
+        new P13305_2().solution();
     }
 }
 
