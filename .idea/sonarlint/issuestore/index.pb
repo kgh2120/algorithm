@@ -137,3 +137,5 @@ F
 src/beak/dp/p1149.java,5\1\51caebfb2fd218095e624644b3b0c22bd80df94b
 K
 src/beak/greedy/P11047.java,b\9\b9ca496345308819980d8a03d09597534ed2591d
+J
+src/beak/greedy/P1931.java,4\4\44ec94f7c611e9423784de72b4a2a6dffa1ab7b9

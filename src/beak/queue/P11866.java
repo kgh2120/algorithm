@@ -1,13 +1,12 @@
+package beak.queue;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P11866 {
 
     StringBuilder sb = new StringBuilder();
     Queue<Integer> q = new LinkedList<>();
@@ -39,7 +38,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P11866().solution();
     }
 }
 
