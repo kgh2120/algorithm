@@ -1,10 +1,11 @@
+package beak.queue;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P1021_2 {
 
     StringBuilder sb = new StringBuilder();
 
@@ -41,7 +42,7 @@ public class Main {
                 c.poll();
                 continue;
             }
-
+            
             int index = c.indexOf(t);
             int containerSize = c.size();
 
@@ -79,7 +80,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P1021_2().solution();
     }
 }
 
