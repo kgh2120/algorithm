@@ -1,3 +1,5 @@
+package beak.graph;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -5,7 +7,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P24479 {
 
     StringBuilder sb = new StringBuilder();
     int[] visitied;
@@ -46,13 +48,14 @@ public class Main {
     public void dfs(ArrayList<LinkedList<Integer>>matrix, int node) {
 
         LinkedList<Integer> linkedList = matrix.get(node);
-        linkedList.sort(Collections.reverseOrder());
+        Collections.sort(linkedList);
         visitied[node] = ++seq;
 
         for (Integer integer : linkedList) {
             // 순서 기록하기.
-            if(visitied[integer] == 0)
+            if (visitied[integer] == 0) {
                 dfs(matrix, integer);
+            }
         }
 
     }
@@ -61,7 +64,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P24479().solution();
     }
 }
 

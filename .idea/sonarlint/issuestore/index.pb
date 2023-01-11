@@ -43,8 +43,6 @@ m
 =src/Inflearn/recursiveBFSDFS/Inflearn_7_14_MinRouteGraph.java,d\7\d754dc3c9731277accb787e45746191b2ec9996e
 q
 Asrc/Inflearn/recursiveBFSDFS/Inflearn_7_14_MinRouteGraph_dis.java,1\0\1085c564adc119143e0f8197b2ae37c8b3005494
-e
-5src/Inflearn/bfsdfs/Inflearn_8_1_SameTotalSubSet.java,e\1\e19e217b0718d1b57ac18d5899823074e983c2bd
 _
 /src/Inflearn/bfsdfs/Inflearn_8_7_FindArray.java,8\0\808645ed03de650a481810e4bc34b69898305ddb
 e
@@ -153,3 +151,15 @@ F
 src/beak/dp/p2156.java,a\8\a8ce580c3392f5798850ba8de7962d4e227ad9ed
 M
 src/beak/greedy/P13305_2.java,d\e\de749951144be0f26d5137fbcd1297dcc2eb5861
+J
+src/beak/queue/P11866.java,4\2\4238d1f570125fe41b642f73ff979603b7ce0b26
+J
+src/beak/queue/P15828.java,3\5\3552e8a02c99d4486051b57bdd2371dadfd1401c
+I
+src/beak/queue/P2164.java,a\3\a3492f2893d724d029a04b78832fd4293e7079c3
+J
+src/beak/queue/P18258.java,3\5\354b7a3af92b9bf149a835076345a3404d4260aa
+I
+src/beak/queue/P1966.java,4\5\459820892486bce6ab3fa5c27a7b10675e1a7e4f
+J
+src/beak/queue/P10866.java,c\3\c375632e7d5ee361185fd560bd25de0da3b8c085
