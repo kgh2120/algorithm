@@ -1,3 +1,5 @@
+package beak.graph;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -5,37 +7,42 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.StringTokenizer;
 
-public class Main {
+public class P2667 {
 
     StringBuilder sb = new StringBuilder();
+    List<Integer> danji = new ArrayList<>();
     int[][] matrix;
-
-    int nOfWorm;
 
     public void solution() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int tRow = Integer.parseInt(st.nextToken());
-        int tCol = Integer.parseInt(st.nextToken());
-        matrix = new int[tRow+2][tCol+2];
+        int n = Integer.parseInt(br.readLine());
+        matrix = new int[n+2][n+2];
 
-        for (int i = 1; i <= tRow; i++) {
+        for (int i = 1; i <= n; i++) {
             String[] split = br.readLine().split("");
-            int j =1;
+
+            int j = 1;
             for (String s : split) {
-                matrix[i][j++]  = Integer.parseInt(s);
+                matrix[i][j++] = Integer.parseInt(s);
             }
         }
 
+        for (int i = 1; i <= n ; i++) {
+            for (int j = 1; j <= n ; j++) {
+                if(matrix[i][j] != 0)
+                    bfs(i,j);
+            }
+        }
 
-        bfs(1,1);
+        Collections.sort(danji);
+        sb.append(danji.size()).append("\n");
+        for (Integer integer : danji) {
+            sb.append(integer).append("\n");
+        }
 
 
-
-
-        System.out.println(matrix[tRow][tCol]);
+        System.out.println(sb);
 
     }
 
@@ -44,28 +51,29 @@ public class Main {
         Queue<Cor> q = new LinkedList<>();
 
         q.add(new Cor(row,col));
-
-
+        matrix[row][col] = 0;
+        int nOfHome = 0;
         while (!q.isEmpty()) {
             Cor poll = q.poll();
-            int count = matrix[poll.row][poll.col];
+            nOfHome++;
             // 4방을 봐야 함.
             // 위
-            enque(q, poll.row -1 , poll.col,count);
+            enque(q, poll.row -1 , poll.col);
             // 아래
-            enque(q,poll.row+1,poll.col,count);
+            enque(q,poll.row+1,poll.col);
             // 오른쪽
-            enque(q,poll.row,poll.col+1,count);
+            enque(q,poll.row,poll.col+1);
             // 왼쪽
-            enque(q,poll.row,poll.col-1,count);
+            enque(q,poll.row,poll.col-1);
         }
+        danji.add(nOfHome);
     }
 
-    public void enque(Queue<Cor>q, int row, int col, int count) {
+    public void enque(Queue<Cor>q, int row, int col) {
 
-        if (matrix[row][col] == 1) {
+        if (matrix[row][col] != 0) {
             q.add(new Cor(row,col));
-            matrix[row][col] = count+1;
+            matrix[row][col] = 0;
         }
     }
 
@@ -84,7 +92,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P2667().solution();
     }
 }
 

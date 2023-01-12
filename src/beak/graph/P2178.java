@@ -1,13 +1,12 @@
+package beak.graph;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P2178 {
 
     StringBuilder sb = new StringBuilder();
     int[][] matrix;
@@ -84,7 +83,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P2178().solution();
     }
 }
 
