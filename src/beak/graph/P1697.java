@@ -1,12 +1,14 @@
+package beak.graph;
+
+import com.sun.tools.javac.Main;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P1697 {
 
 
     public void solution() throws Exception {
@@ -68,45 +70,8 @@ public class Main {
 
     }
 
-    public boolean move(Queue<Turn> q, Set<Integer> visited, Turn t, int b){
-
-        if (t.position - 1 == b || t.position + 1 == b || t.position * 2 == b) {
-            System.out.println(t.sec +1);
-            return true;
-        }
-
-        if (!visited.contains(t.position - 1)) {
-            q.add(new Turn(t.sec + 1, t.position - 1));
-            visited.add(t.position-1);
-        }
-        if (!visited.contains(t.position + 1)) {
-            q.add(new Turn(t.sec + 1, t.position + 1));
-            visited.add(t.position+1);
-        }
-        if (!visited.contains(t.position * 2)) {
-            q.add(new Turn(t.sec + 1, t.position * 2));
-            visited.add(t.position*2);
-        }
-
-        return false;
-    }
-
-
-    class Turn{
-        int sec;
-        int position;
-
-        public Turn(int sec, int position) {
-            this.sec = sec;
-            this.position = position;
-        }
-    }
-
-
-
-
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P1697().solution();
     }
 }
 

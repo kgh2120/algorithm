@@ -177,3 +177,15 @@ O
 src/beak/queue/P5430_array.java,c\a\cafed6c74ce56c54032c0e34af6e5bec73ec08de
 O
 src/beak/queue/P5430_deque.java,e\e\eee1eb21e047784b9a260cdc5d6ece73d5ee63fb
+J
+src/beak/graph/P24479.java,9\c\9c30f90413ef044bce32abe30ed15e4798325531
+J
+src/beak/graph/P24480.java,f\9\f99f5a8edf28a0407a99bcbf12e8adf8bd96d557
+I
+src/beak/graph/P1260.java,7\4\746b3688d0eb98bd4d547f64154f81cafe829645
+I
+src/beak/graph/P2606.java,a\d\ade2bc5cf957dcceec7ab1da3307602f3479f525
+J
+src/beak/graph/P24444.java,5\6\56e59de95bb4778e1a2758bbf78ddba001e46a2c
+J
+src/beak/graph/P24445.java,c\5\c54e9390707496657c93aa897e302cf5c65e2cbb
