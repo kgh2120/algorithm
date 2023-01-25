@@ -1,8 +1,10 @@
+package beak.binaryserach;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+public class P1654 {
     StringBuilder sb = new StringBuilder();
 
 
@@ -14,37 +16,34 @@ public class Main {
 
         long[] arrays = new long[n];
         long max = Long.MIN_VALUE;
-
-        st = new StringTokenizer(br.readLine());
-
         for (int i = 0; i < n; i++) {
-            arrays[i] = Long.parseLong(st.nextToken());
+            arrays[i] = Long.parseLong(br.readLine());
             max = Math.max(max, arrays[i]);
         }
         System.out.println(paramSearch(arrays,r,max));
 
     }
 
-    public long paramSearch(long[] arrays, int requiredLength, long max){
+    public long paramSearch(long[] arrays, int nOfRequired, long max){
 
-        long l = 0L;
+        long l = 1L;
         long r = max;
+
         long maxLength = Long.MIN_VALUE;
         while (l <= r) {
-
             long mid = (l+r) >>> 1;
-            long totalLength = 0;
-            for (long array : arrays) {
-                long length = array - mid;
-                length = length < 0 ? 0 : length;
-                totalLength += length;
+            long nOfLan = 0L;
+            for (int i = 0; i < arrays.length; i++) {
+                nOfLan += arrays[i]/mid;
             }
 
-            if (requiredLength > totalLength) {
-                r = mid -1;
+
+
+            if (nOfRequired > nOfLan) {
+                r = mid - 1;
             } else {
-                maxLength = Math.max(maxLength,mid);
-                l = mid +1;
+                maxLength = Math.max(maxLength, mid);
+                l = mid + 1;
             }
         }
         return maxLength;
@@ -53,7 +52,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P1654().solution();
     }
 }
 
