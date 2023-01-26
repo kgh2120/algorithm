@@ -64,21 +64,13 @@ U
 U
 %src/Inflearn/backtracking/p15650.java,d\2\d247294cb0f55dc1e0d60c018e85e521d975dfa9
 U
-%src/Inflearn/backtracking/p15651.java,1\7\1718db238c1d78bf3d242378ff1c8f297bc1420a
-U
 %src/Inflearn/backtracking/p15652.java,e\3\e307da956b1875598d178e31000e83f71d450ebe
-M
-src/Inflearn/stack/p9012.java,0\6\06593f935e8af680a181fb9f24d9b3fd5a3c866a
 N
 src/Inflearn/stack/p10773.java,1\3\1390c090a58695207b0541ab6c3c6152883d4835
 N
 src/Inflearn/stack/p10828.java,d\a\da8be5009ce339e17fec9547aa6223e2b8951369
-M
-src/Inflearn/stack/p1874.java,f\9\f90d0f6ebc0cf9076a2715a60cbb78258f224cd9
 U
 %src/Inflearn/backtracking/p14889.java,d\7\d702b3c6cda79dea3b2300520313ae5c29e81fd7
-U
-%src/Inflearn/backtracking/p14888.java,f\8\f89f78cb3f6b496fa03a880a82e469cfd3fd7729
 U
 %src/Inflearn/backtracking/sudoku.java,a\b\abe3f315b91bc840d416e85b497c5e07a5a28df8
 R
@@ -95,10 +87,6 @@ Q
 !src/beak/collectionMap/p1269.java,c\e\ce65f7b3d4f8697de6dfe5186d031ed95592c328
 R
 "src/beak/collectionMap/p11478.java,3\e\3e83c84510195f6c8cc82ae5728999feacd8c5fd
-M
-src/Inflearn/stack/p4949.java,7\4\74a896f835da2856036983338c1da8d1ef3a0069
-V
-&src/Inflearn/backtracking/n_queen.java,f\4\f4b409151dee9054bdd91c173b038cce0055bef2
 O
 src/Inflearn/integer/p5086.java,2\c\2cca8fbfd9d366e9a9a15844bd781c83801ffbe1
 F
@@ -197,3 +185,5 @@ I
 src/beak/graph/P1697.java,f\6\f6c6eebec142a08d48a12009761befe08b8f2879
 J
 src/beak/graph/p16928.java,4\d\4d0df89884b5866afdd4fd6e54b1f21e4f8352de
+I
+src/beak/graph/P2206.java,c\e\ce28a0b2d546365dba081a0c5f11116f861a70d3

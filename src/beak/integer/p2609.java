@@ -1,4 +1,4 @@
-package Inflearn.integer;
+package beak.integer;
 
 import java.io.IOException;
 import java.util.Scanner;

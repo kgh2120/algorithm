@@ -1,4 +1,4 @@
-package Inflearn.stack;
+package beak.stack;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package Inflearn.backtracking;
+package beak.backtracking;
 
 import java.io.BufferedReader;
 import java.io.IOException;
