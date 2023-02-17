@@ -47,32 +47,6 @@ _
 /src/Inflearn/bfsdfs/Inflearn_8_7_FindArray.java,8\0\808645ed03de650a481810e4bc34b69898305ddb
 e
 5src/Inflearn/bfsdfs/Inflearn_8_6_CombinationMemo.java,f\f\ff4f42914db75e8aa701e86a81e25721ff8ceecf
-O
-src/Inflearn/integer/p1037.java,9\8\98196431e3e809cfb134c400e6cc0ab7cd686b91
-O
-src/Inflearn/integer/p2609.java,d\3\d32c8c45a670667f9ba9ab5b1fc78865cec5e596
-O
-src/Inflearn/integer/p1934.java,9\1\911bca4facaa8be0a997bb4589c44d57d4051ab7
-U
-%src/Inflearn/integer/p3060_br_sy.java,c\c\cc8bee49d05aac979a1d699f8a350de4ff7c1ec3
-U
-%src/Inflearn/integer/p3060_sc_sb.java,4\8\48c041e3763cf9114c05c4371e9b1548cb6b6b8a
-U
-%src/Inflearn/integer/p3060_sc_sy.java,8\6\866834de46f8d72e69d5ee7a52edee67ebcee77a
-U
-%src/Inflearn/backtracking/p15649.java,2\7\27674c8e4bbc0c2275477162e187b0049a480f32
-U
-%src/Inflearn/backtracking/p15650.java,d\2\d247294cb0f55dc1e0d60c018e85e521d975dfa9
-U
-%src/Inflearn/backtracking/p15652.java,e\3\e307da956b1875598d178e31000e83f71d450ebe
-N
-src/Inflearn/stack/p10773.java,1\3\1390c090a58695207b0541ab6c3c6152883d4835
-N
-src/Inflearn/stack/p10828.java,d\a\da8be5009ce339e17fec9547aa6223e2b8951369
-U
-%src/Inflearn/backtracking/p14889.java,d\7\d702b3c6cda79dea3b2300520313ae5c29e81fd7
-U
-%src/Inflearn/backtracking/sudoku.java,a\b\abe3f315b91bc840d416e85b497c5e07a5a28df8
 R
 "src/beak/collectionMap/p10815.java,8\e\8ec82117e34634bf81414a1b52048e4d2e79456c
 R
@@ -87,20 +61,8 @@ Q
 !src/beak/collectionMap/p1269.java,c\e\ce65f7b3d4f8697de6dfe5186d031ed95592c328
 R
 "src/beak/collectionMap/p11478.java,3\e\3e83c84510195f6c8cc82ae5728999feacd8c5fd
-O
-src/Inflearn/integer/p5086.java,2\c\2cca8fbfd9d366e9a9a15844bd781c83801ffbe1
 F
 src/beak/dp/p1904.java,1\7\17142fce38b9e96b92542fb1a3664fbdb4e2f946
-O
-src/Inflearn/integer/p2981.java,a\6\a6176d3343151e6a7ce4fd96fa1558babb0cabb2
-O
-src/Inflearn/integer/p2004.java,1\8\18b23eaa99dad04c84cbc777b0122188d0d16ab7
-P
- src/Inflearn/integer/p11050.java,f\0\f00f88fcc5e845c556500ac0cdb0366cf3456427
-O
-src/Inflearn/integer/p9375.java,4\3\43ba0599589ba74eee9d75bff00a10e98461f570
-P
- src/Inflearn/integer/p11051.java,e\0\e0103fa3f75630876c8c2a56c24853ecdeb737b8
 F
 src/beak/dp/p9184.java,0\4\04b563ba0b3019c7b2796c2d2c4e2c4afc3ac56f
 G
@@ -187,3 +149,75 @@ J
 src/beak/graph/p16928.java,4\d\4d0df89884b5866afdd4fd6e54b1f21e4f8352de
 I
 src/beak/graph/P2206.java,c\e\ce28a0b2d546365dba081a0c5f11116f861a70d3
+P
+ src/beak/binaryserach/P1654.java,0\b\0bff6ff80e3bfd28f25157839cb178979558175f
+P
+ src/beak/binaryserach/P1920.java,9\0\909309774755cc42be10152e9fa1d61ae81d66a0
+I
+src/beak/graph/P1707.java,6\8\68370068d5f375a22219f8e45374e290a371ff0b
+I
+src/beak/graph/P7569.java,e\2\e232bba90e0f0217b5665f44cb2070668939446d
+I
+src/beak/graph/P7576.java,4\3\43ec3cb107605e60cab1dcdb8da316384bed5d45
+I
+src/beak/graph/P7562.java,7\0\7067564545121dd29079f06a3a110561f685fbeb
+P
+ src/beak/binaryserach/P2805.java,5\a\5adfa97c398f7ccb3827db917851e35c0c9772ee
+m
+=src/Inflearn/twoPointerslidewindow/inflearn3_3_MaxSalary.java,9\6\968ee7813a5d5fc1074511c58e3d0360d1f8de22
+R
+"src/beak/backtracking/n_queen.java,4\7\47b3b3ef6ded939bffc158e0d75bd98d50434d73
+K
+src/beak/integer/p1010.java,6\0\606d2843002fa17248eafbb5712e3b00c368b862
+K
+src/beak/integer/p1037.java,f\0\f053cfc780721ac0440996b051b4a908e5dfd7aa
+K
+src/beak/integer/p1679.java,9\1\914ba7885effc2093e2ce10ecea4eb2a3628e1ec
+I
+src/beak/stack/p1874.java,b\8\b867c932522e7db1f7d1cc7fa8b556807606b5d2
+K
+src/beak/integer/p1934.java,d\1\d1b32a249834365f2792730168e1db360835ad2c
+K
+src/beak/integer/p2004.java,a\9\a9c26bba2d5bc7948a20050dc177758949940761
+K
+src/beak/integer/p2609.java,5\c\5cf7f0c559745e57d6eca30eda899bc6687a6de3
+K
+src/beak/integer/p2981.java,5\5\553d18dc7e44ca23e084126ae98488aa085e5bca
+Q
+!src/beak/integer/p3060_br_sy.java,a\7\a78f3174adb0c5bbd7d1c9ee7b30443a12fb682c
+Q
+!src/beak/integer/p3060_sc_sb.java,2\c\2c3976ffafeaeee6ef0227d0672c14bc97177bf3
+Q
+!src/beak/integer/p3060_sc_sy.java,c\d\cd9c53e40e2f38195d8de632d99fedf1bd4ccc54
+K
+src/beak/integer/p5086.java,5\a\5ad42fc284fa73353350f0ea01998ee00d773099
+I
+src/beak/stack/p9012.java,d\3\d3d0130a9a05c62748673a54d843a149bfb15657
+K
+src/beak/integer/p9375.java,3\1\314c1425644c49d9140cffcfdd91c19e143a31a7
+J
+src/beak/stack/p10773.java,6\d\6d0ca90846b0b146fb5d2b5a73bd680bdee0fddd
+J
+src/beak/stack/p10828.java,7\e\7ee20f18a2dd5d9428e9a80069db89740345cd30
+L
+src/beak/integer/p11050.java,1\b\1bee81d512a93e839bf6539e7bc062627bb398ee
+L
+src/beak/integer/p11051.java,0\5\05eb6b1f54824cdd5e1c05266ad003efc98d7b98
+Q
+!src/beak/backtracking/p14888.java,3\8\38c5e3e3991c49b52aa9e5f88b9544c1df831c2b
+Q
+!src/beak/backtracking/p14889.java,2\9\2962174807115c4bc6c40da990fc3bfdf7c52b16
+Q
+!src/beak/backtracking/p15649.java,1\2\12ee8e18a30413da6a5164761fccb93324183478
+Q
+!src/beak/backtracking/p15650.java,0\e\0eba53448f7e04bec3fc008f948e3d9121ea8c9b
+Q
+!src/beak/backtracking/p15651.java,5\a\5a2eab154dfd6f23dff96d7abbfae58036a4339a
+Q
+!src/beak/backtracking/p15652.java,0\f\0f125ede2b23fdca9960dbeaceba5db815c96dad
+Q
+!src/beak/backtracking/sudoku.java,7\7\77e72626179d830fcc2025151fe7b8a57833ada1
+I
+src/beak/stack/p4949.java,e\c\eccccf14eec6a7fd9e210255a7afd82c9103f245
+n
+>src/Inflearn/twoPointerslidewindow/lnflearn_3_6_MaxLength.java,b\e\be18752b36f086579f46611189e6e07652f51ee3

@@ -1,46 +1,37 @@
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
 public class Solution {
 
-    public int solution(int[] common) {
 
-        // 등차인가?
+    static class Node implements Comparable<Node>{
 
-        int m = common[1] - common[0];
+        int w;
 
-
-        for (int i = 2; i <= common.length-1; i++) {
-            if (common[i] - common[i - 1] != m) {
-                m = 0;
-                break;
-            }
-
+        public Node(int i) {
+            w = i;
         }
 
-        if(m != 0)
-            return common[common.length-1] + m;
-
-        // 등비인가??
-        int k = common[1] / common[0];
-        for (int i = 2; i <= common.length-1; i++) {
-            if (common[i] / common[i - 1] != k) {
-                k = 0;
-                break;
-            }
+        @Override
+        public int compareTo(Node o) {
+            if(w < o.w)
+                return 1;
+            else return -1;
         }
-
-        if(k != 0)
-            return common[common.length-1] * k;
-
-
-        int answer = 0;
-        return answer;
     }
 
 
     public static void main(String[] args) {
-        Solution s = new Solution();
 
-        int[] array = {1,2,3,4};
+        PriorityQueue<Node> nodes = new PriorityQueue<>();
+        for (int i = 0; i < 10; i++) {
+            nodes.add(new Node(i));
+        }
 
-        System.out.println(s.solution(array));
+        while (!nodes.isEmpty()) {
+            System.out.println(nodes.poll().w);
+        }
+
+
     }
 }

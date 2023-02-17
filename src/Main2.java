@@ -5,16 +5,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main2 {
 
 
     List<LinkedList<Edge>> adjacent = new ArrayList<>();
     int[]d;
-    Integer MAX_VALUE = Integer.MAX_VALUE;
-
+    HashSet<Integer> s = new HashSet<>();
+    HashSet<Integer> v = new HashSet<>();
 
     public void solution() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -26,6 +25,8 @@ public class Main {
 
         for (int i = 0; i <= nOfV; i++) {
             adjacent.add(new LinkedList<>());
+            if(i>=1)
+                v.add(i);
         }
         for (int i = 0; i < nOfE; i++) {
             st = new StringTokenizer(br.readLine());
@@ -40,7 +41,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 1; i <=nOfV ; i++) {
-            String dis = d[i] == MAX_VALUE ? "INF" : String.valueOf(d[i]);
+            String dis = d[i] == 9999 ? "INF" : String.valueOf(d[i]);
             sb.append(dis).append("\n");
         }
         System.out.println(sb);
@@ -48,27 +49,36 @@ public class Main {
     }
 
     public void dijkstra(int startNode){
-        Arrays.fill(d,MAX_VALUE);
+        Arrays.fill(d,9999);
         d[startNode] = 0;
+        HashSet<Integer> ds = new HashSet<>(v);
+        while (s.size() != v.size()) {
+            Integer integer = extractMin(ds);
+            s.add(integer);
+            ds.remove(integer);
 
-        PriorityQueue<Edge> q = new PriorityQueue<>();
-        q.offer(new Edge(startNode,0,0));
-        while (!q.isEmpty()) {
-            Edge poll = q.poll();
-
-            if(d[poll.from] < poll.weight) continue;;
             // 인접한 애들 가져오기
-            LinkedList<Edge> edges = adjacent.get(poll.from); // L(U)
+            LinkedList<Edge> edges = adjacent.get(integer); // L(U)
             for (Edge edge : edges) {
-                if (d[poll.from] + edge.weight < d[edge.to]) {
-                    d[edge.to] = d[poll.from] + edge.weight;
-                    q.offer(new Edge(edge.to,0,d[edge.to]));
+                if (ds.contains(edge.to) && d[integer] + edge.weight < d[edge.to]) {
+                    d[edge.to] = d[integer] + edge.weight;
                 }
             }
         }
     }
+    private Integer extractMin(HashSet<Integer> ds){
+        int min = 9999;
+        int index = 0;
+        for (Integer integer : ds) {
+            if (min > d[integer]) {
+                min = d[integer];
+                index = integer;
+            }
+        }
+        return index;
+    }
 
-    class Edge implements Comparable<Edge>{
+    class Edge{
         int from;
         int to;
         int weight;
@@ -78,20 +88,13 @@ public class Main {
             this.to = to;
             this.weight = weight;
         }
-
-        @Override
-        public int compareTo(Edge o) {
-            if(weight < o.weight)
-                return -1;
-            else return 1;
-        }
     }
 
 
 
     public static void main(String[] args) throws Exception {
 
-        new Main().solution();
+        new Main2().solution();
     }
 
 }
