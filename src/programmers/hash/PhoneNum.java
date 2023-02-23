@@ -1,9 +1,8 @@
+package programmers.hash;
+
 import java.util.Arrays;
-import java.util.HashMap;
 
-import java.util.Map;
-
-public class Solution {
+public class PhoneNum {
 
     public boolean solution(String[] phone_book) {
         boolean answer = true;
@@ -20,6 +19,6 @@ public class Solution {
 
         String[] a = {"12","123","1235","567","88"};
 
-        System.out.println(new Solution().solution(a));
+        System.out.println(new PhoneNum().solution(a));
     }
 }
