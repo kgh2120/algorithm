@@ -1,9 +1,6 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+package programmers.stackq;
 
-public class Solution {
+public class CorrectBracket {
 
     boolean solution(String s) {
         boolean answer = true;
@@ -31,6 +28,6 @@ public class Solution {
 
        String a = "()()";
 
-        System.out.println((new Solution().solution(a)));
+        System.out.println((new CorrectBracket().solution(a)));
     }
 }
