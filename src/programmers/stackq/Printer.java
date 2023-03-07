@@ -1,8 +1,10 @@
+package programmers.stackq;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Solution {
+public class Printer {
 
     public int solution(int[] priorities, int location) {
         int answer = 0;
@@ -53,6 +55,6 @@ public class Solution {
        int [] a = {1, 1, 9, 1, 1, 1};
        int b = 0;
 
-        System.out.println((new Solution().solution(a,b)));
+        System.out.println((new Printer().solution(a,b)));
     }
 }
