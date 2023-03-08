@@ -235,3 +235,7 @@ P
 .src/programmers/hash/CannotCompletePlayer.java,0\1\01e5e29984aca2a827e0b642c6e6af3f8afe2526
 T
 $src/programmers/hash/PhoneKemon.java,d\b\db0bc2055445a952314d1b6bc7986b28d9e7c807
+S
+#src/programmers/stackq/Printer.java,2\3\2309b61fb87e923af5a7371fe812d76455cfa56d
+Z
+*src/programmers/stackq/CorrectBracket.java,f\3\f3e0212d9afb5d75378c2149b4471adfea3737ec

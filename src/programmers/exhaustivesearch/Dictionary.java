@@ -1,12 +1,9 @@
-import java.util.ArrayList;
-import java.util.Arrays;
+package programmers.exhaustivesearch;
+
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 import java.util.Set;
 
-public class Solution {
+public class Dictionary {
 
     boolean flag;
     Set<String> wordsSet = new HashSet<>();
@@ -45,6 +42,6 @@ public class Solution {
 
         String a = "EIO";
 
-        System.out.println(((new Solution().solution(a))));
+        System.out.println(((new Dictionary().solution(a))));
     }
 }
