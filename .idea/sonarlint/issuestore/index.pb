@@ -220,12 +220,6 @@ I
 n
 >src/Inflearn/twoPointerslidewindow/lnflearn_3_6_MaxLength.java,b\e\be18752b36f086579f46611189e6e07652f51ee3
 ;
-src/M1.java,a\3\a32fcbb17100354c98d3f85c5f08ae3611597ac5
->
-src/Main2.java,f\e\fefd934fe213e7d7ae1fd8cb503613aff2236a7e
-=
-src/Main.java,9\2\924f089edb4af5ee45c8a9d1129cd28e2b368138
-;
 src/M2.java,a\4\a44fa2ce09a095dee8e5dc744ecf4103137f94da
 P
  src/beak/binaryserach/P1300.java,f\6\f6d8612d13f6c25277cc9db4445949b241833613
@@ -239,3 +233,11 @@ S
 #src/programmers/stackq/Printer.java,2\3\2309b61fb87e923af5a7371fe812d76455cfa56d
 Z
 *src/programmers/stackq/CorrectBracket.java,f\3\f3e0212d9afb5d75378c2149b4471adfea3737ec
+b
+2src/programmers/exhaustivesearch/Fatigability.java,8\b\8b5f8b26ba280c2e2d693f31c8b3d7b2447ce0d6
+^
+.src/programmers/exhaustivesearch/MathExam.java,8\a\8a95f351b3e47af2aaed82433df9a8147e7200fd
+`
+0src/programmers/exhaustivesearch/Dictionary.java,7\7\771318a29b3521430efe58c4fe76fce57f27f69d
+f
+6src/programmers/exhaustivesearch/DivideElectronic.java,0\6\067068e8cb62d57d62001ef1028b20b5adfa33c9

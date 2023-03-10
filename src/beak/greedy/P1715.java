@@ -1,16 +1,16 @@
+package beak.greedy;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Random;
-import java.util.StringTokenizer;
 
-public class Main {
+/**
+ *  그리디 알고리즘 골드 4
+ *  규칙은 좀 일찍 안거 같은데.. 시간초과 및 메모리 이슈가 발생함.
+ *  그래서 우선순위 큐를 적용해서 풀어보니 풀렸다.
+ */
+public class P1715 {
 
 
     public void solution() throws IOException {
@@ -43,7 +43,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        new Main().solution();
+        new P1715().solution();
 
 
 

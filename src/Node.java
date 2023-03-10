@@ -1,25 +1,49 @@
+import java.util.Arrays;
+
 public class Node {
 
-    static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) {
-        int []a = {1,2,3,4};
 
-        for (int i = 0; i < a.length; i++) {
-
-            comb(a, Integer.toString(a[i]),i);
+        for(int i = 2; i < 100; i++){
+            if(isPrimeNum(i))
+                System.out.println(i + " : " + isPrimeNum(i));
         }
-        System.out.println(sb.toString());
+
+        System.out.println("========[에라토스테네스의 체]==========");
+        boolean[] filter = eratosFilter(100);
+        for(int i = 2; i<= 100; i++)
+            if (!filter[i]) {
+                System.out.println(i + " : " + filter[i]);
+            }
+
     }
 
-    public static void comb(int[]a, String s, int prev){
+    private static boolean isPrimeNum(int num){
+        if(num < 2)
+            return false;
+        for(int i = 2; i<= Math.sqrt(num); i++)
+            if(num % i == 0)
+                return false;
+        return true;
+    }
 
-        if (prev == a.length) {
-            System.out.println(s);
-            return ;
+    private static boolean[] eratosFilter(int num){
+        boolean[] e = new boolean[num + 1];
+
+        for(int i =2 ; i<= Math.sqrt(num); i++){
+            if(!e[i]){
+                filter(e,i);
+            }
         }
+        return e;
+    }
 
-        for (int i = prev + 1; i <= a.length-1; i++) {
-            comb(a,s + " " + a[i], i);
+    private static void filter(boolean[] e, int i){
+        int idx = 2;
+        while(i*idx < e.length){
+            e[i*idx] = true;
+            idx++;
         }
     }
 }
