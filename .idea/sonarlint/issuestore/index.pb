@@ -241,3 +241,13 @@ b
 0src/programmers/exhaustivesearch/Dictionary.java,7\7\771318a29b3521430efe58c4fe76fce57f27f69d
 f
 6src/programmers/exhaustivesearch/DivideElectronic.java,0\6\067068e8cb62d57d62001ef1028b20b5adfa33c9
+b
+2src/programmers/exhaustivesearch/FindPrimeNum.java,c\e\ce919a76679b739560403c6c8abe94e66db01bc8
+b
+2src/programmers/exhaustivesearch/MinRectangle.java,9\c\9c607a18e101d34b7f68b06173a88d8887af59df
+[
++src/programmers/stackq/DevelopFunction.java,4\8\48737097a9889407ea141c1c5acc3f96897be917
+Z
+*src/programmers/stackq/HateSameNumber.java,f\4\f42e220d6be7ea2364909eaae49b0537a7e48483
+R
+"src/programmers/hash/PhoneNum.java,3\4\341cb765e170f0b88d3057680af3fa9c9c70fb8d
