@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 
@@ -13,50 +10,45 @@ public class Main {
     public void solution() throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        List<LinkedList<Integer>> adj = new ArrayList<>();
-        boolean[] visited = new boolean[n+1];
-        for(int i = 0; i<=n; i++)
-            adj.add(new LinkedList<>());
+        Stack[] stacks = new Stack[4];
+        for(int i = 0; i<4; i++)
+            stacks[i] = new Stack<Integer>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int [] arr = new int[n];
+        int idx = 0;
 
-        for (int i = 0; i < n-1; i++) {
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int f = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
+        while(st.hasMoreTokens())
+            arr[idx++] = Integer.parseInt(st.nextToken());
 
-            adj.get(f).add(t);
-            adj.get(t).add(f);
-        }
 
-        bfs(adj,visited);
 
-    }
-
-    private void bfs(List<LinkedList<Integer>> adj, boolean[] visited ){
-        Queue<Integer> q = new LinkedList<>();
-        int[] answer = new int[visited.length];
-
-        q.add(1);
-        visited[1] = true;
-        while(!q.isEmpty()){
-            Integer poll = q.poll();
-
-            for (Integer integers : adj.get(poll)) {
-                if (!visited[integers]) {
-
-                    visited[integers] = true;
-                    q.add(integers);
-                    answer[integers] = poll;
-
+        for (int i = 0; i < n; i++) {
+            int target = arr[i];
+            boolean flag = false;
+            for(int j = 0; j<4; j++){
+                if (stacks[j].isEmpty()) {
+                    flag = push(stacks[j], target);
+                    break;
+                }
+                Integer peek = (Integer) stacks[j].peek();
+                if (target > peek) {
+                    flag = push(stacks[j], target);
+                    break;
                 }
             }
+            if (!flag) {
+                System.out.println("NO");
+                return;
+            }
         }
-
-        for (int i = 2; i < answer.length; i++) {
-            System.out.println(answer[i]);
-        }
+        System.out.println("YES");
     }
 
-
+    private boolean push(Stack stacks, int target) {
+        boolean flag = true;
+        stacks.push(target);
+        return flag;
+    }
 
 
     public static void main(String[] args) throws Exception {
