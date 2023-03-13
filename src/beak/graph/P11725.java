@@ -1,3 +1,5 @@
+package beak.graph;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -7,7 +9,13 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 
-public class Main {
+/**
+ *  https://www.acmicpc.net/problem/11725
+ *  그래프 탐색 실버 2
+ *  쉬운 문제였다. 근데 답을 찍는 과정에서 순서를 실수함.
+ *
+ */
+public class P11725 {
 
 
     public void solution() throws Exception{
@@ -60,7 +68,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P11725().solution();
     }
 
 }

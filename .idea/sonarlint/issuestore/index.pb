@@ -251,3 +251,7 @@ Z
 *src/programmers/stackq/HateSameNumber.java,f\4\f42e220d6be7ea2364909eaae49b0537a7e48483
 R
 "src/programmers/hash/PhoneNum.java,3\4\341cb765e170f0b88d3057680af3fa9c9c70fb8d
+A
+src/Solution.java,e\6\e69bf9f9fa39dd11b637f1006bcf9ba6c739a9b6
+J
+src/beak/greedy/P1715.java,0\8\089a19a60c5b94c4b17029ff0556f3bf7599edb5
