@@ -1,14 +1,13 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+package beak.dp;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Main2 {
+public class P9461_2 {
 
 
-    int[]memo;
+    long[]memo;
+    final long[]p = {0,1,1,1,2,2,3,4,5,7,9};
 
     public void solution() throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,26 +15,29 @@ public class Main2 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < n; i++) {
             int k = Integer.parseInt(br.readLine());
-            memo = new int[k+1];
-            sb.append(dp(k)).append("\n");
+            memo = new long[k+1];
+            long r = 0;
+            if (k <= 10) {
+                r = p[k];
+            }else{
+                System.arraycopy(p,0,memo,0,11);
+                r = dp(k);
+            }
+           sb.append(r).append("\n");
         }
         System.out.println(sb);
     }
 
-    public int dp(int k) {
+    public long dp(int k) {
         if(memo[k]!=0)
             return memo[k];
-        if (k <= 3) {
-            if(memo[k]==0)
-                memo[k] = 1;
-            return memo[k];
-        }
-        return memo[k] = dp(k-2) +dp(k-3);
+
+        return memo[k] = dp(k-1) +dp(k-5);
     }
 
 
     public static void main(String[] args) throws Exception {
-        new Main2().solution();
+        new P9461_2().solution();
     }
 
 }
