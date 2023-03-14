@@ -1,3 +1,5 @@
+package beak.graph;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -7,7 +9,11 @@ import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
+/*
+    https://www.acmicpc.net/problem/2583
+    그래프 탐색 실버 1
+ */
+public class P2583 {
 
 
     boolean[][] visited;
@@ -42,7 +48,6 @@ public class Main {
                     continue;
                 counts.add(bfs(i,j,r,c));
             }
-
         }
         Collections.sort(counts);
         printAnswer(counts);
@@ -72,8 +77,6 @@ public class Main {
         }
         return count;
     }
-
-
     public int move(int row, int col, int mr, int mc, Queue<Cor> q){
         if(row >= 0 && row < mr && col >= 0 && col < mc){
             if (!visited[row][col]) {
@@ -99,7 +102,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P2583().solution();
     }
 
 }
