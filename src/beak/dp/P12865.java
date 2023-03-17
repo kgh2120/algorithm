@@ -1,8 +1,14 @@
+package beak.dp;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+/*
+    DP G5
+    냅색(Knapsack) 문제 중 0/1 Knapsack 문제이다.
+ */
+public class P12865 {
 
     Integer[][] memo;
     int[][] bag;
@@ -22,7 +28,13 @@ public class Main {
             bag[i][1] = Integer.parseInt(st.nextToken()); // p
         }
         dp(n-1,w);
+        test(5);
         System.out.println(memo[n-1][w]);
+    }
+    public boolean test(int i){
+        if(i > 5)
+            return true;
+        return false;
     }
 
     public int dp(int i, int w) {
@@ -44,7 +56,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P12865().solution();
     }
 
 }
