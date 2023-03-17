@@ -1,8 +1,16 @@
+package beak.integer;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+/*
+    https://www.acmicpc.net/problem/26008
+    해시 해킹 골드 4
+    해시 테이블 문제라는데 잘 모르겠음. 아닌거같음.
+ */
+
+public class P26008 {
 
     public void solution() throws Exception {
 
@@ -26,7 +34,7 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        new P26008().solution();
     }
 
 }
