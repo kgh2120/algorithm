@@ -1,7 +1,9 @@
+package zerobase;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-class Main{
+class P2830 {
 
     public static void main(String[]args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

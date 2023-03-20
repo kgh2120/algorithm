@@ -1,9 +1,10 @@
+package programmers.dfsbfs;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Solution {
+public class ShortestPath {
 
 
 
@@ -14,7 +15,7 @@ public class Solution {
         int answer = 0;
         maxR = maps.length;
         maxC = maps[0].length;
-        int visited[][] = new int[maxR][maxC];
+        int[][] visited = new int[maxR][maxC];
         return bfs(maps,visited);
     }
 

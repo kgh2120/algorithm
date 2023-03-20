@@ -6,31 +6,14 @@ public class Main2 {
 
 
     public String solution(int[] numbers) {
-        String answer = "";
-        String[] nums = new String[numbers.length];
-        int idx = 0;
-        for(int num : numbers)
-            nums[idx++] = Integer.toString(num);
 
-        Arrays.sort(nums, new Comparator<String>(){
-            @Override
-            public int compare(String o1, String o2){
-                int a = Integer.parseInt(o1+o2);
-                int b = Integer.parseInt(o2+o1);
-                return Integer.compare(b, a);
-            }
-        });
+        int a = 7;
+        int b = 3;
+        int c = 5;
+        System.out.println(a^b + (b^c) + (a^c));
 
-
-        StringBuilder sb = new StringBuilder();
-        for(String n : nums){
-            sb.append(n);
-        }
-        if(sb.charAt(0) == '0')
-            return "0";
-
-
-        return sb.toString();
+        return "";
+//        return sb.toString();
     }
 
 
