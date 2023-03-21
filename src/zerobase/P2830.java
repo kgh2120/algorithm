@@ -23,8 +23,6 @@ class P2830 {
             total+= ((long) arr[i] * (n-arr[i]) *  pow(i));
         }
         System.out.println(total);
-
-
     }
 
     private static int pow(int i) {

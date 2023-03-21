@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class Main2 {
 
@@ -7,10 +9,9 @@ public class Main2 {
 
     public String solution(int[] numbers) {
 
-        int a = 7;
-        int b = 3;
-        int c = 5;
-        System.out.println(a^b + (b^c) + (a^c));
+        List<Integer> a = new ArrayList<>();
+        a.add(1);
+        System.out.println(a.contains(1));
 
         return "";
 //        return sb.toString();
