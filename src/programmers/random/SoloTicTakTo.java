@@ -1,6 +1,8 @@
+package programmers.random;
+
 import java.io.IOException;
 
-public class Solution {
+public class SoloTicTakTo {
 
 
 
@@ -113,7 +115,7 @@ public class Solution {
     public static void main(String[] args) throws IOException {
 
         String [] a = {"OXX", "XOO", "OOX"};
-        System.out.println(((new Solution().solution(a))));
+        System.out.println(((new SoloTicTakTo().solution(a))));
 
     }
 }
