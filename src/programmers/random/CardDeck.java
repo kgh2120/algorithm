@@ -1,8 +1,8 @@
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+package programmers.random;
 
-public class Solution {
+import java.io.IOException;
+
+public class CardDeck {
 
     public String solution(String[] card1, String[] card2, String[] goal) {
         int l = 0;
