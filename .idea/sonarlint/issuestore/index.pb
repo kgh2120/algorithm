@@ -315,3 +315,11 @@ G
 src/zerobase/P2830.java,6\4\649667064d1ea735116b18192fb2dbd3eee7d0e0
 G
 src/beak/dp/P12865.java,2\6\263aae3bed6ae9d8b66c47d68ba6934c64e1e64a
+P
+ src/zerobase/quiz/oneone/P1.java,e\6\e6fb7c08017c29f0432882d3ccbcd6ae42dfa776
+X
+(src/programmers/random/SoloTicTakTo.java,a\2\a2329c50e92a56bbed590c4aec6fd07066ca7cf8
+X
+(src/programmers/random/CoupleSecret.java,9\6\9612e6e25e83986a6310d753755a44fa6c9f0754
+U
+%src/programmers/random/RentHotel.java,c\0\c01a8ab689d3c2f96ee5c4120627447c237ac5fa

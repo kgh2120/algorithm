@@ -1,6 +1,9 @@
-import java.util.*;
+package programmers.random;
 
-class Solution {
+import java.util.HashMap;
+import java.util.Map;
+
+class RunningRace {
     Map<String,Integer> ranks;
     String[] players;
     String[] callings;
