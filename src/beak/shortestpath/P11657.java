@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+// 벨만 포드
 class P11657 {
 
     public void solution() throws Exception{

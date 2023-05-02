@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+// 크루스칼
 class P11404 {
 
     public void solution() throws Exception{

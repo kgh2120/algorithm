@@ -1,57 +1,65 @@
-public class S2 {
-    int memo[][];
-    long answer;
-    public long solution(int N, int M, int K, int[] capacity) {
-        answer = 0;
+import java.util.*;
 
-        memo = new int[N+1][11];
-        for(int i = 1; i<=N; i++){
-            memo[i][0] = 1;
+class Solution {
+    public long solution(int[][] tasks) {
+
+        long totalAmount = 0;
+        long lastDate = 0;
+        for(int i = 0; i< tasks.length; i++){
+            lastDate = Math.max(lastDate, tasks[i][1]);
+            totalAmount += tasks[i][2];
         }
-        for(int i = 1; i<=Math.min(N,10); i++){
-            memo[i][1] = i;
-            memo[i][i] = 1;
+        long power = totalAmount/ (lastDate - tasks[0][0] + 1);
+
+        loop : while(true){
+            int idx = 0;
+            int day = 0;
+            PriorityQueue<Task> pq = new PriorityQueue<>(new Comparator<Task>(){
+                public int compare(Task t1, Task t2){
+                    return t1.duedate - t2.duedate;
+                }
+            });
+
+            while(idx < tasks.length || pq.isEmpty() ){
+
+                long todayPower = power;
+                while(idx < tasks.length && tasks[idx][0] == day){
+                    pq.add(new Task(tasks[idx][1], tasks[idx][2]));
+                    idx++;
+                }
+
+                while(todayPower > 0 && !pq.isEmpty()){
+                    Task t = pq.poll();
+                    if(t.amount > todayPower){
+                        if(t.duedate <= day){
+                            power++;
+                            continue loop;
+                        }
+                        t.amount -= todayPower;
+                        pq.add(t);
+                    }
+                    todayPower -= t.amount;
+                }
+                day++;
+            }
+            break;
+
         }
-        ff(N,M,capacity,0,1);
-        answer *= permutation(K,M);
-        return answer;
+        return power;
+
+
     }
+    class Task{
+        int duedate;
+        int amount;
 
-    private void ff(int N, int M, int [] capacities, int c, long w){
-        if(c == M){
-            if(N >0)
-                return;
-            answer+=w;
-            return;
+        Task(int duedate, int amount){
+            this.duedate = duedate;
+            this.amount = amount;
         }
-        for(int i = capacities[c]; i>=0; i--){
-            if(N < i)
-                continue;;
 
-            long cur = comb(N,i);
-            ff(N-i, M, capacities, c+1, w*cur);
+        public String toString(){
+            return "{ "+duedate+" , "+ amount +"  }";
         }
     }
-
-    private long permutation(int n, int r){
-        long rt = 1;
-        for(int i = 0; i <r; i++)
-            rt*= (n-i);
-        return rt;
-    }
-
-    private int comb(int n, int r){
-        if(n <= 0 || r <= 0)
-            return 1;
-        if(memo[n][r] != 0)
-            return memo[n][r];
-
-        return memo[n][r] = comb(n-1,r) + comb(n-1,r-1);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new S2().solution(10,3,4,new int[]{5,3,4}));
-
-    }
-
 }

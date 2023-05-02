@@ -1,72 +1,87 @@
 import java.util.*;
-
 class Solution {
-    int n;
-    int i;
-    int j;
-    int answer;
-    List<Integer> s = new ArrayList<>();
-    public int solution(int n, int i, int j) {
-        answer = 0;
 
-        this.n = n;
-        this.i = i;
-        this.j = j;
-        fillMatrix(0,0,n,n);
-        return answer;
-    }
+    int[][]matrix;
+    List<Move> list;
+    Queue<Move>q;
+    public int solution(int x1, int y1, int x2, int y2) {
+        if(x1==x2 && y1==y2)
+            return 0;
+        int answer = 0;
 
-    private void fillMatrix(int leftRow, int leftCol, int rightRow, int rightCol){
+        list = new ArrayList<>();
 
-        if(leftRow - rightRow == -1 && leftCol - rightCol == -1){
+        if(y1==y2){
+            matrix = new int[2][Math.abs(x1-x2)+1];
 
-            // 결산
+        }else if(x1==x2){
+            matrix = new int[Math.abs(y1-y2)+1][2];
 
-            int max = n*n;
-            int k = max;
-            for(int i = 0; i< s.size(); i++){
-                Integer integer = s.get(i);
-                k = k/4;
-                max = max - ((4-integer) * k);
+        }else{
+            matrix = new int[Math.abs(y1-y2)+1][Math.abs(x1-x2)+1];
+
+        }
+
+        bfs(Math.abs(y1-y2),Math.abs(x1-x2));
+
+
+        int min = Integer.MAX_VALUE;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(Move m : list){
+            int dist = m.r+ m.c;
+            if(dist == m.turn){
+                min = Math.min(m.turn,min);
             }
-
-            answer = max;
-
-
-            return;
+            if(dist > m.turn){
+                if((dist -m.turn) % 2 == 0)
+                    pq.add(dist);
+            }
         }
+        if(min == Integer.MAX_VALUE )
+            min = pq.poll();
 
-
-        int halfRow = (rightRow + leftRow)/2;
-        int halfCol = (rightCol + leftCol)/2;
-        if(leftRow == rightRow || leftCol == rightCol)
-            return;
-
-        if(halfRow >= (i+1) && halfCol < (j+1)){
-            s.add(1);
-            fillMatrix(leftRow, halfCol, halfRow, rightCol);
-        }
-
-        else if(halfRow >= i+1 && halfCol >= j+1){
-            s.add(2);
-            fillMatrix(leftRow, leftCol, halfRow, halfCol);
-        }
-
-        else if(halfRow < i+1 && halfCol >= j+1){
-            s.add(3);
-            fillMatrix(halfRow, leftCol, rightRow, halfCol);
-        }
-
-        else if(halfRow < i+1 && halfCol < j+1){
-            s.add(4);
-            fillMatrix(halfRow, halfCol, rightRow, rightCol);
-        }
+        return min;
     }
 
+    private void bfs(int startX, int startY){
+        q = new LinkedList<>();
+        q.add(new Move(startX, startY,0));
+
+        while(!q.isEmpty()){
+            Move m = q.poll();
+            move(m,-1,-1);
+            move(m,-1,1);
+            move(m,1,-1);
+            move(m,1,1);
+        }
+
+
+    }
+
+    private void move(Move m, int rD, int cD){
+        if(m.r + rD <0 || m.r+rD >= matrix.length || m.c+cD < 0 || m.c+cD >= matrix[0].length)
+            return;
+        if(matrix[m.r+rD][m.c+cD] != 0)
+            return;
+        matrix[m.r+rD][m.c+cD] = m.turn+1;
+        Move n = new Move(m.r+rD, m.c+cD, m.turn+1);
+        q.add(n);
+        list.add(n);
+    }
+
+    class Move{
+        int r;
+        int c;
+        int turn;
+
+        Move(int r, int c, int turn){
+            this.r = r;
+            this.c = c;
+            this.turn = turn;
+        }
+    }
 
     public static void main(String[] args) {
-
-
-        System.out.println(new Solution().solution(8,0,0));
+        System.out.println(new Solution().solution(2,4,2,1));;
     }
 }
