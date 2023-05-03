@@ -1,3 +1,5 @@
+package beak.May2023.b2480;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
