@@ -1,7 +1,6 @@
+package swea.May23.s2072;
 
 import java.util.Scanner;
-import java.io.FileInputStream;
-import java.lang.StringBuilder;
 
 
 class Solution
