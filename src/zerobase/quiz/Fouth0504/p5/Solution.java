@@ -1,3 +1,5 @@
+package zerobase.quiz.Fouth0504.p5;
+
 import java.util.*;
 
 class Solution {
@@ -83,20 +85,7 @@ class Solution {
         for (int i = 0; i < b.size(); i++) {
             answer[i] = b.get(i);
         }
-        for (int[] ints : b) {
-            System.out.println(Arrays.toString(ints));
-        }
-//        System.out.println(Arrays.toString(answer));
-
-
-
-
 
         return answer;
-    }
-
-    public static void main(String[] args) {
-        int[][] buildings = {{1,8,4},{2,4,10},{3,5,6},{10,12,6}, {30,40,10000}};
-        System.out.println(new Solution().solution(buildings));
     }
 }
