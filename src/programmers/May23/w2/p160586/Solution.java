@@ -1,4 +1,4 @@
-package programmers.May23.p160586;
+package programmers.May23.w2.p160586;
 
 import java.util.HashMap;
 import java.util.Map;

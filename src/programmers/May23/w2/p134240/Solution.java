@@ -1,4 +1,4 @@
-package programmers.May23.p134240;
+package programmers.May23.w2.p134240;
 
 class Solution {
     public String solution(int[] food) {

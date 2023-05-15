@@ -1,4 +1,4 @@
-package programmers.May23.p181188;
+package programmers.May23.w2.p181188;
 
 import java.util.Arrays;
 import java.util.Comparator;

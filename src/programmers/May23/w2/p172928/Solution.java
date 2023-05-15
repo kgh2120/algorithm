@@ -1,4 +1,4 @@
-package programmers.May23.p172928;
+package programmers.May23.w2.p172928;
 
 import java.util.StringTokenizer;
 

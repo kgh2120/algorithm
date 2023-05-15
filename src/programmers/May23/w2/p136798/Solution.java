@@ -1,4 +1,4 @@
-package programmers.May23.p136798;
+package programmers.May23.w2.p136798;
 
 import java.util.Arrays;
 

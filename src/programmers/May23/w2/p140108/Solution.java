@@ -1,4 +1,4 @@
-package programmers.May23.p140108;
+package programmers.May23.w2.p140108;
 
 class Solution {
     public int solution(String s) {

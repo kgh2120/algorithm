@@ -1,4 +1,4 @@
-package programmers.May23.p161989;
+package programmers.May23.w2.p161989;
 
 class Solution {
     public int solution(int n, int m, int[] sections) {

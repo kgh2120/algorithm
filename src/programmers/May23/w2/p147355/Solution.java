@@ -1,4 +1,4 @@
-package programmers.May23.p147355;
+package programmers.May23.w2.p147355;
 
 class Solution {
     // sliding window 하면 어떨까?

@@ -1,4 +1,4 @@
-package programmers.May23.p133502;
+package programmers.May23.w2.p133502;
 
 import java.util.Stack;
 

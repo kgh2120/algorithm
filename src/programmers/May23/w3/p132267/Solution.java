@@ -1,4 +1,4 @@
-package programmers.May23.p132267;
+package programmers.May23.w3.p132267;
 
 class Solution {
     public int solution(int a, int b, int n) {

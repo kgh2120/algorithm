@@ -1,4 +1,4 @@
-package programmers.May23.p133499;
+package programmers.May23.w2.p133499;
 
 class Solution {
     public int solution(String[] babbling) {

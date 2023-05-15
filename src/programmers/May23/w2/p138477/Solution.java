@@ -1,4 +1,4 @@
-package programmers.May23.p138477;
+package programmers.May23.w2.p138477;
 
 import java.util.PriorityQueue;
 
