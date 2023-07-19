@@ -11,19 +11,15 @@ class Solution {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int t = Integer.parseInt(br.readLine());
 
-        for(int i = 1; i<=t; i++){
+        for (int i = 1; i <= t; i++) {
             int n = Integer.parseInt(br.readLine());
             if (n % 2 == 0) {
                 System.out.println("#" + i + " Alice");
-            }
-            else
+            } else {
                 System.out.println("#" + i + " Bob");
+            }
         }
     }
-
-
-
-
 
 
 }

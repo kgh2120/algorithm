@@ -1,102 +1,99 @@
-import java.util.*;
+import java.util.Arrays;
 
 class Solution {
-    /*
-     buildings 안에는 x좌표와 높이가 주어진다.
-    */
-    public int[][] solution(int[][] buildings) {
-        final int UP = 1;
-        final int RIGHT = 2;
-        final int DOWN = 3;
-        int[][] answer = {};
-        int[][] matrix = new int[10001][10001];
-        for(int i = 0; i< buildings.length; i++){
-            int left = buildings[i][0];
-            int right = buildings[i][1];
-            int h = buildings[i][2];
-            for(int j = 0; j< h; j++){
-                matrix[j][left] = 1;
-                matrix[j][right] = 1;
-            }
-            for(int j = left; j <= right; j++){
-                matrix[h][j] = 1;
-            }
-        }
+    public int solution(int[][] maze) {
+        final int mod = 1007;
+        long answer = 0;
+        long [][] matrix = new long[maze.length][maze[0].length];
 
-
-
-
-        // 이동
-        int x = 0;
-        int y = 0;
-        boolean flag = false;
-        List<int[]> b = new ArrayList<>();
+        int r = 0;
         int c = 0;
-        int direction = RIGHT;
-        while(true){
-            c++;
-            if(c >= 10001 * 10001){
+        for(int i = 0; i<maze[0].length;i++){
+            if(maze[0][i] == 1)
+                break;
+            if(maze[0][i] == 2){
+                r = 0;
+                c = i;
+                matrix[0][i] = 1;
                 break;
             }
-            if(x == 10001)
+            matrix[0][i] = 1;
+        }
+        for(int i = 0; i<maze.length;i++){
+            if(maze[i][0] == 1)
                 break;
-            if(matrix[y][x] == 0){
-                direction = RIGHT;
-                x++;
-                continue;
+            if(maze[i][0] == 2){
+                r = i;
+                c = 0;
+                matrix[i][0] = 1;
+                break;
             }
-            if(matrix[y][x] == 1){
-                if(y != matrix.length-1 && matrix[y+1][x] == 1 && direction != DOWN){ // check
-                    y++;
-                    flag = true;
-                    direction = UP;
-                }else if(x != matrix.length-1 && matrix[y][x+1]==1){
-                    direction  = RIGHT;
-                    if(flag){
+            matrix[i][0] = 1;
+        }
 
-                        int[] arr = {x,y};
-                        b.add(arr);
-                    }
-                    x++;
-                    flag = false;
-
-                }else if(y != 0 && matrix[y-1][x] == 1){
-                    direction = DOWN;
-                    y--;
-                    flag=true;
+        for(int i = 1; i<maze.length; i++){
+            for(int j = 1; j<maze[0].length; j++){
+                if(maze[i][j] == 1){
+                    matrix[i][j] = 0;
+                    continue;
                 }
-                else if(y == 0){
-                    direction  = RIGHT;
-                    if(flag){
+                matrix[i][j] = matrix[i-1][j] + matrix[i][j-1];
+                // matrix[i][j] = matrix[i-1][j] % mod  + matrix[i][j-1] % mod;
+                matrix[i][j] %= mod;
 
-                        int[] arr = {x,y};
-                        b.add(arr);
-                    }
-                    x++;
-                    flag = false;
+                if(maze[i][j] == 2){
+                    r = i;
+                    c = j;
+                    break;
                 }
             }
-
         }
 
-        answer = new int[b.size()][2];
-        for (int i = 0; i < b.size(); i++) {
-            answer[i] = b.get(i);
+        // if(matrix[r][c] == 0)
+        //     return 0;
+
+
+
+        long c1 = matrix[r][c];
+        // 열쇠 부터 끝까지 다시 만들기
+
+        for(int i = r; i < maze.length; i++){
+
+            if(maze[i][c] == 1)
+                break;
+            matrix[i][c] = 1;
         }
-        for (int[] ints : b) {
-            System.out.println(Arrays.toString(ints));
+        for(int i = c; i < maze[0].length; i++){
+            if(maze[r][i] == 1)
+                break;
+            matrix[r][i] = 1;
         }
-//        System.out.println(Arrays.toString(answer));
+
+
+        for(int i = r+1; i<maze.length; i++){
+            for(int j = c+1; j<maze[0].length; j++){
+                if(maze[i][j] == 1){
+                    matrix[i][j] = 0;
+                    continue;
+                }
+                matrix[i][j] = matrix[i-1][j] + matrix[i][j-1];
+
+                // matrix[i][j] = matrix[i-1][j] % mod  + matrix[i][j-1] % mod;
+                matrix[i][j] %= mod;
+            }
+        }
+        c1 %= mod;
+
+        answer = (matrix[maze.length-1][maze[0].length-1] * c1) % mod;
 
 
 
-
-
-        return answer;
+        return (int)answer;
     }
 
     public static void main(String[] args) {
-        int[][] buildings = {{1,8,4},{2,4,10},{3,5,6},{10,12,6}, {30,40,10000}};
-        System.out.println(new Solution().solution(buildings));
+        int [][] a = {{0, 1, 0,0}, {0, 2, 0,0}, {0,0,0, 0}};
+        int solution = new Solution().solution(a);
+        System.out.println(solution);
     }
 }

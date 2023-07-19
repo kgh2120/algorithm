@@ -1,4 +1,4 @@
-out/**
+out/
 baek.iml
-.idea/**
+.idea/
 src/secret

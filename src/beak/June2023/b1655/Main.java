@@ -7,25 +7,25 @@ import java.util.PriorityQueue;
 class Main {
 
     static StringBuilder sb = new StringBuilder();
+
     public static void main(String[] args) throws Exception {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>((x,y)-> x-y);
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x,y) -> y-x);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>((x, y) -> x - y);
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>((x, y) -> y - x);
 
-        for(int i = 0; i<n; i++){
+        for (int i = 0; i < n; i++) {
             int k = Integer.parseInt(br.readLine());
-            if(maxHeap.size() == minHeap.size()){
+            if (maxHeap.size() == minHeap.size()) {
                 maxHeap.add(k);
 
-            }
-            else{
+            } else {
                 minHeap.add(k);
             }
 
-            if(!minHeap.isEmpty() && minHeap.peek() < maxHeap.peek()){
+            if (minHeap.isEmpty() && minHeap.peek() < maxHeap.peek()) {
                 int min = minHeap.poll();
                 int max = maxHeap.poll();
                 minHeap.add(max);
@@ -37,10 +37,6 @@ class Main {
 
 
     }
-
-
-
-
 
 
 }

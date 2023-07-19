@@ -15,6 +15,7 @@ class Solution
         {
 
             int n = sc.nextInt();
+
             int answer = 0;
 
             int[] buildings = new int[n];
