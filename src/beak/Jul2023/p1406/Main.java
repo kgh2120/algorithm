@@ -1,4 +1,4 @@
-package beak.Sep2023.p1406;
+package beak.Jul2023.p1406;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
