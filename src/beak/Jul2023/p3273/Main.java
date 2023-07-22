@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
  * @time : 10min
  * @try : 2
  * @type : Hashing
- * @perfomance : memory : 33728KB, time : 320ms
+ * @performance : memory : 33728KB, time : 320ms
  */
 public class Main {
 

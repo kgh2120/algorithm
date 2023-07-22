@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  * @time : 15min
  * @try : 4
  * @type : 완탐?
- * @perfomance : memory : 11808KB, time : 84ms
+ * @performance : memory : 11808KB, time : 84ms
  */
 public class Main {
 

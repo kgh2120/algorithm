@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * @time : 8min
  * @try : 1
  * @type : 배열, 카운팅
- * @perfomance : memory : 12236, time : 100ms
+ * @performance : memory : 12236, time : 100ms
  */
 public class Main {
 

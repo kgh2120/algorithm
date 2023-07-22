@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  * @time : 10min
  * @try : 3
  * @type : two-pointer
- * @perfomance : memory : 25752KB, time : 296ms
+ * @performance : memory : 25752KB, time : 296ms
  */
 public class Main_2Pointer {
 
