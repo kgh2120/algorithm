@@ -1,7 +1,6 @@
-package beak.Sep2023.p1711;
+package beak.Jul2023.p1711;
 
 import java.io.*;
-import java.util.*;
 
 public class Main {
 
