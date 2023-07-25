@@ -1,12 +1,11 @@
+package beak.Jul2023.p17298;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class Main {
+public class Main_LinkedList {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
