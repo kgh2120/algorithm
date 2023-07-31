@@ -1,3 +1,5 @@
+package beak.Jul2023.p3190;
+
 import java.io.*;
 import java.util.*;
 
@@ -61,8 +63,9 @@ public class Main {
 
             if(poll.time == result){
                 rotate(poll.d);
-                if(!q.isEmpty())
+                if (!q.isEmpty()) {
                     poll = q.poll();
+                }
             }
             if (move()){
                 if(!hasApple()) {
@@ -101,11 +104,13 @@ public class Main {
 
     private static void rotate(String d){
         if("L".equals(d)){
-            if(++direction > 3)
+            if (++direction > 3) {
                 direction = 0;
+            }
         }else if("D".equals(d)){
-            if(--direction <0)
+            if (--direction < 0) {
                 direction = 3;
+            }
         }
     }
 
