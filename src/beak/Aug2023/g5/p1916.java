@@ -29,7 +29,7 @@ import java.util.*;
     사용 변수
 
 */
-public class p1916_최소비용_구하기 {
+public class p1916 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static Map<Integer, List<Edge>> adjMap;

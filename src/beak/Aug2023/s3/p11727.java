@@ -32,7 +32,7 @@ import java.util.StringTokenizer;
     DP테이블 : int[][]memo;
     나머지 변수 : MOD = 10_007
 */
-public class Main {
+public class p11727 {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static int n;
     static long[][] memo;
