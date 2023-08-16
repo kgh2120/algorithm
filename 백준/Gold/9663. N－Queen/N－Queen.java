@@ -1,66 +1,42 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class Main {
-    static int N, result;
-    static int[][] arr;
 
-    public static void main(String[] args) throws Exception {
+    static int N;
+    static int[] cols;
+    static int ans;
+    public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         N = Integer.parseInt(br.readLine());
-
-        arr = new int[N][N];
-        result = 0;
-
-        backT(0, 0);
-
-        bw.write(result + "\n");
-        bw.flush();
-        bw.close();
-
+        cols = new int[N+1];
+        ans = 0;
+        setQueen(1);
+        System.out.println(ans);
     }
 
-    static void backT(int row, int count) {
-        if (count == N) {
-            result++;
+    private static void setQueen(int row) {
+        //가지치기
+        if(!isAvailable(row-1)) return;
+        // 기저조건
+        if (row > N) {
+            ans++;
             return;
         }
-
-
-        for (int j = 0; j < N; j++) {
-            if (checkQ(row, j)) {
-                arr[row][j] = 1;
-                backT(row + 1, count + 1);
-                arr[row][j] = 0;
-            }
+        for (int c = 1; c <= N; c++) {
+            cols[row] = c;
+            setQueen(row+1);
         }
-
     }
-
-    static boolean checkQ(int row, int col) {
-        // y축
-        for (int i = 0; i < row; i++) {
-            if (arr[i][col] == 1) {
+    private static boolean isAvailable(int row) { // 마지막으로 놓아진 퀸의 행
+        int cur = cols[row];
+        for (int i = 1; i < row; i++) {
+            if(cur == cols[i])
                 return false;
-            }
-        }
-        // 대각선
-        for (int i = 1; i <= row; i++) {
-            if ((isIn(row - i, col - i) && arr[row - i][col - i] == 1) || (isIn(row - i, col + i) && arr[row - i][col + i] == 1)) {
+            if(cur == cols[i] + Math.abs(row-i) || cur == cols[i] - Math.abs(row-i))
                 return false;
-            }
         }
-
         return true;
-    }
-
-    static boolean isIn(int row, int col) {
-        return row >= 0 && row < arr.length && col >= 0 && col < arr.length;
     }
 }
