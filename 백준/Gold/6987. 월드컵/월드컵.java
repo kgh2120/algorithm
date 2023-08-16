@@ -1,5 +1,5 @@
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /**
@@ -35,20 +35,27 @@ public class Main {
 //                "5 0 0 3 1 1 2 1 2 2 0 3 0 0 5 1 0 4\n"+
 //                "5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5"));
 
-        for (int i = 0; i < 4; i++) {
+        loop : for (int i = 0; i < 4; i++) {
             st = new StringTokenizer(br.readLine());
             result = 0;
             wdl = new int[6][3];
             visited = new boolean[6][6];
             for (int j = 0; j < 6; j++) {
+                int sum = 0;
                 for (int k = 0; k < 3; k++) {
-                    wdl[j][k] = Integer.parseInt(st.nextToken());
+                    int num = Integer.parseInt(st.nextToken());
+                    sum+= num;
+                    wdl[j][k] = num;
+                }
+                if (sum != 5) {
+                    sb.append("0 ");
+                    continue loop;
                 }
             }
 
 
 
-            if(isValid())
+
                 findAnswer(0,0);
 
 
@@ -59,19 +66,6 @@ public class Main {
         System.out.println(sb);
     }
 
-    private static boolean isValid(){
-
-        for (int[] ints : wdl) {
-
-            int sum = 0;
-            for (int anInt : ints) {
-                sum+= anInt;
-            }
-            if(sum != 5)
-                return false;
-        }
-        return true;
-    }
 
     private static void findAnswer(int countryNumber, int wdlNumber){
         if (countryNumber == 6) {
