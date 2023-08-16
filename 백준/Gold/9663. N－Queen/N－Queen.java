@@ -18,7 +18,7 @@ public class Main {
 
     private static void setQueen(int row) {
         //가지치기
-        if(!isAvailable(row-1)) return;
+//        return;
         // 기저조건
         if (row > N) {
             ans++;
@@ -26,7 +26,8 @@ public class Main {
         }
         for (int c = 1; c <= N; c++) {
             cols[row] = c;
-            setQueen(row+1);
+            if(isAvailable(row))
+                setQueen(row+1);
         }
     }
     private static boolean isAvailable(int row) { // 마지막으로 놓아진 퀸의 행
