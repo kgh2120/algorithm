@@ -1,8 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 /**
@@ -23,13 +22,13 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
     static int[] A; // 주어진 수열 A를 받을 배열
     static int a, m;
+    static Set<Integer> s;
     public static void main(String[] args) throws IOException {
         // 변수 설정
         setVaribles();
-        Arrays.sort(A); // 2진탐색을 위한 정렬 n log n
         for (int i = 0; i < m; i++) {
             int number = Integer.parseInt(st.nextToken());
-            sb.append(Arrays.binarySearch(A,number)>=0 ? "1\n" : "0\n");
+            sb.append(s.contains(number) ? "1\n" : "0\n");
         }
         System.out.println(sb);
     }
@@ -68,9 +67,9 @@ public class Main {
     private static void setVaribles() throws IOException {
         a = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
-        A = new int[a];
+        s = new HashSet<>();
         for (int i = 0; i < a; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
+            s.add(Integer.parseInt(st.nextToken()));
         }
         m = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
