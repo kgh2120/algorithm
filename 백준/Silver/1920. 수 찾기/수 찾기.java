@@ -24,16 +24,25 @@ public class Main {
     static int[] A; // 주어진 수열 A를 받을 배열
     static int a, m;
     public static void main(String[] args) throws IOException {
-
         // 변수 설정
         setVaribles();
         Arrays.sort(A); // 2진탐색을 위한 정렬 n log n
         for (int i = 0; i < m; i++) {
             int number = Integer.parseInt(st.nextToken());
-            sb.append(binarySearch(number) ? "1\n" : "0\n");
+            sb.append(Arrays.binarySearch(A,number)>=0 ? "1\n" : "0\n");
         }
         System.out.println(sb);
     }
+//    public static void main(String[] args) throws IOException {
+//        // 변수 설정
+//        setVaribles();
+//        Arrays.sort(A); // 2진탐색을 위한 정렬 n log n
+//        for (int i = 0; i < m; i++) {
+//            int number = Integer.parseInt(st.nextToken());
+//            sb.append(binarySearch(number) ? "1\n" : "0\n");
+//        }
+//        System.out.println(sb);
+//    }
 
     private static boolean binarySearch(int n) {
         int l = 0;
