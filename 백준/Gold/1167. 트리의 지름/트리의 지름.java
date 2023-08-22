@@ -34,7 +34,7 @@ class Main {
             while ((t = Integer.parseInt(st.nextToken())) != -1) {
                 w = Integer.parseInt(st.nextToken());
                 adjList.get(from).add(new Node(t,w));
-                adjList.get(t).add(new Node(from,w));
+//                adjList.get(t).add(new Node(from,w));
             }
         }
 
