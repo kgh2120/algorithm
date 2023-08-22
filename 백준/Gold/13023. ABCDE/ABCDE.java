@@ -62,8 +62,6 @@ class Main {
     }
 
     private static void dfs(int node, int cnt) {
-        if(flag)
-            return;
         if (cnt == 4) {
             flag = true;
             return;
@@ -72,6 +70,8 @@ class Main {
             if(visited[n.t]) continue;
             visited[n.t] = true;
             dfs(n.t,cnt+1);
+            if(flag)
+                return;
             visited[n.t] = false;
         }
     }
