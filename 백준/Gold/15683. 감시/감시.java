@@ -1,7 +1,9 @@
-import java.util.*;
-import java.io.*;
-
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 
 /*
@@ -66,6 +68,9 @@ class Main {
         Camera camera = cameras.get(depth);
         if(camera.type.equals("5")){
             dfs(depth+1, action(camera, 0, copy(checked)));
+        }else if(camera.type.equals("2")){
+            dfs(depth+1, action(camera, 0, copy(checked)));
+            dfs(depth+1, action(camera, 2, copy(checked)));
         }else{
             dfs(depth+1, action(camera, 0, copy(checked)));
             dfs(depth+1, action(camera, 1, copy(checked)));
