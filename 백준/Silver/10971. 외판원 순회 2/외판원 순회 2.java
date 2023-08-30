@@ -22,23 +22,24 @@ public class Main {
                 graph[i][j] = Integer.parseInt(st.nextToken());
         }
 
-            dfs(0,0,0,0);
+        dfs(0, 0, 0, 0);
         System.out.println(min);
     }
 
     private static void dfs(int startNode, int cur, int depth, int cost) {
-        if(depth != n && depth != 0 && cur == startNode) return;
+        if (depth != n && depth != 0 && cur == startNode) return;
         if (depth == n) {
             if (cur == startNode)
-                min = Math.min(min,cost);
+                min = Math.min(min, cost);
             return;
         }
 
         for (int i = 0; i < n; i++) {
             int nextCost = graph[cur][i];
-            if(nextCost == 0 || visited[i]) continue;
+            if (nextCost == 0 || visited[i]) continue;
             visited[i] = true;
-            dfs(startNode,i,depth+1, cost + nextCost);
+            if(min > cost + nextCost)
+                dfs(startNode, i, depth + 1, cost + nextCost);
             visited[i] = false;
         }
 
