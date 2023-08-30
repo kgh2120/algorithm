@@ -18,28 +18,19 @@ public class Main {
         visited = new boolean[n];
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < n; j++)
                 graph[i][j] = Integer.parseInt(st.nextToken());
-            }
         }
 
-
-        for (int i = 0; i < n; i++) {
-            dfs(i,i,0,0);;
-        }
-
+            dfs(0,0,0,0);
         System.out.println(min);
-
-
-
     }
 
     private static void dfs(int startNode, int cur, int depth, int cost) {
         if(depth != n && depth != 0 && cur == startNode) return;
         if (depth == n) {
-            if (cur == startNode) {
+            if (cur == startNode)
                 min = Math.min(min,cost);
-            }
             return;
         }
 
