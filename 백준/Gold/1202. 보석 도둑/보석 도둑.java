@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Arrays;
@@ -12,7 +14,7 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static PScanner sc = new PScanner(System.in);
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
 
@@ -21,19 +23,18 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
+        
+        int n = sc.nextInt();
+        int k = sc.nextInt();
 
         정보석[] 보석이 = new 정보석[n];
         가방[] 가방들 = new 가방[k];
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            보석이[i] = new 정보석(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+            보석이[i] = new 정보석(sc.nextInt(),sc.nextInt());
         }
 
         for (int i = 0; i < k; i++) {
-            가방들[i] = new 가방(Integer.parseInt(br.readLine()));
+            가방들[i] = new 가방(sc.nextInt());
         }
 
         Arrays.sort(보석이);
@@ -103,6 +104,8 @@ public class Main {
     }
 
 
-
+    static class PScanner{private final InputStreamReader in;private final char[]buf;private int len,ptr;public PScanner(
+            InputStream input){in=new InputStreamReader(input);buf=new char[8192];}public boolean hasNext(){consume();return ptr<len&&buf[ptr]>' ';}public String next(){consume();char[]cbuf=new char[16];char clen=0;while((cbuf[clen++]=read())>' '){if(clen==cbuf.length)cbuf=Arrays.copyOf(cbuf,clen << 2);}return new String(cbuf,0,clen - 1);}public int nextInt(){consume();int v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}public long nextLong(){consume();long v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}private char read(){if(ptr==len)fill();return ptr<len?buf[ptr++]:0;}private void fill(){try{len=in.read(buf);ptr=0;}catch(
+            IOException e){throw new RuntimeException(e.getMessage());}}private void consume(){char c;while((c=read())<=' '&&c!=0);ptr--;}}
 
 }
