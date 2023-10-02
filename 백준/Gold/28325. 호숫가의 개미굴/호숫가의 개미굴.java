@@ -43,16 +43,17 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
 
     static int n;
-    static int[] arr;
-    static int[][][] dp;
-    static final int INIT = -1;
+    static long[] arr;
+    static long[][][] dp;
+    static final long INIT = -1;
 
     public static void main(String[] args) throws Exception {
         setVariables();
         System.out.println(dp(0,0,0));
+//        System.out.println(Arrays.deepToString(dp));
     }
 
-    private static int dp(int depth, int isFirstSelected, int selected) {
+    private static long dp(int depth, int isFirstSelected, int selected) {
         if(depth > n) return 0;
         if (depth == n) {
             if(isFirstSelected == 0 && selected == 1)
@@ -78,10 +79,10 @@ public class Main {
 
     private static void setVariables() throws IOException {
         n = Integer.parseInt(br.readLine());
-        arr = new int[n+1];
-        dp = new int[2][2][n+1];
-        for (int[][] ints : dp) {
-            for (int[]d : ints) {
+        arr = new long[n+1];
+        dp = new long[2][2][n+1];
+        for (long[][] ints : dp) {
+            for (long[]d : ints) {
                 Arrays.fill(d,INIT);
             }
         }
@@ -89,7 +90,7 @@ public class Main {
 
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= n; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Long.parseLong(st.nextToken());
         }
     }
 }
