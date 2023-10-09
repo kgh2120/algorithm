@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
@@ -6,9 +8,8 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
 
 
     static int n, l;
@@ -16,29 +17,27 @@ public class Main {
     static int result = 0;
 
     public static void main(String[] args) throws Exception {
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        l = Integer.parseInt(st.nextToken());
+
+        PScanner sc = new PScanner(System.in);
+        n = sc.nextInt();
+        l = sc.nextInt();
         waters = new Water[n];
-        int min = 10_0000_0001;
-        int max = -1;
+
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            waters[i] = new Water(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
-            min = Math.min(waters[i].start,min);
-            max = Math.max(waters[i].end,max);
+
+            waters[i] = new Water(sc.nextInt(),sc.nextInt());
+
         }
         Arrays.sort(waters);
 
 
-        int i = min;
+        int i = waters[0].start;
         int j = 0;
+        int max = waters[waters.length-1].end;
         while (i < max) {
             Water water = waters[j];
-//            System.out.println("i : " + i + " j  : " + j + " water : " + water);
             int diff = water.end - i;
             int k = diff/l + (diff%l != 0 ? 1 : 0);
-//            System.out.println("diff : " + diff + " k : " + k);
             result += k;
             i += k * l;
             j++;
@@ -66,14 +65,10 @@ public class Main {
             return Integer.compare(start, o.start);
         }
 
-        @Override
-        public String toString() {
-            return "Water{" +
-                    "start=" + start +
-                    ", end=" + end +
-                    '}';
-        }
     }
 
+    static class PScanner{private final InputStreamReader in;private final char[]buf;private int len,ptr;public PScanner(
+                InputStream input){in=new InputStreamReader(input);buf=new char[8192];}public boolean hasNext(){consume();return ptr<len&&buf[ptr]>' ';}public String next(){consume();char[]cbuf=new char[16];char clen=0;while((cbuf[clen++]=read())>' '){if(clen==cbuf.length)cbuf=Arrays.copyOf(cbuf,clen << 2);}return new String(cbuf,0,clen - 1);}public int nextInt(){consume();int v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}public long nextLong(){consume();long v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}private char read(){if(ptr==len)fill();return ptr<len?buf[ptr++]:0;}private void fill(){try{len=in.read(buf);ptr=0;}catch(
+                IOException e){throw new RuntimeException(e.getMessage());}}private void consume(){char c;while((c=read())<=' '&&c!=0);ptr--;}}
 
 }
