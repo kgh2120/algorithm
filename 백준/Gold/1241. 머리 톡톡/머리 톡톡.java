@@ -16,9 +16,7 @@ class Main {
 
 
         counter = new int[1_000_001];
-        dp = new int[1_000_001];
 
-        Arrays.fill(dp,-1);
         int n = Integer.parseInt(br.readLine());
 
         int[] numbers = new int[n];
@@ -34,9 +32,7 @@ class Main {
         for (int number : numbers) {
             // number에 대한 약수 찾기
             int result = 0;
-            if (dp[number] != -1) {
-                result = dp[number];
-            }else{
+
                 for (int i = 1; i <= Math.sqrt(number) ; i++) {
                     if (number % i == 0) {
                         if (number == 1) {
@@ -54,8 +50,7 @@ class Main {
 
                     }
                 }
-                dp[number] = result;
-            }
+
             sb.append(result).append("\n");
         }
 
