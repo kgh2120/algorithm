@@ -68,7 +68,12 @@ class Main {
         int rp = find(r);
 
         if(lp == rp) return false;
-        parents[Math.max(lp,rp)] = Math.min(rp,lp);
+
+        if(lp > rp)
+            parents[rp] = lp;
+        else
+            parents[lp] = rp;
+       
         return true;
     }
 
