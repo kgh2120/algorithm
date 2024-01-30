@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -17,17 +15,17 @@ public class Main {
         int[] arr = new int[n];
         Arrays.fill(arr, -1);
 
-        Deque<Node> deque = new ArrayDeque<>();
+
+        Node tail = null;
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
             int number = Integer.parseInt(st.nextToken());
-            while (!deque.isEmpty() && deque.peekLast().value < number) {
-                Node node = deque.pollLast();
-                arr[node.index] = number;
+            while (tail != null && tail.value < number) {
+                arr[tail.index] = number;
+                tail = tail.prev;
             }
-            deque.addLast(new Node(number, i));
+            tail = new Node(number, i, tail);
         }
-
 
         for (int i : arr) {
             sb.append(i).append(" ");
@@ -40,9 +38,12 @@ public class Main {
         int value;
         int index;
 
-        public Node(int value, int index) {
+        Node prev;
+
+        public Node(int value, int index, Node prev) {
             this.value = value;
             this.index = index;
+            this.prev = prev;
         }
     }
 
