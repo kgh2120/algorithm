@@ -10,9 +10,9 @@ import java.util.StringTokenizer;
     @since 2023-10-02
     @url https://www.acmicpc.net/problem/14891
     @level G5
-    @try
-    @performance
-    @category #
+    @try 1
+    @performance 11648KB, 84ms
+    @category # 구현, 시뮬레이션
     @note
 
     톱니바퀴를 구현하는 문제
@@ -35,6 +35,7 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
 
     static Chain head;
+    static Chain[] chains;
 
     public static void main(String[] args) throws Exception {
         setChains();
@@ -47,13 +48,14 @@ public class Main {
         for (int i = 0; i < nOfCommand; i++) {
             st = new StringTokenizer(br.readLine());
             int index = Integer.parseInt(st.nextToken());
-            getChain(index).rotate(Integer.parseInt(st.nextToken()) != 1);
+            chains[index-1].rotate(Integer.parseInt(st.nextToken()) != 1);
         }
     }
 
     private static void setChains() throws IOException {
         head = null;
         Chain prev = null;
+        chains = new Chain[4];
         for (int i = 0; i < 4; i++) {
 
             Chain chain = new Chain(br.readLine());
@@ -62,16 +64,11 @@ public class Main {
             if(prev != null)
                 prev.setNextChain(chain);
             prev = chain;
+            chains[i] = chain;
         }
     }
 
-    private static Chain getChain(int index) {
-        Chain chain = head;
-        for (int i = 1; i < index ; i++) {
-            chain = chain.next;
-        }
-        return chain;
-    }
+
 
     private static int getScore(){
         int total = 0;
@@ -163,8 +160,5 @@ public class Main {
             }
         }
     }
-
-
-
 
 }
