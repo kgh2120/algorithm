@@ -37,7 +37,7 @@ public class Main {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if(visited[i][j]) continue;
-                bfs(i,j,matrix[i][j]);
+                bfs(i,j,new char[]{matrix[i][j]});
                 rgbCount++;
             }
         }
@@ -65,7 +65,7 @@ public class Main {
 
     }
 
-    static void bfs(int row, int col, char... target){
+    static void bfs(int row, int col, char[] target){
 
         Queue<int[]> q = new ArrayDeque<>();
         q.add(new int[]{row, col});
@@ -88,7 +88,7 @@ public class Main {
 
     }
 
-    static boolean isSame(char cur, char ... targets) {
+    static boolean isSame(char cur, char[] targets) {
         for (char target : targets) {
             if(target == cur)
                 return true;
