@@ -21,22 +21,16 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
         int[] arr = new int[k + 1];
-        List<Integer> numbers = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
             int number= Integer.parseInt(br.readLine());
-            if(number <= k)
-                numbers.add(number);
-        }
-
-        Collections.sort(numbers, Collections.reverseOrder());
-
-
-        for (Integer number : numbers) {
+            if(number > k) continue;
             arr[number]++;
-            for (int i = number; i <= k ; i++) {
-                arr[i] += arr[i-number];
+            for (int j = number; j <= k ; j++) {
+                arr[j] += arr[j-number];
             }
         }
+
 
         System.out.println(arr[k]);
 
