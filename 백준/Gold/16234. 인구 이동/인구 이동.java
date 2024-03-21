@@ -18,6 +18,9 @@ public class Main {
 
     static int[][] map;
     static boolean[][] visited;
+
+    static Queue<Union> q;
+    static Queue<int[]> innerQ;
     
     public static void main(String[] args) throws Exception {
 
@@ -39,10 +42,11 @@ public class Main {
 
 
         int days = 0;
-        visited = new boolean[n][n];
-        Queue<Union> q = new ArrayDeque<>();
+        
+        q = new ArrayDeque<>();
+        innerQ = new ArrayDeque<>();
         while(true){
-            resetVisited();
+        visited = new boolean[n][n];
                 
             // 각 나라별 인구 이동 드가자
             for(int i = 0; i<n; i++){
@@ -59,7 +63,7 @@ public class Main {
             if(q.isEmpty())
                 break;
             
-            move(q);
+            move();
             days++;
             
         }
@@ -67,7 +71,7 @@ public class Main {
         
     }
 
-    static void move(Queue<Union> q){
+    static void move(){
         while(!q.isEmpty()){
             Union u = q.poll();
             int value = u.totalCount / u.nOfCountry;
@@ -81,17 +85,17 @@ public class Main {
     static Union bfs(int row, int col){
 
 
-        Queue<int[]> q = new ArrayDeque<>();
-        q.add(new int[]{row,col});
+        
+        innerQ.add(new int[]{row,col});
         visited[row][col] = true;
         Node node = null;
         node = new Node(row,col,node);
         int totalPeople = map[row][col];
         int nOfCountry = 1;
 
-        while(!q.isEmpty()){
+        while(!innerQ.isEmpty()){
 
-            int[] coord = q.poll();
+            int[] coord = innerQ.poll();
             
             for(int[] delta : deltas){
                 int nr = coord[0] + delta[0];
@@ -100,7 +104,7 @@ public class Main {
                 if(isIn(nr,nc) && !visited[nr][nc] && canUnion(coord[0], coord[1], nr , nc)){
                     visited[nr][nc] = true;
                     node = new Node(nr,nc,node);
-                    q.add(new int[]{nr,nc});
+                    innerQ.add(new int[]{nr,nc});
                     totalPeople += map[nr][nc];
                     nOfCountry++;
                 }
