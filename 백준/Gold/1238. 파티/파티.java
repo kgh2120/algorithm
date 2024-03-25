@@ -1,112 +1,92 @@
 import java.io.*;
 import java.util.*;
 
-
-
 public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
 
-    static List<List<Node>> adjList;
+    static Edge[] graph;
+    static Edge[] reverseGraph;
 
-    static int n,m,x;
-
-    static int[] xToTown;
+    static int[] dist;
+    static int[] reverseDist;
 
     public static void main(String[] args) throws Exception {
+
         st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        x = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        int x = Integer.parseInt(st.nextToken());
 
-        adjList = new ArrayList<>();
+        graph = new Edge[n+1];
+        reverseGraph = new Edge[n+1];
 
-        for (int i = 0; i <= n; i++) {
-            adjList.add(new ArrayList<>());
-        }
-
-        xToTown = new int[n+1];
-        for (int i = 0; i < m; i++) {
+        for(int i = 0; i<m; i++){
             st = new StringTokenizer(br.readLine());
+
             int from = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            adjList.get(from).add(new Node(from, to, w));
+            int weight = Integer.parseInt(st.nextToken());
+
+            graph[from] = new Edge(to, weight, graph[from]);
+            reverseGraph[to] = new Edge(from, weight, reverseGraph[to]);
         }
 
-        dijkstra();
 
-        int result = -100;
-        for (int i = 1; i <= n; i++) {
-            if(i == x) continue;
-          result = Math.max(result, xToTown[i] + dijkstra(i));
+        dist = new int[n+1];
+        reverseDist = new int[n+1];
 
+        Arrays.fill(dist, 10_0000_0000);
+        Arrays.fill(reverseDist, 10_0000_0000);
+
+
+        dijkstra(graph, dist, x);
+        dijkstra(reverseGraph, reverseDist, x);
+
+        int maxTime = -1;
+        for(int i = 1; i<= n; i++){
+            int time = dist[i] + reverseDist[i];
+            if(maxTime < time){
+                maxTime = time;
+            }
         }
-        System.out.println(result);
+        System.out.println(maxTime);
     }
 
-    private static void dijkstra() {
-        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.w, o2.w);
-            }
-        });
-        Arrays.fill(xToTown,Integer.MAX_VALUE);
-        xToTown[x] = 0;
-        pq.add(new Node(x,0,0));
+    static void dijkstra(Edge[] graph, int[] dist, int x){
 
-        while (!pq.isEmpty()) {
-            Node n = pq.poll();
-            if(xToTown[n.from] < n.w) continue;;
-            for (Node adj : adjList.get(n.from)) {
-                if(xToTown[adj.to] > adj.w + xToTown[adj.from]){
-                    xToTown[adj.to] = adj.w + xToTown[adj.from];
-                    pq.add(new Node(adj.to,0,xToTown[adj.to]));
+        Queue<Edge> q = new PriorityQueue<>();
+        dist[x] = 0;
+        q.add(new Edge(x,0,null));
+
+        while(!q.isEmpty()){
+            Edge e = q.poll();
+
+            if(dist[e.t] < e.w) continue;
+
+            for(Edge n = graph[e.t]; n != null; n = n.next){
+                if(dist[n.t] > dist[e.t] + n.w){
+                    dist[n.t] = dist[e.t] + n.w;
+                    q.add(new Edge(n.t, dist[n.t], null ));
                 }
             }
         }
     }
 
-    private static int dijkstra(int startNode) {
-        PriorityQueue<Node> pq = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Integer.compare(o1.w, o2.w);
-            }
-        });
-        int[]distance = new int[n+1];
-        Arrays.fill(distance,Integer.MAX_VALUE);
-        distance[startNode] = 0;
-        pq.add(new Node(startNode,0,0));
-
-        while (!pq.isEmpty()) {
-            Node n = pq.poll();
-            if(distance[n.from] < n.w) continue;;
-            for (Node adj : adjList.get(n.from)) {
-                if(distance[adj.to] > adj.w + distance[adj.from]){
-                    distance[adj.to] = adj.w + distance[adj.from];
-                    pq.add(new Node(adj.to,0,distance[adj.to]));
-                }
-            }
-
-        }
-        return distance[x];
-    }
-
-    static class Node{
-        int from;
-        int to;
+    static class Edge implements Comparable<Edge>{
+        int t;
         int w;
+        Edge next;
 
-        public Node(int from, int to, int w) {
-            this.from = from;
-            this.to = to;
+        Edge(int t, int w, Edge next){
+            this.t = t;
             this.w = w;
+            this.next = next;
+        }
+
+        public int compareTo(Edge e){
+            return Integer.compare(w, e.w);
         }
     }
-
-
 }
