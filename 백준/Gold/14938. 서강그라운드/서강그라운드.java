@@ -1,100 +1,99 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
-/*
-
-  14938 서강그라운드
-
-  어떤 위치에서 떨어졌을 때, 수색 범위m 에 속하는 만큼의 개수를 먹을 수 있음.
-  그럴 때 최대로 획득할 수 있는 아이템의 개수를 구하는 문제이다.
-
-  그럼 특정 위치 A에서 다른 위치까지의 거리를 전부 알아야 함.
-
-  그럼 다익스트라를 n번 돌리거나 플로이드 워셜을 써가지고 풀 수 있을 듯 함.
-
-  그런데 전부 체크를 해야 하니까 플로이드 워셜이 좋ㅇ으려나?
-
-  다익스트라는 e log n을 n번 반복/ 플로이드 워셜을 n^3이다.
-
-  n이 100, 길의 개수가 100개임. 다익스트라가 더 빨라보이긴 한데, 플로이드 워셜로 돌리는게 더 편해보인다.
- */
 public class Main {
 
-    public static final int INF = 10_0000_0000;
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-
-
-    public static void main(String[] args) throws Exception {
-
+    static Node[] graph;
+    static int[] items;
+    static int n;
+    static int m;
+    static int r;
+    static int[] dist;
+    static final int INF = 10_0000_0000;
+    public static void main(String[] args) throws Exception{
         st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        int r = Integer.parseInt(st.nextToken());
-        int[] items = new int[n + 1];
+
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        r = Integer.parseInt(st.nextToken());
+        items = new int[n + 1];
+        graph = new Node[n+1];
+        dist = new int[n + 1];
         st = new StringTokenizer(br.readLine());
-        for (int i = 1; i < n + 1; i++) {
+        for (int i = 1; i <= n; i++) {
             items[i] = Integer.parseInt(st.nextToken());
-        }
-
-        int[][] matrix = new int[n + 1][n + 1];
-
-
-        for (int[] anInt : matrix) {
-            Arrays.fill(anInt, INF);
-        }
-
-        for (int i = 1; i <=n ; i++) {
-            matrix[i][i] = 0;
         }
 
 
         for (int i = 0; i < r; i++) {
             st = new StringTokenizer(br.readLine());
-            int f = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
-            int l = Integer.parseInt(st.nextToken());
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
+            int dist = Integer.parseInt(st.nextToken());
 
-            matrix[f][t] = l;
-            matrix[t][f] = l;
+            graph[from] = new Node(to, dist, graph[from]);
+            graph[to] = new Node(from, dist, graph[to]);
         }
 
-
-        for (int k = 1; k <= n; k++) {
-            for (int i = 1; i <= n; i++) {
-                for (int j = 1; j <= n; j++) {
-                    if (matrix[i][j] > matrix[i][k] + matrix[k][j]) {
-                        matrix[i][j] = matrix[i][k] + matrix[k][j];
-                    }
-                }
-            }
+        int max = -1;
+        for (int i = 1; i <= n ; i++) {
+            Arrays.fill(dist, INF);
+            dist[i] = 0;
+            int dijkstra = dijkstra(i);
+            max = Math.max(max, dijkstra);
         }
 
-
-        int max = 0;
-
-        for (int i = 1; i <= n; i++) {
-            List<Integer> loadList = new ArrayList<>();
-            int tempMax = 0;
-            for (int j = 1; j <= n ; j++) {
-                if (matrix[i][j] <= m) {
-                    loadList.add(j);
-                }
-            }
-
-            for (Integer integer : loadList) {
-                tempMax += items[integer];
-            }
-
-            max = Math.max(max, tempMax);
-        }
 
         System.out.println(max);
     }
 
+    static int dijkstra(int startNode) {
+        Queue<Node> pq = new PriorityQueue<>();
+        pq.add(new Node(startNode, 0, null));
 
+        while (!pq.isEmpty()) {
+            Node node = pq.poll();
+
+            if(dist[node.to] < node.w) continue;
+
+            for (Node n = graph[node.to]; n != null; n = n.next) {
+                if (dist[n.to] > dist[node.to] + n.w && dist[node.to] + n.w <= m) {
+                    dist[n.to] = dist[node.to] + n.w;
+                    pq.add(new Node(n.to, dist[n.to], null));
+                }
+            }
+        }
+
+        int score = 0;
+        for (int i = 1; i <= n ; i++) {
+            int value = dist[i];
+            if (value <= m) {
+                score += items[i];
+            }
+        }
+        return score;
+    }
+
+    static class Node implements Comparable<Node>{
+        int to;
+        int w;
+        Node next;
+
+        public Node(int to, int w, Node next) {
+            this.to = to;
+            this.w = w;
+            this.next = next;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return Integer.compare(this.w, o.w);
+        }
+    }
 }
