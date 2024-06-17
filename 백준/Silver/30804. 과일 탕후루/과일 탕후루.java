@@ -20,36 +20,47 @@ public class Main {
         int left = 0;
         int right = 0;
 
+        int fruitA = -1;
+        int fruitB = -1;
+        int fruitALastIndex = -1;
+        int fruitBLastIndex = -1;
 
         int maxLength = -1;
         while (left <= right && right < n) {
             int next = tanghuru[right];
-            while (!canPush(next)) {
-                pop(tanghuru[left++]);
+            if(fruitA == -1 ) {
+                fruitA = next;
+                fruitALastIndex = right;
+            }else if(fruitA != next && fruitB == -1) {
+                fruitB = next;
+                fruitBLastIndex = right;
+            }else { // 둘 다 찬 경우
+                // 그런데 이미 같은 경우?
+                if (fruitA == next) {
+                    fruitALastIndex = right;
+                }else if(fruitB == next) {
+                    fruitBLastIndex = right;
+                }else {
+                    // 둘 중 index가 낮은 애가 나가라..
+                    if(fruitALastIndex > fruitBLastIndex) {
+                        left = fruitBLastIndex +1;
+                        fruitB = next;
+                        fruitBLastIndex = right;
+                    }else {
+                        left = fruitALastIndex +1;
+                        fruitA = next;
+                        fruitALastIndex = right;
+                    }
+                }
             }
-            push(tanghuru[right++]);
+            right++;
             maxLength = Math.max(maxLength, right - left);
+
         }
 
         System.out.println(maxLength);
     }
 
-
-    public static void push(int n) {
-        if (countArray[n]++ == 0)
-            nOfKinds++;
-    }
-
-    public static boolean canPush(int n) {
-        if (countArray[n] != 0) return true;
-        else return nOfKinds < 2;
-    }
-
-    public static void pop(int n) {
-        if (--countArray[n] == 0) {
-            nOfKinds--;
-        }
-    }
 
 
 
