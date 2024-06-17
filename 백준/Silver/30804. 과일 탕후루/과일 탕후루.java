@@ -3,8 +3,13 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
+
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int[] countArray = new int[10];
+    static int nOfKinds = 0;
+
     public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int n = Integer.parseInt(br.readLine());
         int[] tanghuru = new int[n];
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -15,14 +20,14 @@ public class Main {
         int left = 0;
         int right = 0;
 
-        Counter counter = new Counter();
+
         int maxLength = -1;
         while (left <= right && right < n) {
             int next = tanghuru[right];
-            while (!counter.canPush(next)) {
-                counter.pop(tanghuru[left++]);
+            while (!canPush(next)) {
+                pop(tanghuru[left++]);
             }
-            counter.push(tanghuru[right++]);
+            push(tanghuru[right++]);
             maxLength = Math.max(maxLength, right - left);
         }
 
@@ -30,30 +35,22 @@ public class Main {
     }
 
 
-    static class Counter {
-        int[] arr;
-        int nOfKinds;
+    public static void push(int n) {
+        if (countArray[n]++ == 0)
+            nOfKinds++;
+    }
 
-        public Counter() {
-            arr = new int[10];
-            nOfKinds = 0;
-        }
+    public static boolean canPush(int n) {
+        if (countArray[n] != 0) return true;
+        else return nOfKinds < 2;
+    }
 
-        public void push(int n) {
-            if (arr[n]++ == 0)
-                nOfKinds++;
-        }
-
-        public boolean canPush(int n) {
-            if (arr[n] != 0) return true;
-            else return nOfKinds < 2;
-        }
-
-        public void pop(int n) {
-            if (--arr[n] == 0) {
-                nOfKinds--;
-            }
+    public static void pop(int n) {
+        if (--countArray[n] == 0) {
+            nOfKinds--;
         }
     }
+
+
 
 }
