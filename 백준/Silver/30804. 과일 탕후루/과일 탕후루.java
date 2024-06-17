@@ -19,13 +19,10 @@ public class Main {
         int maxLength = -1;
         while (left <= right && right < n) {
             int next = tanghuru[right];
-            if (counter.canPush(next)) {
-                counter.push(tanghuru[right++]);
-            } else {
-                while (!counter.canPush(next)) {
-                    counter.pop(tanghuru[left++]);
-                }
+            while (!counter.canPush(next)) {
+                counter.pop(tanghuru[left++]);
             }
+            counter.push(tanghuru[right++]);
             maxLength = Math.max(maxLength, right - left);
         }
 
