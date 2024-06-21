@@ -10,10 +10,11 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int aN = Integer.parseInt(br.readLine());
 
-        Set<Integer> aNumber = new HashSet<>();
+        int maxValue = 10_0000;
+        boolean[] has = new boolean[maxValue + 1];
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < aN; i++) {
-            aNumber.add(Integer.parseInt(st.nextToken()));
+            has[Integer.parseInt(st.nextToken())] = true;
         }
 
         int qN = Integer.parseInt(br.readLine());
@@ -30,7 +31,7 @@ public class Main {
         for (int i = 1; i <= 10_0000 ; i++) {
 
             // 1은 contains 있는지 체크
-            if(aNumber.contains(i))
+            if(has[i])
                 yaksu[i]++;
 
             if(yaksu[i] == 0)
