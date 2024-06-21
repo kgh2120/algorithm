@@ -13,28 +13,17 @@ public class Main {
         PScanner sc= new PScanner(System.in);
         int aN = sc.nextInt();
 
-        int maxValue = 10_0000;
-        boolean[] has = new boolean[maxValue + 1];
-
+        int[] yaksu = new int[10_0001];
         for (int i = 0; i < aN; i++) {
-            has[sc.nextInt()] = true;
+            yaksu[sc.nextInt()]++;
         }
-
         int qN = sc.nextInt();
         int[] qArray = new int[qN];
-
         for (int i = 0; i < qN; i++) {
             qArray[i] = sc.nextInt();
         }
-
-        int[] yaksu = new int[10_0001];
-
-
+        
         for (int i = 1; i <= 10_0000 ; i++) {
-
-            // 1은 contains 있는지 체크
-            if(has[i])
-                yaksu[i]++;
 
             if(yaksu[i] == 0)
                 continue;
