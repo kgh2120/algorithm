@@ -26,13 +26,20 @@ public class Main {
         }
 
         int[] yaksu = new int[maxValue + 1];
-        Arrays.fill(yaksu, -1);
 
-        for (int i = 0; i < qN; i++) {
-            int number = qArray[i];
-            fill(yaksu, number, aNumber);
+
+        for (int i = 1; i <= maxValue ; i++) {
+
+            // 1은 contains 있는지 체크
+            if(aNumber.contains(i))
+                yaksu[i]++;
+
+            if(yaksu[i] == 0)
+                continue;
+            for (int j = 2; j * i <= maxValue ; j++) {
+                yaksu[j * i] += yaksu[i];
+            }
         }
-
 
         StringBuilder sb = new StringBuilder();
         for (int i : qArray) {
@@ -42,29 +49,7 @@ public class Main {
 
     }
 
-    private static int fill(int [] dp, int curValue, Set<Integer> aNumber){
-        if (curValue <= 0) {
-            return 0;
-        }
 
-        if(dp[curValue] != -1) return dp[curValue];
-        dp[curValue] = 0;
-        for (int i = 1; i <= Math.sqrt(curValue) ; i++) {
-            if(curValue % i != 0)
-                continue;
-            int bigger = curValue / i;
-            if (bigger == curValue) {
-                if(aNumber.contains(bigger))
-                    dp[curValue] += 1;
-            }else
-                dp[curValue] += fill(dp, bigger, aNumber);
-            if(bigger == i)
-                continue;
-            dp[curValue] += fill(dp, i, aNumber);
-        }
-
-        return dp[curValue];
-    }
 
 
 }
