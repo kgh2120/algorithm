@@ -19,16 +19,15 @@ public class Main {
         int qN = Integer.parseInt(br.readLine());
         st = new StringTokenizer(br.readLine());
         int[] qArray = new int[qN];
-        int maxValue = -1;
+
         for (int i = 0; i < qN; i++) {
             qArray[i] = Integer.parseInt(st.nextToken());
-            maxValue = Math.max(maxValue, qArray[i]);
         }
 
-        int[] yaksu = new int[maxValue + 1];
+        int[] yaksu = new int[10_0001];
 
 
-        for (int i = 1; i <= maxValue ; i++) {
+        for (int i = 1; i <= 10_0000 ; i++) {
 
             // 1은 contains 있는지 체크
             if(aNumber.contains(i))
@@ -36,7 +35,7 @@ public class Main {
 
             if(yaksu[i] == 0)
                 continue;
-            for (int j = 2; j * i <= maxValue ; j++) {
+            for (int j = 2; j * i <= 10_0000 ; j++) {
                 yaksu[j * i] += yaksu[i];
             }
         }
