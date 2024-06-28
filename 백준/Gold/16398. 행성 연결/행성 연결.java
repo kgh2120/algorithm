@@ -1,91 +1,80 @@
-import java.io.*;
-import java.math.BigInteger;
-import java.util.*;
-
-
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
 
     static int[] parents;
 
-    static Edge[] edges;
 
     public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        parents = new int[n + 1];
-        for (int i = 1; i < n+1; i++) {
+        StringTokenizer st = null;
+        parents = new int[n];
+        for (int i = 0; i < n; i++) {
             parents[i] = i;
         }
 
-        List<Edge> list = new ArrayList<>();
+        Queue<Edge> q = new PriorityQueue<>();
+
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < n; j++) {
-                int cost = Integer.parseInt(st.nextToken());
-                if(i == j) continue;
-                list.add(new Edge(i,j,cost));
+                int weight = Integer.parseInt(st.nextToken());
+                if(i >= j) continue;
+                q.add(new Edge(i,j,weight));
             }
         }
 
-        Collections.sort(list);
 
-//        System.out.println(list);
-        long total = 0;
-        int cnt = 0;
-        for (int i = 0; i < list.size(); i++) {
-            Edge e = list.get(i);
+        int count = 0;
+        long sum = 0;
+        while (!q.isEmpty() && count < n) {
+            Edge e = q.poll();
             if (union(e.from, e.to)) {
-                total += e.w;
-                if (++cnt == n - 1) {
-                    break;
-                }
+                sum += e.weight;
+                count++;
             }
         }
-        System.out.println(total);
-
-
+        System.out.println(sum);
     }
 
-    private static boolean union(int l, int r) {
-        int lp = find(l);
-        int rp = find(r);
-        if(lp == rp ) return false;
+    private static boolean union(int l, int r){
 
-        parents[lp] = rp;
+        int ll = find(l);
+        int rr = find(r);
+
+        if(ll == rr) return false;
+        else parents[ll] = rr;
         return true;
     }
-
-    private static int find(int i) {
-        if(i == parents[i]) return i;
-        return parents[i] = find(parents[i]);
+    private static int find(int l){
+        if(parents[l] == l) return l;
+        return parents[l] = find(parents[l]);
     }
 
-    static class Edge implements Comparable<Edge>{
+
+    static class Edge implements Comparable<Edge> {
         int from;
         int to;
-        int w;
+        int weight;
 
-        public Edge(int from, int to, int w) {
-            this.from = from;
-            this.to = to;
-            this.w = w;
+        public Edge(int f, int t, int w){
+            from = f;
+            to = t;
+            weight = w;
         }
 
         @Override
         public int compareTo(Edge o) {
-            return Integer.compare(w,o.w);
-        }
-
-        @Override
-        public String toString() {
-            return "Edge{" +
-                    "from=" + from +
-                    ", to=" + to +
-                    ", w=" + w +
-                    '}';
+            return Integer.compare(this.weight, o.weight);
         }
     }
+
+
 }
