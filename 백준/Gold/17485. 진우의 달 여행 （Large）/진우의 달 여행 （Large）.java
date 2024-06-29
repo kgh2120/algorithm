@@ -10,9 +10,8 @@ public class Main {
     static int [][] matrix;
     static int [][][]dp;
 
-    static int[][] deltas = {
-            {1,-1}, {1,0}, {1,1}
-    };
+    static int[] deltas =
+            {-1,0,1};
     static public void main(String []args) throws Exception {
 
         setVariables();
@@ -20,10 +19,10 @@ public class Main {
         int minValue = Integer.MAX_VALUE;
         for(int i = 0; i<m; i++){
             for(int j = 0; j<3; j++){
-                int [] delta = deltas[j];
+                int  delta = deltas[j];
                 int nr = 1;
-                int nc = i + delta[1];
-                if(!isIn( nc))
+                int nc = i + delta;
+                if(isIn(nc))
                     continue;
 
                 minValue = Math.min(minValue, matrix[0][i] + findMin(j, nr, nc));
@@ -42,10 +41,10 @@ public class Main {
         // 반복문 돌기
         int minValue = Integer.MAX_VALUE;
         for(int i = 0; i<3; i++){
-            int [] delta = deltas[i];
-            int nr = row + delta[0];
-            int nc = col + delta[1];
-            if(!isIn(nc) || i == k)
+            int delta = deltas[i];
+            int nr = row +1;
+            int nc = col + delta;
+            if(isIn(nc) || i == k)
                 continue;
             minValue = Math.min(minValue, findMin(i, nr, nc));
         }
@@ -77,6 +76,6 @@ public class Main {
     }
 
     static boolean isIn( int col){
-        return  col >= 0 && col < m;
+        return col < 0 || col >= m;
     }
 }
