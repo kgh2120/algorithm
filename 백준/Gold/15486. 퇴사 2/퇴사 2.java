@@ -12,29 +12,17 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int[] costs = new int[n];
-        int[] values = new int[n];
-        int[] dp = new int[n+1];
+        int[] dp = new int[n + 1];
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            costs[i] = Integer.parseInt(st.nextToken());
-            values[i] = Integer.parseInt(st.nextToken());
-        }
-
-        for (int i = 0; i < n; i++) {
-           int cost = costs[i];
-            if (i + cost  <= n) {
-                dp[i + cost ] = Math.max(dp[i+cost  ], dp[i] + values[i]);
+            int cost = Integer.parseInt(st.nextToken());
+            int value = Integer.parseInt(st.nextToken());
+            dp[i + 1] = Math.max(dp[i + 1], dp[i]);
+            if (i + cost <= n) {
+                dp[i + cost] = Math.max(dp[i + cost], dp[i] + value);
             }
-
-                dp[i+1] = Math.max(dp[i+1], dp[i]);
-
-
-
         }
         System.out.println(dp[n]);
-
-
     }
 
 
