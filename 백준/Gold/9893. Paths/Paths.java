@@ -41,7 +41,7 @@ public class Main {
             while (size-- > 0) {
                 Node node = queue.poll();
                 for (Node next = graph[node.to]; next != null; next = next.next) {
-                    long cost = visited[node.to].value + next.cost;
+                    int cost = visited[node.to].value + next.cost;
                     if (visited[next.to] == null) {
                         visited[next.to] = new Log(turn, cost);
                         queue.add(new Node(next.to, cost, null));
@@ -58,10 +58,10 @@ public class Main {
 
     static class Node {
         int to;
-        long cost;
+        int cost;
         Node next;
 
-        public Node(int t, long c, Node n) {
+        public Node(int t, int c, Node n) {
             to = t;
             cost = c;
             next = n;
@@ -70,9 +70,9 @@ public class Main {
 
     static class Log {
         int turn;
-        long value;
+        int value;
 
-        public Log(int t, long v) {
+        public Log(int t, int v) {
             turn = t;
             value = v;
         }
