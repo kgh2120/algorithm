@@ -28,14 +28,8 @@ public class Main {
 
 
             for (int i = 0; i < n; i++) {
-                dp[0][i + 1] = Math.max(dp[0][i + 1], dp[0][i]); // 셀렉트 안하고 같은 라인 이동하기
-                dp[1][i + 1] = Math.max(dp[1][i + 1], dp[0][i]); // 셀렉트 안하고 반대 라인 이동하기
-                dp[1][i + 1] = Math.max(dp[1][i + 1], dp[0][i] + matrix[0][i]); // 셀렉트 하고 반대 라인 이동하기
-
-
-                dp[1][i + 1] = Math.max(dp[1][i + 1], dp[1][i]); // 셀렉트 안하고 같은 라인 이동하기
-                dp[0][i + 1] = Math.max(dp[0][i + 1], dp[1][i]); // 셀렉트 안하고 반대 라인 이동하기
-                dp[0][i + 1] = Math.max(dp[0][i + 1], dp[1][i] + matrix[1][i]); // 셀렉트 하고 반대 라인 이동하기
+                dp[0][i + 1] = Math.max(dp[1][i] + matrix[1][i], dp[0][i]); // 셀렉트 안하고 같은 라인 이동하기
+                dp[1][i + 1] = Math.max(dp[1][i], dp[0][i] + matrix[0][i]); // 셀렉트 하고 반대 라인 이동하기
             }
 
             int answer = Math.max(dp[0][n], dp[1][n]);
