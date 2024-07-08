@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
@@ -17,8 +18,8 @@ public class Main {
         StringBuilder firstAnswerBuilder = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         long number = 0;
-        Deque<Word> queue = new ArrayDeque<>();
-        boolean directOperate = false;
+        char ops = 'i';
+        long acc = 0;
         for (char c : str.toCharArray()) {
             if (Character.isUpperCase(c)) {
                 sb.append(c);
@@ -33,42 +34,28 @@ public class Main {
                     System.out.println("Madness!");
                     return;
                 }
+                //
                 firstAnswerBuilder.append(c);
-                queue.addLast(new Word(number, c));
+                if (ops != 'i') {
+                    acc = operate(acc, number, ops);
+                }else{
+                    acc = number;
+                }
+                ops = c;
                 number = 0;
             }
         }
-
         // 이젠 덧셈 뺄셈만 하면 됨.
-
-
-        char ops;
-
-        Word left = queue.pollFirst();
-        while (!queue.isEmpty()) {
-            Word right = queue.pollFirst();
-            long newNumber = operate(left.value, right.value, left.operator);
-            left.value = newNumber;
-            left.operator = right.operator;
-        }
-
         System.out.println(firstAnswerBuilder);
         StringBuilder secondAnswerBuilder = new StringBuilder();
-
-        String leftStr  = Long.toString(left.value);
-
+        String leftStr  = Long.toString(acc);
         for (char c : leftStr.toCharArray()) {
             if(c == '-')
                 secondAnswerBuilder.append(c);
             else
                 secondAnswerBuilder.append(charToStringMap.get(c));
         }
-
         System.out.println(secondAnswerBuilder);
-
-
-
-
 
     }
 
