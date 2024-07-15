@@ -41,16 +41,12 @@ public class Main {
 
         int curValue = 0;
         int idx = 1;
+        sb = new StringBuilder();
         while (idx <= n) {
             // st가 있으면 check
             curValue += values[idx];
-            arr[idx++] += curValue;
-        }
-
-        sb = new StringBuilder();
-
-        for (int i = 1; i<=n; i++) {
-            sb.append(arr[i]).append(' ');
+            arr[idx] += curValue;
+            sb.append(arr[idx++]).append(' ');
         }
         System.out.println(sb);
     }
