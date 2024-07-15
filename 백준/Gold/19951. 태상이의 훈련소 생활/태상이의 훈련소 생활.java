@@ -1,54 +1,58 @@
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    static BufferedReader br;
     static StringTokenizer st;
-    static StringBuffer sb = new StringBuffer();
+    static int n;
+    static int m;
 
-    static int n, m;
-    static int[] inputStatus, status;
-
-    static void input() throws IOException {
-
+    static int[] arr;
+    static int[] values;
+    static StringBuilder sb;
+    public static void main(String[] args) throws Exception {
+        br = new BufferedReader(new InputStreamReader(System.in));
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
 
-        inputStatus = new int[n + 1];
-        status = new int[n + 2];
+        arr = new int[n+1];
+        values = new int[n+2];
+
 
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= n; i++) {
-            inputStatus[i] = Integer.parseInt(st.nextToken());
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-    }
 
-    static void pro() throws IOException {
-
-        int a, b, k;
-        while( m-- > 0 ) {
+        while(m-- >0) {
             st = new StringTokenizer(br.readLine());
-            a = Integer.parseInt(st.nextToken());
-            b = Integer.parseInt(st.nextToken());
-            k = Integer.parseInt(st.nextToken());
-            status[a] += k;
-            status[b + 1] -= k;
+            int startIdx = Integer.parseInt(st.nextToken());
+            int endIdx = Integer.parseInt(st.nextToken());
+            int value = Integer.parseInt(st.nextToken());
+            values[startIdx] += value;
+            values[endIdx+1] -= value;
         }
 
-        int sum = 0;
+        int curValue = 0;
+        int idx = 1;
+        while (idx <= n) {
+            // st가 있으면 check
+            curValue += values[idx];
+            arr[idx++] += curValue;
+        }
 
-        for (int i = 1; i <= n; i++) {
-            sum += status[i];
-            inputStatus[i] += sum;
-            sb.append(inputStatus[i]).append(' ');
+        sb = new StringBuilder();
+
+        for (int i = 1; i<=n; i++) {
+            sb.append(arr[i]).append(' ');
         }
         System.out.println(sb);
     }
 
-    public static void main(String[] args) throws IOException {
-        input();
-        pro();
-    }
 }
