@@ -16,8 +16,8 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
 
         int[] arr = new int[n+1];
-        int[] start = new int[n+1];
-        int[] end =  new int[n+1];
+        int[] values = new int[n+2];
+
 
         st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= n; i++) {
@@ -29,18 +29,16 @@ public class Main {
             int startIdx = Integer.parseInt(st.nextToken());
             int endIdx = Integer.parseInt(st.nextToken());
             int value = Integer.parseInt(st.nextToken());
-            start[startIdx] += value;
-            end[endIdx] += value;
+            values[startIdx] += value;
+            values[endIdx+1] -= value;
         }
 
         int curValue = 0;
         int idx = 1;
         while (idx <= n) {
             // st가 있으면 check
-            curValue += start[idx];
-            arr[idx] += curValue;
-            curValue -= end[idx];
-            idx++;
+            curValue += values[idx];
+            arr[idx++] += curValue;
         }
 
         StringBuilder sb = new StringBuilder();
@@ -50,5 +48,5 @@ public class Main {
         }
         System.out.println(sb);
     }
-    
+
 }
