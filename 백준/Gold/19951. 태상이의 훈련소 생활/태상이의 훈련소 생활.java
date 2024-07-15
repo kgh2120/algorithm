@@ -7,16 +7,22 @@ import java.util.StringTokenizer;
 public class Main {
 
 
+    static BufferedReader br;
+    static StringTokenizer st;
+    static int n;
+    static int m;
 
-
+    static int[] arr;
+    static int[] values;
+    static StringBuilder sb;
     public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
+        br = new BufferedReader(new InputStreamReader(System.in));
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
 
-        int[] arr = new int[n+1];
-        int[] values = new int[n+2];
+        arr = new int[n+1];
+        values = new int[n+2];
 
 
         st = new StringTokenizer(br.readLine());
@@ -24,7 +30,7 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 0; i < m; i++) {
+        while(m-- >0) {
             st = new StringTokenizer(br.readLine());
             int startIdx = Integer.parseInt(st.nextToken());
             int endIdx = Integer.parseInt(st.nextToken());
@@ -41,7 +47,7 @@ public class Main {
             arr[idx++] += curValue;
         }
 
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
 
         for (int i = 1; i<=n; i++) {
             sb.append(arr[i]).append(" ");
