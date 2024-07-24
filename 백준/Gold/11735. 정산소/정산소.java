@@ -7,13 +7,13 @@ import java.util.StringTokenizer;
 public class Main {
 
 
-    static Set<Long> deletedRow;
-    static Set<Long> deletedCol;
-    static long deletedRowSum ;
-    static long deletedColSum;
+
+
     static long originTotalSum;
     static StringBuilder sb;
     static int n;
+    static Wrapper rowWrapper;
+    static Wrapper colWrapper;
 
     public static void main(String[] args) throws Exception {
 
@@ -22,10 +22,9 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
 
-        deletedRow = new HashSet<>();
-        deletedCol = new HashSet<>();
-         deletedRowSum = 0;
-         deletedColSum = 0;
+        rowWrapper = new Wrapper(n);
+        colWrapper = new Wrapper(n);
+
         
          originTotalSum = (long) n * (n + 1) / 2;
          sb = new StringBuilder();
@@ -37,9 +36,9 @@ public class Main {
 
             if (command.equals("R")) {
                 // value가 이미 set에 있는가? 있다면 0
-                deletedRowSum += action(deletedRow, deletedCol, deletedColSum, value);
+                action(rowWrapper, colWrapper, value);
             } else {
-                deletedColSum += action(deletedCol, deletedRow, deletedRowSum, value);
+                action(colWrapper, rowWrapper, value);
             }
 
         }
@@ -48,7 +47,7 @@ public class Main {
 
     }
 
-    static long action(Set<Long> selected, Set<Long> other, long deletedAcc,  long cur){
+    static long action(Wrapper selected, Wrapper other,  int cur){
 
         if (selected.contains(cur)) {
             sb.append(0).append("\n");
@@ -57,12 +56,33 @@ public class Main {
 
         // 아니라면...
 
-        long value = (long) (n - other.size()) * cur + originTotalSum - deletedAcc;
+        long value = (n - other.size) * cur + originTotalSum - other.containsTotalSum;
         sb.append(value).append("\n");
         selected.add(cur);
 
 
         return cur;
+    }
+
+    static class Wrapper{
+        boolean [] contains;
+        long containsTotalSum;
+        long size;
+
+        public Wrapper(int n) {
+            contains = new boolean[n+1];
+        }
+
+        public boolean contains(int n) {
+            return contains[n];
+        }
+
+        public void add(int n) {
+            contains[n] = true;
+            size++;
+            containsTotalSum += n;
+        }
+
     }
 
 
