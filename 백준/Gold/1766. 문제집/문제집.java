@@ -1,49 +1,50 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
-
 
 public class Main {
 
+
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-    static int[] counts;
-    static PriorityQueue<Integer> pq;
-    static int n;
-    static Node[] graph;
-    public static void main(String[] args) throws IOException {
-        st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        graph = new Node[n+1];
+
+    public static void main(String[] args) throws Exception {
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-        counts = new int[n+1];
+
+        int[] cnt = new int[n + 1];
+        Node[] graph = new Node[n+1];
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int from = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
-            graph[from] = new Node(to,graph[from]);
-            counts[to]++;
+
+            cnt[to]++;
+            graph[from] = new Node(to, graph[from]);
         }
 
-        pq = new PriorityQueue<>();
-        for (int i = 1; i < n + 1; i++) {
-            if(counts[i] == 0)
-                pq.add(i);
+        Queue<Integer> q = new PriorityQueue<>();
+        for (int i = 1; i <= n; i++) {
+            if(cnt[i] == 0)
+                q.add(i);
         }
-        topologySort();
-        System.out.println(sb);
-    }
 
-    private static void topologySort(){
-        while (!pq.isEmpty()) {
-            Integer poll = pq.poll();
+        StringBuilder sb = new StringBuilder();
+
+        while(!q.isEmpty()) {
+            Integer poll = q.poll();
+
             sb.append(poll).append(" ");
-            for (Node node = graph[poll]; node != null; node = node.next) {
-                if(--counts[node.to] == 0)
-                    pq.add(node.to);
+
+            for(Node node = graph[poll]; node != null; node = node.next) {
+                if(--cnt[node.to]==0)
+                    q.add(node.to);
             }
         }
+        System.out.println(sb);
+
+
     }
 
     static class Node{
@@ -55,6 +56,5 @@ public class Main {
             this.next = next;
         }
     }
-
 
 }
