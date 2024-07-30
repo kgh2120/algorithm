@@ -2,10 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
 
@@ -23,22 +20,20 @@ public class Main {
 
 
 
-        Edge[] kruskal = new Edge[m];
 
+
+        Queue<Edge> pq = new PriorityQueue<>();
         parents = new int[n + 1];
         for (int i = 0; i < n + 1; i++) {
             parents[i] = i;
         }
 
         for (int i = 0; i < m; i++) {
-//            st = new StringTokenizer(br.readLine());
             int from = sc.nextInt();
             int to  = sc.nextInt();
             int cost = sc.nextInt();
-            kruskal[i] = new Edge(from, to, cost);
+            pq.add(new Edge(from, to, cost));
         }
-
-        Arrays.sort(kruskal);
 
 
         int i = 0;
@@ -46,7 +41,8 @@ public class Main {
         int totalCost = 0;
         int max = -1;
         while (i < m) {
-            Edge edge = kruskal[i++];
+            i++;
+            Edge edge = pq.poll();
             if (union(edge.from, edge.to)) {
                 totalCost += edge.cost;
                 max = Math.max(max, edge.cost);
