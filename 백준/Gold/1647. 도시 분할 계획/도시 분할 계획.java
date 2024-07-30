@@ -27,13 +27,16 @@ public class Main {
         for (int i = 0; i < n + 1; i++) {
             parents[i] = i;
         }
-
+        Edge [] e = new Edge[m];
         for (int i = 0; i < m; i++) {
             int from = sc.nextInt();
             int to  = sc.nextInt();
             int cost = sc.nextInt();
-            pq.add(new Edge(from, to, cost));
+            e[i] = new Edge(from, to, cost);
+          
         }
+
+        pq.addAll(Arrays.asList(e));
 
 
         int i = 0;
