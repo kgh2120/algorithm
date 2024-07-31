@@ -20,13 +20,14 @@ import java.util.*;
 public class Main {
 
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-
+//    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//    static StringTokenizer st;
+    
 
     public static void main(String[] args) throws Exception {
-        int n = Integer.parseInt(br.readLine());
-        int m = Integer.parseInt(br.readLine());
+        PScanner sc = new PScanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
         final int INIT = 10_0000_0000;
 
         Edge[] edges = new Edge[n + 1];
@@ -34,17 +35,17 @@ public class Main {
         Arrays.fill(dist, INIT);
 
         for (int i = 0; i < m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int from = Integer.parseInt(st.nextToken());
-            int to  = Integer.parseInt(st.nextToken());
-            int cost = Integer.parseInt(st.nextToken());
+            
+            int from = sc.nextInt();
+            int to  = sc.nextInt();
+            int cost = sc.nextInt();
             edges[from] = new Edge(to, cost, edges[from]);
 
         }
 
-        st = new StringTokenizer(br.readLine());
-        int a = Integer.parseInt(st.nextToken());
-        int b = Integer.parseInt(st.nextToken());
+        
+        int a = sc.nextInt();
+        int b = sc.nextInt();
 
         Queue<Edge> pq = new PriorityQueue<>();
         pq.add(new Edge(a, 0, null));
@@ -85,6 +86,112 @@ public class Main {
             return Integer.compare(this.cost, o.cost);
         }
     }
+    
+         public static class PScanner {
+                     private final InputStreamReader in;
+                     private final char[] buf;
+                     private final char[] cbuf;
+                     private int len, ptr;
+         
+                     public PScanner(InputStream input) {
+                         in = new InputStreamReader(input);
+                         buf = new char[8192];
+                         cbuf = new char[8192];
+                     }
+         
+                     public boolean hasNext() {
+                         consume();
+                         return ptr < len && buf[ptr] > ' ';
+                     }
+         
+                     public boolean hasNextInLine() {
+                         char c;
+                         while ((c = read()) <= ' ' && c != 0 && c != '\n') ;
+                         ptr--;
+                         return ptr < len && buf[ptr] > ' ';
+                     }
+         
+                     public String next() {
+                         consume();
+                         char[] cbuf = this.cbuf;
+                         int clen = 0;
+                         int start = ptr;
+                         while (true) {
+                             if (ptr < len) {
+                                 if (buf[ptr++] <= ' ') {
+                                     cbuf = copy(buf, start, cbuf, clen, ptr - start);
+                                     clen += ptr - start;
+                                     break;
+                                 }
+                             } else if (ptr == len) {
+                                 cbuf = copy(buf, start, cbuf, clen, ptr - start);
+                                 clen += ptr - start;
+                                 fill();
+                                 start = ptr;
+                             } else break;
+                         }
+                         ptr--;
+                         if (ptr < len) clen--;
+                         return new String(cbuf, 0, clen);
+                     }
+         
+                     private char[] copy(char[] src, int srcPos, char[] dest, int destPos, int length) {
+                         if (dest.length < destPos + length) dest = Arrays.copyOf(dest, dest.length << 1);
+                         System.arraycopy(src, srcPos, dest, destPos, length);
+                         return dest;
+                     }
+         
+                     public char nextChar() {
+                         consume();
+                         return read();
+                     }
+         
+                     public int nextInt() {
+                         consume();
+                         int v = 0;
+                         char c = read();
+                         boolean neg = c == '-';
+                         if (neg) c = read();
+                         do {
+                             v = v * 10 + c - '0';
+                         } while ('0' <= (c = read()) && c <= '9');
+                         ptr--;
+                         return neg ? -v : v;
+                     }
+         
+                     public long nextLong() {
+                         consume();
+                         long v = 0;
+                         char c = read();
+                         boolean neg = c == '-';
+                         if (neg) c = read();
+                         do {
+                             v = v * 10 + c - '0';
+                         } while ('0' <= (c = read()) && c <= '9');
+                         ptr--;
+                         return neg ? -v : v;
+                     }
+         
+                     private char read() {
+                         if (ptr == len) fill();
+                         return ptr < len ? buf[ptr++] : 0;
+                     }
+         
+                     private void fill() {
+                         try {
+                             len = in.read(buf);
+                             ptr = 0;
+                         } catch (IOException e) {
+                             throw new RuntimeException(e);
+                         }
+                     }
+         
+                     private void consume() {
+                         char c;
+                         while ((c = read()) <= ' ' && c != 0) ;
+                         ptr--;
+                     }
+                 }
 
 
 }
