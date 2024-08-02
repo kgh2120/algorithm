@@ -1,150 +1,110 @@
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 /*
+    @제약사항 : 6s 256mb
+    @입력 범위 : k <= 100,0000 // -2^31 <= i <= 2^31 (int)
+    @문제 내용 :
 
-    I a : pq에 a를 넣어라
-    D 1 : 최대값 삭제
-    D -1 최소값 삭제
+        이중 우선순위 큐라는 자료구조를 만든다.
+        삽입 , 삭제 연산이 있고, 삭제에는 최대값 삭제와 최소값 삭제 연산이 있음.
+        삽입 연산은 I n 으로 표현하고 삭제 연산은 D 1 (최대값) D 2(최소값)으로 구분된다.
 
-    q가 비었는데 D 연산이 들어갈 경우 무시한다.
+        연산의 개수는 K로 최대 100만개까지 있다.
+        저장되는 숫자는 -2^31 ~ 2^31로 int 범위이다.
 
-    연산이 끝났을 때 Q에 남아있는 최대값과 최소값을 출력한다.
- */
+        모든 연산을 한 후, 최대값과 최소값을 출력하는데, 다 비었을 경우는 EMPTY를 ㅜㅊㄹ력한다.
+
+        2개의 PQ를 만든다고 하면, 최대값 PQ와 최소값 PQ에 동시에 저장된 경우에 한 PQ에 의해서 삭제가 되더라도, 다른 PQ에서는 유지될 수있음. 이를 값으로 나타내줘야 할 듯.
+    @주의 사항 :
+        **저장되는 숫자는 -2^31 ~ 2^31로 int 범위이다.**
+        연산이 총 100만개이다.
+        지금 PQ를 2개를 만들어서 사용하려고 하는데, 아주 기본적인 처리를 한다고 가정하면, n log n일텐데,, 100만개라..
+        100만 -> 10^6이고.. log를 할 때 10^3이 10이다. 그럼 100. 10^8 정도가 나오는데 6초니까 가능할듯..?
+    @예상 알고리즘 :
+*/
 public class Main {
 
 
-    public static void main(String[] args) {
-        PScanner sc = new PScanner(System.in);
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+
+
+    public static void main(String[] args) throws Exception {
+        int t = Integer.parseInt(br.readLine());
         StringBuilder sb = new StringBuilder();
-        int T = sc.nextInt();
-
-        for (int i = 0; i < T; i++) {
-            int nOfCommand = sc.nextInt();
-            PriorityQueue<Node> minQ = new PriorityQueue<>(new Comparator<Node>(){
-
+        for (int i = 0; i < t; i++) {
+            int n = Integer.parseInt(br.readLine());
+            Queue<Node> maxPQ = new PriorityQueue<>(new Comparator<Node>() {
                 @Override
-                public int compare(Node node, Node t1) {
-
-                    if (node.value == t1.value) {
-
-                        if(!node.isOut)
-                            return -1;
-                        else
-                            return 1;
-                    }
-
-                    return Integer.compare(node.value,t1.value);
+                public int compare(Node o1, Node o2) {
+                    return Integer.compare(o1.value, o2.value) * -1;
                 }
             });
-            PriorityQueue<Node> maxQ = new PriorityQueue<>(new Comparator<Node>(){
+            Queue<Node> minPQ = new PriorityQueue<>(new Comparator<Node>() {
                 @Override
-                public int compare(Node node, Node t1) {
-                    if (node.value == t1.value) {
-                        if(!node.isOut)
-                            return -1;
-                        else
-                            return 1;
-                    }
-                    return Integer.compare(node.value,t1.value) * -1;
+                public int compare(Node o1, Node o2) {
+                    return Integer.compare(o1.value, o2.value);
                 }
             });
 
-            for (int j = 0; j < nOfCommand; j++) {
-                String command = sc.next();
-                int number = sc.nextInt();
-                if (command.equals("I")) {
-                    Node node = new Node(number);
-                    minQ.add(node);
-                    maxQ.add(node);
+
+            for (int j = 0; j < n; j++) {
+                st = new StringTokenizer(br.readLine());
+
+                String command = st.nextToken();
+                int value = Integer.parseInt(st.nextToken());
+
+                if ("I".equals(command)) {
+                    Node node = new Node(value);
+                    maxPQ.add(node);
+                    minPQ.add(node);
+                } else if (value == 1) {
+                    while (!maxPQ.isEmpty() && maxPQ.peek().isDeleted) {
+                        maxPQ.poll();
+                    }
+                    if (!maxPQ.isEmpty()) {
+                        maxPQ.poll().isDeleted = true;
+                    }
                 } else {
-                    if (number == 1) {
-                        // max값 빼기
-                        poll(maxQ,false);
-                    } else {
-                        // min값 빼기
-                        poll(minQ,false);
+                    while (!minPQ.isEmpty() && minPQ.peek().isDeleted) {
+                        minPQ.poll();
+                    }
+                    if (!minPQ.isEmpty()) {
+                        minPQ.poll().isDeleted = true;
                     }
                 }
-
+            }
+            while (!maxPQ.isEmpty() && maxPQ.peek().isDeleted) {
+                maxPQ.poll();
+            }
+            while (!minPQ.isEmpty() && minPQ.peek().isDeleted) {
+                minPQ.poll();
             }
 
-            
-            
-            // 최대값 최소값 찾기
-            //일단 최대값
-
-            long m = Long.MIN_VALUE;
-            Node max = poll(maxQ, true);
-            if (max != null) {
-                m = max.value;
+            if (maxPQ.isEmpty() && minPQ.isEmpty()) {
+                sb.append("EMPTY\n");
+            }else {
+                sb.append(maxPQ.poll().value).append(" ").append(minPQ.poll().value).append("\n");
             }
 
-            long n = Long.MIN_VALUE;
-            Node min = poll(minQ, true);
-            if (min != null) {
-                n = min.value;
-            }
-
-            if (m == Long.MIN_VALUE && n == Long.MIN_VALUE) {
-                sb.append("EMPTY").append("\n");
-            } else {
-                sb.append(m).append(" ").append(n).append("\n");
-            }
 
 
         }
-
         System.out.println(sb);
 
-
-
-
     }
 
-    private static Node poll(PriorityQueue<Node> pq, boolean isLast){
-        if (!pq.isEmpty()) {
-            Node n = pq.poll();
-            pq.add(n);
-            n = pq.poll();
-            while (!pq.isEmpty() && n.isOut) {
-                n = pq.poll();
-            }
-            // 이미 삭제되지 않는 값밖에 없음.
-            if(n.isOut) return null;
-            // 아니라면 Node 반환
-            if(!isLast)
-                n.isOut = true;
-            return n;
-        }
-        return null;
-    }
-
-    static class Node{
-
+    static class Node {
         int value;
-        boolean isOut;
+        boolean isDeleted;
 
         public Node(int value) {
             this.value = value;
         }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "value=" + value +
-                    ", isOut=" + isOut +
-                    '}';
-        }
     }
-
-    static class PScanner{private final InputStreamReader in;private final char[]buf;private int len,ptr;public PScanner(
-            InputStream input){in=new InputStreamReader(input);buf=new char[8192];}public boolean hasNext(){consume();return ptr<len&&buf[ptr]>' ';}public String next(){consume();char[]cbuf=new char[16];char clen=0;while((cbuf[clen++]=read())>' '){if(clen==cbuf.length)cbuf= Arrays.copyOf(cbuf,clen << 2);}return new String(cbuf,0,clen - 1);}public int nextInt(){consume();int v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}public long nextLong(){consume();long v=0;char c=read();boolean neg=c=='-';if(neg)c=read();do{v=v * 10+c - '0';}while('0'<=(c=read())&&c<='9');return neg?-v:v;}private char read(){if(ptr==len)fill();return ptr<len?buf[ptr++]:0;}private void fill(){try{len=in.read(buf);ptr=0;}catch(
-            IOException e){throw new RuntimeException(e.getMessage());}}private void consume(){char c;while((c=read())<=' '&&c!=0);ptr--;}}
 }
