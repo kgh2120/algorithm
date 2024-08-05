@@ -45,10 +45,12 @@ public class Main {
             for (int j = i-1; j >= 0 ; j--) {
                 int value = arrB[i] - arrB[j];
 
-                if (!counters.containsKey(value)) {
-                    counters.put(value, new Counter());
+                Counter counter = counters.get(value);
+                if (counter == null) {
+                    counter = new Counter();
+                    counters.put(value, counter);
                 }
-                counters.get(value).count++;
+                counter.count++;
             }
         }
 
@@ -60,11 +62,12 @@ public class Main {
                 int value = arrA[i] - arrA[j];
                 int opp = t - value;
 
-                if (!counters.containsKey(opp)) continue;
 
-                int count = counters.get(opp).count;
-
-                answer += count;
+                Counter counter = counters.get(opp);
+                if (counter != null) {
+                    int count = counters.get(opp).count;
+                    answer += count;
+                }
             }
         }
 
