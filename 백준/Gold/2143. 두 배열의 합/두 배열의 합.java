@@ -40,7 +40,7 @@ public class Main {
             arrB[i] = v + arrB[i-1];
         }
 
-        Map<Integer, Counter> counters = new HashMap<>();
+        Map<Integer, Counter> counters = new HashMap<>(1000000);
         for (int i = m; i > 0 ; i--) {
             for (int j = i-1; j >= 0 ; j--) {
                 int value = arrB[i] - arrB[j];
