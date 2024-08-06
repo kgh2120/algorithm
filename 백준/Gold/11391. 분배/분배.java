@@ -26,63 +26,24 @@ public class Main {
 
         visited = new boolean[(int)Math.pow(2,n)];
 
+        int t = (int) Math.pow(2, n-k-1);
+        int max = (int)Math.pow(2, n) -1 ;
 
-        bit = new HashMap<>();
+        int a = 0;
+        for (int i = 0; i < Math.pow(2, n-1); i++) {
 
-        for (int i = 0; i <= n; i++) {
-            bit.put(i, new HashSet<>());
-        }
+            int other = max - i;
+            sb.append(i).append(" ").append(other).append(" ");
 
-        int totalBit = 0;
-        for (int i = 0; i < Math.pow(2,n) ; i++) {
-            int nOfBit = Integer.bitCount(i);
-            totalBit += nOfBit;
-            bit.get(nOfBit).add(i);
-        }
-        int t = (int) Math.pow(2, n-k);
-        int remainNumber = (int) Math.pow(2,k);
-        int remainBit = totalBit / remainNumber;
+            if (++a == t) {
+                a = 0;
+                sb.append("\n");
+            }
 
-        for (int i = 0; i < remainNumber; i++) {
-
-            divide(t, remainBit);
-            sb.append("\n");
         }
         System.out.println(sb);
 
     }
 
-    static void divide(int remainNumberCount, int remainBitCount){
-        if(remainNumberCount == 0) return;
-
-        int targetBitCount = remainBitCount / remainNumberCount;
-        int temp = targetBitCount;
-
-        Set<Integer> integers = bit.get(targetBitCount);
-        while (integers.isEmpty()) {
-            integers = bit.get(temp);
-            if(!integers.isEmpty()) break;
-            if(temp <= targetBitCount)
-                temp--;
-            else if(temp > targetBitCount)
-                temp++;
-            if(temp < 0)
-                temp = targetBitCount+1;
-        }
-        Integer t = null;
-        for (Integer integer : integers) {
-            if(visited[integer]) continue;
-            t = integer;
-            break;
-        }
-        visited[t] = true;
-
-        integers.remove(t);
-
-        sb.append(t).append(" ");
-        targetBitCount = temp;
-        divide(remainNumberCount-1, remainBitCount- targetBitCount);
-
-    }
 
 }
