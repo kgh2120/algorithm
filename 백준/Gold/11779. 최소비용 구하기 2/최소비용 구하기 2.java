@@ -3,118 +3,96 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 
-/**
- @author 김규현
- @since 2023-08-09
- @see https://www.acmicpc.net/problem/11779
- @performance
- @category #
- @note
- 도시 N, 버스가 M개가 있다.
- A -> B로 가는 버스 비용을 최소화 하려고 한다.
- 1 <= n <= 1000, 1 <= m <= 100_000
-
- 다익스트라를 돌면서, 거리가 업데이트되면 그 값을 바꿔준다.
-
-  **출력
- 비용
- 도시 개수
- 도시들
- */
+/*
+    @제약사항 :
+    @입력 범위 :
+    @문제 내용 :
+    @주의 사항 :
+    @예상 알고리즘 :
+*/
 public class Main {
+
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
-
-    static List<List<Node>> adjList;
-
-    static long[] dist;
-    static int[] lastVisited;
-    static PriorityQueue<Node> pq;
-
-    static int n,e;
-    static int start, end;
-
-
     public static void main(String[] args) throws Exception {
-        n = Integer.parseInt(br.readLine());
-        e = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
+        int m = Integer.parseInt(br.readLine());
 
-        pq = new PriorityQueue<>(new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return Long.compare(o1.w,o2.w);
-            }
-        });
-
-        adjList = new ArrayList<>();
-        for (int i = 0; i <= n; i++)
-            adjList.add(new ArrayList<>());
-
-        for (int i = 0; i < e; i++) {
+        Edge[] graph = new Edge[n+1];
+        for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
-            int f = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            adjList.get(f).add(new Node(f,t,w));
+            int from = Integer.parseInt(st.nextToken());
+            int to =  Integer.parseInt(st.nextToken());
+            int weight = Integer.parseInt(st.nextToken());
+            graph[from] = new Edge(to, weight, graph[from]);
+
         }
+        int [] dist = new int[n+1];
+        int [] path = new int[n+1];
+
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
         st = new StringTokenizer(br.readLine());
-        start = Integer.parseInt(st.nextToken());
-        end = Integer.parseInt(st.nextToken());
+        int a = Integer.parseInt(st.nextToken());
+        int b = Integer.parseInt(st.nextToken());
 
-        dist = new long[n+1];
-        lastVisited = new int[n+1];
-        lastVisited[start] = start;
-        Arrays.fill(dist,Long.MAX_VALUE);
-        dijkstra(start,end);
+        Queue<Edge> pq = new PriorityQueue<>();
+        pq.add(new Edge(a, 0, null));
+        dist[a] = 0;
+        path[a] = -1;
 
+        while(!pq.isEmpty()) {
+            Edge edge = pq.poll();
 
-        List<Integer> visited = new ArrayList<>();;
-        int depth = findParent(end, visited);
-        sb.append(dist[end])
-                .append("\n")
-                .append(depth)
-                .append("\n");
-        for(int i = visited.size()-1; i>=0; i--)
-            sb.append(visited.get(i)).append(" ");
+            if(dist[edge.to] < edge.weight) continue;
 
-        System.out.println(sb);
-    }
-    private static int findParent(int n, List<Integer> visited){
-        visited.add(n);
-        if (lastVisited[n] == n) {
-            return 1;
-        }
-        return findParent(lastVisited[n], visited) + 1;
-    }
-
-    private static void dijkstra(int start, int end){
-        dist[start] = 0;
-        pq.add(new Node(start,0,0));
-
-        while (!pq.isEmpty()) {
-            Node node = pq.poll();
-
-            if(dist[node.f] < node.w) continue;
-            for (Node n : adjList.get(node.f)) {
-                if (dist[n.t] > dist[n.f] + n.w) {
-                    dist[n.t] = dist[n.f] + n.w;
-                    lastVisited[n.t] = n.f;
-                    pq.add(new Node(n.t,0,dist[n.t]));
+            for(Edge e = graph[edge.to]; e != null; e = e.next) {
+                if(dist[e.to] > dist[edge.to] + e.weight) {
+                    dist[e.to] = dist[edge.to] + e.weight;
+                    path[e.to] = edge.to;
+                    pq.add(new Edge(e.to, dist[e.to], null));
                 }
             }
         }
-    }
-    static class Node{
-        int f;
-        int t;
-        long w;
 
-        public Node(int f, int t, long w) {
-            this.f = f;
-            this.t = t;
-            this.w = w;
+        sb.append(dist[b]).append("\n");
+
+
+        int k = path[b];
+        Deque<Integer> route = new ArrayDeque<>();
+        route.addFirst(b);
+        while (k != -1) {
+            route.addFirst(k);
+            k = path[k];
+        }
+        sb.append(route.size()).append("\n");
+        while(!route.isEmpty()) {
+            Integer r = route.pollFirst();
+            sb.append(r).append(" ");
+        }
+
+        System.out.println(sb);
+
+    }
+
+    static class Edge implements Comparable<Edge> {
+        int to;
+        int weight;
+        Edge next;
+
+        public Edge(int to, int weight, Edge next) {
+            this.to = to;
+            this.weight = weight;
+            this.next = next;
+        }
+
+        @Override
+        public int compareTo(Edge o) {
+            return Integer.compare(this.weight, o.weight);
         }
     }
+
+
 }
