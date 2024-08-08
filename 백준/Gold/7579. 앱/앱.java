@@ -1,93 +1,54 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 
+/*
+    @제약사항 :
+    @입력 범위 :
+    @문제 내용 :
+    @주의 사항 :
+    @예상 알고리즘 :
+*/
 public class Main {
+
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws Exception {
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
 
-    static int[] dp;
-    static App[] apps;
-
-    static int n, limit;
-    static final int code = 1_0000_0000;
-    static int min;
-
-    public static void main(String[] args) throws IOException {
+            int [] memory = new int[n];
+            int [] cost = new int[n];
 
         st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken());
-        limit = Integer.parseInt(st.nextToken());
-
-        dp = new int[limit+1];
-
-//        Arrays.fill(dp, Integer.MAX_VALUE);
-
-
+        for (int i = 0; i < n; i++) {
+            memory[i] = Integer.parseInt(st.nextToken());
+        }
         st = new StringTokenizer(br.readLine());
-        StringTokenizer costSt = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            cost[i] = Integer.parseInt(st.nextToken());
+        }
 
-        apps = new App[n];
+        int [] dp = new int[m+1];
+        Arrays.fill(dp, 100_0000);
+        dp[0] = 0;
+        // 뒤에서부터 진행
 
         for (int i = 0; i < n; i++) {
-            apps[i] = new App(Integer.parseInt(st.nextToken()), Integer.parseInt(costSt.nextToken()));
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= limit; j++) {
-                // 넣을 수 있는지 없는지? 넣을 수야 다 있지... limit이 넘어가면 code를 추가해야해
-                int other = 0;
-                if(j + apps[i].value >= limit)
-                    other = code;
-                else
-                    other = dp[j+apps[i].value];
-                dp[j] = Math.max(dp[j], other - apps[i].cost);
+            for (int j = m; j > 0; j--) {
+                int next = Math.max(j - memory[i], 0);
+                dp[j] = Math.min(dp[j], dp[next] + cost[i]);
             }
         }
-
-//        System.out.println(Arrays.toString(dp));
-        System.out.println(code - dp[0] );
+        System.out.println(dp[m]);
 
 
-    }
-
-
-
-    static class App implements Comparable<App>{
-        int value;
-        int cost;
-
-        public App(int value, int cost) {
-            this.value = value;
-            this.cost = cost;
-        }
-
-        @Override
-        public int compareTo(App o) {
-            // value/cost가 높은 것. if cost가 0 이면 무적권 -1
-            // v/c가 같다면 c가 낮은 애
-            if (cost == 0)
-                return -1;
-            if(o.cost == 0)
-                return 1;
-            double vc = value/cost;
-            double ovc = o.value / o.cost;
-
-            if (vc == ovc) {
-                return Integer.compare(cost,o.cost);
-            }
-            return Double.compare(vc,ovc) * -1;
-        }
-
-        @Override
-        public String toString() {
-            return "App{" +
-                    "value=" + value +
-                    ", cost=" + cost +
-                    '}';
-        }
     }
 
 
