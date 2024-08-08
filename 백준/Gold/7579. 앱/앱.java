@@ -18,13 +18,14 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
-    public static void main(String[] args) throws Exception {
-            st = new StringTokenizer(br.readLine());
-            int n = Integer.parseInt(st.nextToken());
-            int m = Integer.parseInt(st.nextToken());
 
-            int [] memory = new int[n];
-            int [] cost = new int[n];
+    public static void main(String[] args) throws Exception {
+        st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        int[] memory = new int[n];
+        int[] cost = new int[n];
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
@@ -35,22 +36,27 @@ public class Main {
             cost[i] = Integer.parseInt(st.nextToken());
         }
 
-        int [] dp = new int[m+1];
-        Arrays.fill(dp, 100_0000);
+        int[] dp = new int[10001];
+
         dp[0] = 0;
         // 뒤에서부터 진행
-
         for (int i = 0; i < n; i++) {
-            for (int j = m; j > 0; j--) {
-                int next = Math.max(j - memory[i], 0);
-                dp[j] = Math.min(dp[j], dp[next] + cost[i]);
+            for (int j = 10000; j >= 0; j--) {
+                if (cost[i] <= j) {
+                    dp[j] = Math.max(dp[j], dp[j - cost[i]] + memory[i]);
+                }
             }
         }
-        System.out.println(dp[m]);
 
+        for (int i = 0; i <= 10000; i++) {
+            if (dp[i] >= m) {
+                System.out.println(i);
+                break;
+            }
+
+        }
 
     }
-
 
 
 }
