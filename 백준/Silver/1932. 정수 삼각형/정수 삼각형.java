@@ -26,17 +26,14 @@ public class Main {
 //            st = new StringTokenizer(input.readLine());
             for (int j = 1; j <= i; j++) {
                 tri[i][j] = sc.nextInt();
+                tri[i][j] += Math.max(tri[i-1][j], tri[i-1][j-1]);
             }
         }
 
-        for (int i = 1; i <=n ; i++) {
-            for (int j = 1; j <= n ; j++) {
-                dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + tri[i][j];
-            }
-        }
+
 
         int max = -1;
-        for (int value : dp[n]) {
+        for (int value : tri[n]) {
             max = Math.max(max, value);
         }
         System.out.println(max);
@@ -47,25 +44,25 @@ public class Main {
                      private final char[] buf;
                      private final char[] cbuf;
                      private int len, ptr;
-         
+
                      public PScanner(InputStream input) {
                          in = new InputStreamReader(input);
                          buf = new char[8192];
                          cbuf = new char[8192];
                      }
-         
+
                      public boolean hasNext() {
                          consume();
                          return ptr < len && buf[ptr] > ' ';
                      }
-         
+
                      public boolean hasNextInLine() {
                          char c;
                          while ((c = read()) <= ' ' && c != 0 && c != '\n') ;
                          ptr--;
                          return ptr < len && buf[ptr] > ' ';
                      }
-         
+
                      public String next() {
                          consume();
                          char[] cbuf = this.cbuf;
@@ -89,18 +86,18 @@ public class Main {
                          if (ptr < len) clen--;
                          return new String(cbuf, 0, clen);
                      }
-         
+
                      private char[] copy(char[] src, int srcPos, char[] dest, int destPos, int length) {
                          if (dest.length < destPos + length) dest = Arrays.copyOf(dest, dest.length << 1);
                          System.arraycopy(src, srcPos, dest, destPos, length);
                          return dest;
                      }
-         
+
                      public char nextChar() {
                          consume();
                          return read();
                      }
-         
+
                      public int nextInt() {
                          consume();
                          int v = 0;
@@ -113,7 +110,7 @@ public class Main {
                          ptr--;
                          return neg ? -v : v;
                      }
-         
+
                      public long nextLong() {
                          consume();
                          long v = 0;
@@ -126,12 +123,12 @@ public class Main {
                          ptr--;
                          return neg ? -v : v;
                      }
-         
+
                      private char read() {
                          if (ptr == len) fill();
                          return ptr < len ? buf[ptr++] : 0;
                      }
-         
+
                      private void fill() {
                          try {
                              len = in.read(buf);
@@ -140,7 +137,7 @@ public class Main {
                              throw new RuntimeException(e);
                          }
                      }
-         
+
                      private void consume() {
                          char c;
                          while ((c = read()) <= ' ' && c != 0) ;
