@@ -33,35 +33,32 @@ public class Main {
             Arrays.fill(ints, 10_0000_0000);
         }
 
+
+        dp[0][0] = cost[0][0];
+        dp[0][1] = cost[0][1];
+        dp[0][2] = cost[0][2];
+
         int min = Integer.MAX_VALUE;
-
-        for (int i = 0; i < 3; i++) {
-
-            min = Math.min(min, dp(n-1, i));
+        for (int i = 1; i < n ; i++) {
+            for (int j = 0; j < 3; j++) {
+                for (int k = 0; k < 3; k++) {
+                    if(j == k) continue;
+                    dp[i][j] = Math.min(dp[i][j], dp[i-1][k] + cost[i][j]);
+                }
+                if (i == n - 1) {
+                    min = Math.min(min, dp[i][j]);
+                }
+            }
         }
         System.out.println(min);
 
 
 
 
-    }
-    static int dp(int depth, int selected){
 
-        if(depth == 0){
-            return cost[depth][selected];
-        }
 
-        if(dp[depth][selected] != 10_0000_0000){
-            return dp[depth][selected];
-        }
 
-        for (int i = 0; i < 3; i++) {
-            if (i == selected) continue;
 
-            dp[depth][selected] = Math.min(dp[depth][selected], dp(depth-1, i) + cost[depth][selected]);
-        }
-
-        return dp[depth][selected];
     }
 
 
