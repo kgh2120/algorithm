@@ -17,30 +17,28 @@ public class Main {
 
         int n = Integer.parseInt(input.readLine());
         int[] arr = new int[n];
-        int[] dp = new int[n];
+        int[] dp = new int[n+1];
 
         st = new StringTokenizer(input.readLine());
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.fill(dp, 1);
+        Arrays.fill(dp, 10_0000_0000);
 
+        int maxIndex = -1;
         for (int i = 0; i <n ; i++) {
             int cur = arr[i];
-            for (int j = i; j >= 0 ; j--) {
-                int target = arr[j];
 
-                if (cur > target) {
-                    dp[i] = Math.max(dp[i], dp[j] +1);
-                }
+            int index = Arrays.binarySearch(dp, cur);
+            if (index < 0) {
+                index = -index - 1;
             }
+            dp[index] = cur;
+            maxIndex = Math.max(maxIndex, index);
         }
+        System.out.println(maxIndex+1);
 
-        int max = -1;
-        for (int i : dp) {
-            max = Math.max(max, i);
-        }
-        System.out.println(max);
+
 
 
     }
