@@ -1,53 +1,60 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.*;
+
 
 public class Main {
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
+    static StringBuilder output = new StringBuilder();
 
-    static int[] value;
-    static int[][] dp;
+    static   int[][] dp ;
+    static  int[][] arr;
+    static int n;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
-        int n = Integer.parseInt(br.readLine());
-        value = new int[n + 1];
+        n = Integer.parseInt(input.readLine());
+        arr = new int[n][2];
         for (int i = 0; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
-            value[i] = Integer.parseInt(st.nextToken());
-            value[i+1] = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(input.readLine());
+            int f = Integer.parseInt(st.nextToken());
+            int t = Integer.parseInt(st.nextToken());
+            arr[i][0] = f;
+            arr[i][1] = t;
         }
-        dp = new int[n+1][n+1];
 
-        for (int[] ints : dp) {
-            Arrays.fill(ints,-1);
+        dp = new int[n][n];
 
-        }
-        
-        dp(1,n);
+        int i = find(0, n - 1);
+        System.out.println(i);
 
-        System.out.println(dp[1][n]);
+
+
+
     }
 
-    static int dp(int i, int j){
-        if(i == j)
+    static int find(int left, int right) {
+
+        if(dp[left][right] != 0)
+            return dp[left][right];
+        if(left == right)
             return 0;
 
-        if(dp[i][j] != -1) return dp[i][j];
+        if (left + 1 == right) {
+            return dp[left][right] = arr[left][0] * arr[right][0] * arr[right][1];
+        }
 
         int min = Integer.MAX_VALUE;
-        for (int k = i; k < j ; k++) {
-            min = Math.min(min, dp(i,k) + dp(k+1,j) + value[i-1] * value[k] * value[j]);
+        
+        for (int i = left; i < right ; i++) {
+            // left ~ i ,, i ~ right 그리고 arr[left][0] * arr[i][1] * arr[right][1]
+            min = Math.min(min, find(left,i) + find(i+1, right) + arr[left][0] * arr[i][1] * arr[right][1]);
         }
-        return dp[i][j] = min;
+        return dp[left][right] = min;
     }
-
-
 }
