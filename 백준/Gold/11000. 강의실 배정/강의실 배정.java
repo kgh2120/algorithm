@@ -17,8 +17,9 @@ public class Main {
         // 코드를 작성해주세요
         PScanner sc = new PScanner(System.in);
         int n = sc.nextInt();
-        Node[] nodes = new Node[n];
-        Queue<Node> pq= new PriorityQueue<>(new Comparator<Node>(){
+
+        Queue<Node> startQueue= new PriorityQueue<>();
+        Queue<Node> endQueue= new PriorityQueue<>(new Comparator<Node>(){
             @Override
             public int compare(Node o1, Node o2){
                 int v = Integer.compare(o1.end, o2.end);
@@ -28,17 +29,17 @@ public class Main {
             }
         });
         for(int i = 0;i<n;i++){
-            nodes[i] = new Node(sc.nextInt(), sc.nextInt());
+            startQueue.add(new Node(sc.nextInt(), sc.nextInt()));
         }
-        Arrays.sort(nodes);
 
         int max = -1;
-        for(Node node : nodes){
-            while(!pq.isEmpty() && pq.peek().end <= node.start){
-                pq.poll();
+        while(!startQueue.isEmpty()){
+            Node node = startQueue.poll();
+            while(!endQueue.isEmpty() && endQueue.peek().end <= node.start){
+                endQueue.poll();
             }
-            pq.add(node);
-            max = Math.max(max, pq.size());
+            endQueue.add(node);
+            max = Math.max(max, endQueue.size());
         }
 
         System.out.println(max);
