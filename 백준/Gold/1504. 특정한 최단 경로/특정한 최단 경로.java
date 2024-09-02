@@ -7,61 +7,93 @@ public class Main {
     static StringTokenizer st;
 
     static final int INF = 10_0000_0000;
+    static int n;
+    static Edge[] edges;
     public static void main(String[] args) throws Exception {
 
         st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
+        n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
 
-        int[][] matrix = new int[n+1][n+1];
+        edges = new Edge[n+1];
 
 
 
-        for (int i = 0; i<n+1; i++) {
-            Arrays.fill(matrix[i], INF);
-            matrix[i][i] = 0;
-        }
+
 
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int f = Integer.parseInt(st.nextToken());
             int t = Integer.parseInt(st.nextToken());
             int w = Integer.parseInt(st.nextToken());
-            matrix[f][t] = w;
-            matrix[t][f] = w;
+
+            edges[f] = new Edge(t, w, edges[f]);
+            edges[t] = new Edge(f, w, edges[t]);
+
         }
 
         st = new StringTokenizer(br.readLine());
         int a = Integer.parseInt(st.nextToken());
         int b = Integer.parseInt(st.nextToken());
 
-        for(int k = 1; k<=n; k++){
-            for (int i = 1; i<= n; i++){
-                for (int j = 1; j <= n; j++) {
-                    if (matrix[i][j] > matrix[i][k] + matrix[k][j]) {
-                        matrix[i][j] = matrix[i][k] + matrix[k][j];
-                    }
-                }
-            }
-        }
 
-        long ansA = matrix[1][a] + matrix[a][b] + matrix[b][n];
-        long ansB = matrix[1][b] + matrix[b][a] + matrix[a][n];
 
-        long ans = 0;
-        if(matrix[1][a] == INF || matrix[a][b] == INF || matrix[b][n] == INF)
-            ansA = -1;
-        if(matrix[1][b] == INF || matrix[b][a] == INF || matrix[a][n] == INF)
-            ansB = -1;
+        // 다익스트라 1->a, a->b, b->n
+        long ansA = (long) dijkstra(1, a) + dijkstra(a, b) + dijkstra(b, n);
+        long ansB = (long) dijkstra(1, b) + dijkstra(b, a) + dijkstra(a, n);
 
-        if(ansA != -1 && ansB != -1)
-            ans = Math.min(ansA,ansB);
-        else if(ansA == -1 && ansB != -1)
+        long ans = 0L;
+        if(ansA >= INF && ansB >= INF)
+            ans = -1;
+        else if(ansA < INF && ansB < INF)
+            ans = Math.min(ansA, ansB);
+        else if(ansA >= INF)
             ans = ansB;
         else ans = ansA;
 
         System.out.println(ans);
 
+
+    }
+
+    static int dijkstra(int start, int end){
+        Queue<Edge> q = new PriorityQueue<>();
+        q.add(new Edge(start, 0, null));
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, INF);
+        dist[start] = 0;
+
+        while(!q.isEmpty()){
+            Edge edge = q.poll();
+
+            if(dist[edge.to] < edge.weight) continue;
+
+            for (Edge e = edges[edge.to]; e != null; e = e.next) {
+                if(dist[e.to] > dist[edge.to] + e.weight){
+                    dist[e.to] = dist[edge.to] + e.weight;
+                    q.add(new Edge(e.to, dist[e.to], null));
+                }
+            }
+        }
+
+        return dist[end];
+    }
+
+    static class Edge implements Comparable<Edge>{
+        int to;
+        int weight;
+        Edge next;
+
+        public Edge(int to, int weight, Edge next) {
+            this.to = to;
+            this.weight = weight;
+            this.next = next;
+        }
+
+        @Override
+        public int compareTo(Edge o){
+            return Integer.compare(weight, o.weight);
+        }
 
     }
 
