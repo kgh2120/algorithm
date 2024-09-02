@@ -9,6 +9,7 @@ public class Main {
     static final int INF = 10_0000_0000;
     static int n;
     static Edge[] edges;
+    static Map<Integer, int[]> records;
     public static void main(String[] args) throws Exception {
 
         st = new StringTokenizer(br.readLine());
@@ -16,6 +17,7 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
 
         edges = new Edge[n+1];
+        records = new HashMap<>();
 
 
 
@@ -59,7 +61,13 @@ public class Main {
     static int dijkstra(int start, int end){
         Queue<Edge> q = new PriorityQueue<>();
         q.add(new Edge(start, 0, null));
-        int[] dist = new int[n + 1];
+
+        int[] dist = records.get(start);
+        if (dist != null) {
+            return dist[end];
+        }
+        dist = new int[n + 1];
+        records.put(start, dist);
         Arrays.fill(dist, INF);
         dist[start] = 0;
 
