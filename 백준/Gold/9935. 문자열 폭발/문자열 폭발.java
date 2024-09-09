@@ -1,79 +1,166 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Queue;
+/*
+
+    문자열이 주어진다. 문자열에 '폭발 문자열'이라는 것이 있으면, 폭발한다.
+
+    폭발동작은 다음과 같다.
+    1. 한 문자열 내에 폭발 문자열이 있다면 모두 사라진다.
+    2. 새로운 문자열이 생성된다.
+    1~2번 과정을 폭발 문자열이 없을때까지 반복한다.
+
+    주의할 점은 새로운 문자열이 생성되면서 폭발 문자열이 새로 등장할 수 있다는 점이다.
+
+    폭발 문자열이 더이상 없다면 그 상태의 문자열을 출력한다.
+    하지만 모든 문자열이 다 터진다면 'FRULA'라는 단어를 출력한다.
+
+    초기 문자열의 길이는 1<= L <= 1_000_000 (10^6)
+
+    간단하게 생각해서 선형 탐색으로 쭉 가는거로는 시간초과가 날 가능성이 높아보인다.
+
+    생각나는 방법
+    1. 첫번째엔 선형탐색을 진행한다. 이때 폭발된 문자열의 위치를 찾는다.
+       새로 폭발할 문자열이 생긴다면, 어차피 이 근처니까, 그쯤에서 찾아보기.
+
+    그런데 굳이 한번에 터뜨릴 필요가 있나? 그냥 투포인터처럼 하면 안되나? 그게 1번이랑 동일한듯?
+
+
+*/
+
+import java.util.*;
+import java.io.*;
 
 public class Main {
 
+    static Node head;
+    static Node cursor;
+    static Node tail;
+    static int size;
 
-    // queue에 다 넣는다.
-    // stack이 queue의 poll을 먹는다.
-    // 먹은 애가 target[cnt]와 같다면 cnt++
-    // cnt == length이면
-    // stack은 length만큼 pop하고
-    // length -1 만큼 queue에 add한다.
-    // 반복문은 queue가 빌때까지 진행하고
-    // 반복문이 끝났을 때 Stack의 상태에 따라서 답을 출력한다.
-    public static void main(String[] args) throws IOException {
+    static int targetLength;
+    static char[] targetArray;
+
+    static int index;
+    static boolean isNext;
+
+    public static void main(String[] args) throws Exception {
+        // 코드를 작성해주세요
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        BufferedReader br = new BufferedReader(new StringReader("mirkovC4nizCC44\n"
-//                + "C4"));
+
         String word = br.readLine();
-        char[] target = br.readLine().toCharArray();
-        int length = target.length;
+        String target = br.readLine();
+        targetArray = target.toCharArray();
 
-        Deque<Character> left = new ArrayDeque<>(); // LIFO 먹은애를 그대로 내뱉으면 됨.
-        Deque<Character> right = new ArrayDeque<>(); // LIFO 먹은애를 그대로 내뱉으면 됨.
-        for (int i = 0; i < word.length(); i++) {
-            right.addLast(word.charAt(i));
+        // Node head;
+        // Node cursor;
+        // Node tail;
+
+        targetLength = target.length();
+        if (word.length() < targetLength) {
+            System.out.println(word);
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        if (targetLength == 1) {
+            for(char c : word.toCharArray()) {
+                if(c == target.charAt(0)) {
+                    continue;
+                }
+                sb.append(c);
+            }
+
+        } else {
+            while (index < word.length()) {
+                char v = word.charAt(index++);
+                // 일단 추가를 한다.
+                build(v);
+                // 그 다음에 비교 진행.
+                if (size < targetLength) continue;
+                // 아니면 액션
+                action();
+            }
+
+            Node c = head;
+            while (c != null) {
+                sb.append(c.v);
+                c = c.next;
+            }
+
         }
 
-        int cnt = 0;
-        while (!right.isEmpty()) {
+
+        // 전설의 시작
 
 
-            Character poll = right.pollFirst();
-
-            if (poll != target[cnt]) {
-                cnt = 0;
-            }
-            if (poll == target[cnt]) {
-                cnt++;
-            }
-            left.addLast(poll);
-
-            if (cnt == length) {
-
-                for(int i = 0; i<length;i++)
-                    left.pollLast();
-
-                for(int i = 0; i<length-1;i++)
-                    if(!left.isEmpty())
-                        right.addFirst(left.pollLast());
-
-
-                cnt = 0;
-            }
-
-        }
-
-
-
-        if (left.isEmpty()) {
+        if (sb.length() == 0) {
             System.out.println("FRULA");
-        }else{
-            StringBuilder sb = new StringBuilder();
-            for (Character character : left) {
-                sb.append(character);
-            }
-            System.out.println(sb);
+        } else {
+            System.out.println(sb.toString());
         }
 
 
     }
 
+    static void action() {
 
+        int cnt = 0;
+        Node c = cursor;
+        boolean flag = false;
+
+        while (cnt < targetLength) {
+
+            if (c.v != targetArray[cnt]) {
+                flag = true;
+                break;
+            }
+            c = c.next; // NPE가 터짐.
+            cnt++;
+        }
+
+        if (flag) {
+            cursor = cursor.next;
+        } else {
+            // cursor 부터 targetLength까지 삭제.
+            // cursor는 targetLength -1 만큼 뒤로간다.
+
+            size -= targetLength;
+            if (cursor.prev != null) {
+                tail = cursor.prev;
+                tail.next = null;
+                cnt = 0;
+                while (cnt < targetLength - 1 && cursor.prev != null) {
+                    cursor = cursor.prev;
+                    cnt++;
+                }
+            } else {
+                head = null;
+                cursor = null;
+                tail = null;
+            }
+
+
+        }
+    }
+
+    static void build(char v) {
+        if (head == null) {
+            head = new Node(v, null, null);
+            tail = head;
+            cursor = head;
+        } else {
+            tail.next = new Node(v, tail, null);
+            tail = tail.next;
+        }
+        size++;
+    }
+
+    static class Node {
+        char v;
+        Node prev;
+        Node next;
+
+        public Node(char v, Node prev, Node next) {
+            this.v = v;
+            this.prev = prev;
+            this.next = next;
+        }
+    }
 }
