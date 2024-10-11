@@ -1,70 +1,43 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-class Main {
-
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-    static boolean[] filter;
-    static int n;
-    static int num;
-    static List<Integer> primeNumbers;
-
+public class Main {
     public static void main(String[] args) throws Exception {
-
-        num = Integer.parseInt(br.readLine());
-        if (num == 1) {
-            System.out.println(0);
-            return;
+        // 코드를 작성해주세요
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        
+        boolean [] filter = new boolean[n+1];
+        
+        List<Integer> primeNumbers = new ArrayList<>();
+        for(int i = 2; i<= n; i++){
+            if(filter[i]) continue;
+            
+            primeNumbers.add(i);
+            for(int j = 2; i*j <= n; j++)
+                filter[i*j] = true;
         }
-        filter = new boolean[num+1];
-        primeNumbers = new ArrayList<>();
-        getPrimeNumbers();
-
+        
         int l = 0;
         int r = 0;
-        int acc = primeNumbers.get(l);
-        int size = primeNumbers.size();
-        while (l <= r && l < size) {
-            if (acc < num) {
-                if(r == size -1)
+        int end = primeNumbers.size();
+        int acc = 0;
+        int answer = 0;
+        while(l<=r){
+            if(acc < n){
+                if(r >= end)
                     break;
-                acc += primeNumbers.get(++r);
-            } else if (acc > num) {
-                acc -= primeNumbers.get(l++);
-            }else{
-                n++;
-                acc -= primeNumbers.get(l++);
-                if(r == size-1)
-                    break;
-                acc += primeNumbers.get(++r);
+                acc += primeNumbers.get(r++);
+                continue;
             }
+            
+            if(acc == n){
+                answer++;
+            }
+            
+            acc -= primeNumbers.get(l++);
         }
-        System.out.println(n);
-
+        System.out.println(answer);
+        
     }
-
-    private static void getPrimeNumbers() {
-        for (int i = 2; i <= num ; i++) {
-            if(filter[i]) continue;
-            filtering(i);
-            primeNumbers.add(i);
-        }
-    }
-
-    private static void filtering(int n){
-
-        for (int i = 2; i* n <= num ; i++) {
-            filter[i*n] = true;
-        }
-    }
-
-
-
-
 }
