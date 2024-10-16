@@ -8,7 +8,6 @@ public class Main {
 
     static Edge[] graph;
     static boolean [] visited;
-    static int[] count;
 
 
     public static void main(String[] args) throws Exception{
@@ -25,7 +24,6 @@ public class Main {
 
 
             graph = new Edge[n+1];
-            count = new int[n+1];
             visited = new boolean[n+1];
 
             for(int j = 0; j<m; j++){
@@ -35,11 +33,12 @@ public class Main {
                 int cost = Integer.parseInt(st.nextToken());
                 graph[a] = new Edge(b, cost, graph[a]);
                 graph[b] = new Edge(a, cost, graph[b]);
-                count[a]++;
-                count[b]++;
+
             }
             visited[1] = true;
-            int cost = dfs(1);
+            int cost = 0;
+            if(m != 0)
+             cost = dfs(1);
             sb.append(cost).append("\n");
 
         }
@@ -49,22 +48,18 @@ public class Main {
     }
 
     static int dfs(int i) {
-
+        boolean isLeafNode = true;
         int cost = 0;
         for (Edge e = graph[i]; e != null; e = e.next) {
             if(visited[e.to]) continue;
+            isLeafNode = false;
             visited[e.to] = true;
-
-            if(count[e.to] == 1){
-                cost += e.cost;
-            }else {
-                int dfs = dfs(e.to);
-                int value = Math.min(e.cost, dfs);
-                cost += value;
-            }
-
-//            System.out.println("currentIndex : " + i + " to : " + e.to + " min : " + value + " origin cost : " + e.cost +  " dfs cost : " +dfs );
+            int dfs = dfs(e.to);
+            int value = Math.min(e.cost, dfs);
+            cost += value;
         }
+
+        if(isLeafNode) return graph[i].cost;
 
 
         return cost;
