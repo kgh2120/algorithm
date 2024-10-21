@@ -1,46 +1,40 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.*;
-
- class Main {
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-
-
+import java.io.*;
+public class Main {
     public static void main(String[] args) throws Exception {
-
-        int T = Integer.parseInt(br.readLine());
-        for (int i = 0; i < T; i++) {
+        // 코드를 작성해주세요
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int TC = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        for(int t = 0; t<TC; t++){
             int n = Integer.parseInt(br.readLine());
             String[] arr = new String[n];
-            for (int j = 0; j < n; j++) {
-                arr[j] = br.readLine();
-            }
-
+            for(int i = 0; i<n; i++)
+                arr[i] = br.readLine();
             Arrays.sort(arr);
-
-            boolean result = false;
-            for (int j = 0; j < n-1; j++) {
-                String prev = arr[j];
-                String next = arr[j+1];
-                if(prev.length() > next.length())
-                    continue;
-                if (next.startsWith(prev)) {
-                    result = true;
+            String answer = "YES";
+            for(int i = 0; i<n-1; i++){
+                String start = arr[i];
+                String phone = arr[i+1];
+                if(dosePhoneNumberIsStartWith(phone,start)){
+                    answer = "NO";
                     break;
                 }
             }
-
-            sb.append(result ? "NO" : "YES").append("\n");
+            sb.append(answer).append("\n");
         }
-
-        System.out.print(sb);
+        System.out.println(sb);
     }
-
-
-
-
+    
+    static boolean dosePhoneNumberIsStartWith(String phone, String start){
+        int length = start.length();
+        if(length > phone.length())
+            return false;
+        for(int i = 0; i<length; i++){
+            if(phone.charAt(i) != start.charAt(i))
+                return false;
+        }
+        return true;
+            
+    }
 }
