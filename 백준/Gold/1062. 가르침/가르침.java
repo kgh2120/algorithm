@@ -4,8 +4,8 @@ public class Main {
 
     static int n;
     static int k;
-    static int[] selected;
-    static String[] words;
+    static boolean[] selected;
+    static char[][] words;
     static int answer;
 
     public static void main(String[] args) throws Exception {
@@ -27,12 +27,12 @@ public class Main {
         // 재귀 종료 조건, nCk 선택한 경우
         if(depth == k){
             int cnt = 0;
-            for(String w : words){
-                int end = w.length()-4;
+            for(char[] w : words){
+                int end = w.length-4;
                 boolean check = true;
                 for(int idx = 4; idx < end; idx++){
-                    int k =w.charAt(idx)-'a';
-                    if(selected[k] != 1){
+                    int k =w[idx]-'a';
+                    if(!selected[k]){
                         check = false;
                         break;
                     }
@@ -53,12 +53,12 @@ public class Main {
         //    return;
 
         for(int number = i; number < 26; number++ ){
-            if(selected[number] == 1 || selected[number] == -1)
+            if(selected[number])
                 continue;
 
-            selected[number] = 1;
+            selected[number] = true;
             combination(number+1, depth+1);
-            selected[number] = 0;
+            selected[number] = false;
         }
 
 
@@ -70,24 +70,18 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         k = Integer.parseInt(st.nextToken());
 
-        selected = new int[26];
-//        Arrays.fill(selected ,-1);
+        selected = new boolean[26];
 
 
 
-        words = new String[n];
+        words = new char[n][];
         for(int i = 0; i< n; i++){
-            words[i] = br.readLine();
-
-            for(char c : words[i].toCharArray()){
-                int idx = c - 'a';
-                selected[idx] = 0;
-            }
+            words[i] = br.readLine().toCharArray();
         }
 
         char [] needs = {'a', 'n', 't', 'i', 'c'};
 
         for(char c : needs)
-            selected[c-'a'] = 1;
+            selected[c-'a'] = true;
     }
 }
