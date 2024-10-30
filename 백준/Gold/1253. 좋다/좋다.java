@@ -9,52 +9,43 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        Set<Integer> set = new HashSet<>();
-        
+        Map<Integer, Queue<Integer>> map = new HashMap<>();
         arr = new int[n];
         for(int i = 0; i<n; i++){
             arr[i] = Integer.parseInt(st.nextToken());
+            Queue<Integer>q = map.get(arr[i]);
+            if(q == null){
+                q = new ArrayDeque<>();
+                map.put(arr[i], q);
+            }
+            q.add(i);
         }
-        Arrays.sort(arr);
+       
         int answer = 0;
-        for(int i = n-1; i>=0; i--){
-            int origin = arr[i];
-            for(int j = n-1; j>=0; j--){
-                if(i == j) continue;
-                int num = arr[j];
-                int target = origin - num;
+        for(int i = 0; i<n; i++){
+            for(int j = i+1; j<n; j++){
                 
-                int index = binarySearch(target, i, j);
-                if(index == -1) continue;
-                answer++;
-                break;
+                int value = arr[i] + arr[j];
+                
+                Queue<Integer> q = map.get(value);
+                if(q == null) continue;
+                
+                int size = q.size();
+                
+                while(size-->0){
+                    int idx = q.poll();
+                    if(idx == i || idx == j){
+                        q.add(idx);
+                        continue;
+                    }
+                    
+                    answer++;
+                }
+                
             }
         }
         System.out.println(answer);
             
-    }
-    
-    static int binarySearch(int target, int i, int j){
-        
-        int l = 0;
-        int r = arr.length-1;
-        
-        while(l<=r){
-            int mid = (l+r)/2;
-            
-            int find = arr[mid];
-            
-            if(target > find){
-                l = mid+1;
-            }else if(target == find){
-                if(mid == i || mid == j)
-                    l = mid+1;
-                else
-                    return mid;
-            }else 
-                r = mid-1;
-        }
-        return -1;
     }
    
 }
