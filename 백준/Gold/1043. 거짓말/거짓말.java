@@ -1,87 +1,87 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.*;
-
+import java.io.*;
 public class Main {
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-
-    static Map<Integer, List<Integer>> peopleToParty;
-    static Map<Integer, List<Integer>> partyToPeople;
-    static boolean[] visited;
-
+    
+    static int[] parents;
+    static boolean[] truth;
+    static int[][] party;
+    
     public static void main(String[] args) throws Exception {
-        st = new StringTokenizer(br.readLine());
+        // 코드를 작성해주세요
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
-        peopleToParty = new HashMap<>();
-        partyToPeople = new HashMap<>();
-        visited = new boolean[n + 1];
-
-        for (int i = 1; i <= n; i++) {
-            peopleToParty.put(i, new ArrayList<>());
-        }
-        for (int i = 1; i <= m; i++) {
-            partyToPeople.put(i, new ArrayList<>());
-        }
+        
+        Node [] p = new Node[n+1];
+        int[][] party = new int[m][];
+        boolean [] selected = new boolean[n+1];
+        boolean[] isClean = new boolean[m];
+        
+        
         st = new StringTokenizer(br.readLine());
-        int nOfT = Integer.parseInt(st.nextToken());
-        int[] tArray = new int[nOfT];
-        for (int i = 0; i < nOfT; i++) {
-            tArray[i] = Integer.parseInt(st.nextToken());
+        int count = Integer.parseInt(st.nextToken());
+        
+        if(count == 0){
+            System.out.println(m);
+            return;
         }
-
-        for (int i = 1; i <= m; i++) {
-            st = new StringTokenizer(br.readLine());
-            int nOfPartyPeople = Integer.parseInt(st.nextToken());
-            List<Integer> party = partyToPeople.get(i);
-            for (int j = 0; j < nOfPartyPeople; j++) {
-                int peopleNumber = Integer.parseInt(st.nextToken());
-                party.add(peopleNumber);
-                peopleToParty.get(peopleNumber).add(i);
-            }
-        }
-
-        for (int i : tArray) {
-            if(visited[i]) continue;
-            bfs(i);
-        }
-
-        int answer = 0;
-
-        loop: for (int i = 1; i <= m ; i++) {
-            for (int p : partyToPeople.get(i)) {
-                if(visited[p])
-                    continue loop;
-            }
-            answer++;
-        }
-        System.out.println(answer);
-    }
-
-    static void bfs(int people) {
+        
         Queue<Integer> q = new ArrayDeque<>();
-        q.add(people);
-        visited[people] = true;
-
-        while (!q.isEmpty()) {
-            Integer p = q.poll();
-            for (int party : peopleToParty.get(p)) {
-                for (int pp : partyToPeople.get(party)) {
-                    if(visited[pp]){
-                        continue;
-                    }
-                    visited[pp] = true;
-                    q.add(pp);
+        
+        for(int i = 0; i<count; i++){
+            int number = Integer.parseInt(st.nextToken());
+            
+            q.add(number);
+            selected[number] = true;
+        }
+        
+        for(int i = 0; i<m; i++){
+            st = new StringTokenizer(br.readLine());
+            
+            count = Integer.parseInt(st.nextToken());
+            party[i] = new int[count];
+            for(int j = 0; j<count; j++){
+                 int number = Integer.parseInt(st.nextToken());
+                 p[number] = new Node(i, p[number]);
+                 party[i][j] = number;
+            }
+        }
+        
+        while(!q.isEmpty()){
+            int b = q.poll();
+            
+            for(Node e = p[b];  e != null; e = e.next){
+                if(isClean[e.num]) continue;
+                isClean[e.num] = true;
+                
+                for(int friend : party[e.num]){
+                    if(selected[friend]) continue;
+                    selected[friend] = true;
+                    q.add(friend);
                 }
             }
-
         }
-
+        int answer = 0;
+        for(boolean v : isClean){
+            if(!v) answer++;
+        }
+        
+        System.out.println(answer);
+       
+        
+        
+        
     }
-
+    
+    static class Node{
+        int num;
+        Node next;
+        
+        public Node(int num, Node next){
+            this.num = num;
+            this.next = next;
+        }
+    }
 
 }
