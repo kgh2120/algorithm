@@ -11,7 +11,12 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         
         Queue<Problem> pq = new PriorityQueue<>();
-        Problem[] problems = new Problem[n];
+        Queue<Problem> problems = new PriorityQueue<>(new Comparator<Problem>(){
+            @Override
+            public int compare(Problem p1, Problem p2){
+                return Integer.compare(p1.deadLine, p2.deadLine) * -1;
+            }
+        });
         int max = -1;
         
         for(int i = 0; i<n; i++){
@@ -20,23 +25,16 @@ public class Main {
             int value = Integer.parseInt(st.nextToken());
             
             Problem problem = new Problem(dead,value);
-            problems[i] = problem;
+            problems.add(problem);
             max = Math.max(dead, max);
         }
         
-        Arrays.sort(problems, new Comparator<Problem>(){
-            @Override
-            public int compare(Problem p1, Problem p2){
-                return Integer.compare(p1.deadLine, p2.deadLine) * -1;
-            }
-        });
+   
         
-        int index = 0;
         int answer = 0;
         while(max != 0){
-            while(index < n && problems[index].deadLine == max){
-                pq.add(problems[index]);
-                index++;
+            while(!problems.isEmpty()  && problems.peek().deadLine == max){
+                pq.add(problems.poll());
             }
             
             max--;
