@@ -36,10 +36,7 @@ public class Main {
         matrix = new char[n][m];
 
         for (int i = 0; i < n; i++) {
-            String word = br.readLine();
-            for (int j = 0; j < m; j++) {
-                matrix[i][j] = word.charAt(j);
-            }
+            matrix[i] = br.readLine().toCharArray();
         }
 
         Queue<Node> q = new ArrayDeque<>();
