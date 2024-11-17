@@ -24,7 +24,7 @@ public class Main {
                 int cost = Integer.parseInt(st.nextToken());
 
                 rooms[i] = new Room(type, cost);
-                while(st.hasMoreTokens()){
+                while(true){
                     int toIndex = Integer.parseInt(st.nextToken());
                     if(toIndex == 0) break;
                     rooms[i].addTo(toIndex);
@@ -38,52 +38,29 @@ public class Main {
                 Current cur = q.poll();
 
                 Room curRoom = rooms[cur.index];
-
-                // empty인지
-                if (curRoom.type.equals("E")) {
-                    if (cur.index == nOfRoom) {
-                        ans = "Yes";
-                        break;
-                    } else {
-                        // visited 처리해주기
-                        for (int next : curRoom.to) {
-                            if (visited[next] < cur.money) {
-                                visited[next] = cur.money;
-                                q.add(new Current(next, cur.money));
-                            }
-                        }
-                    }
-                }
-                // L인지
+          
+                int nextMoney = cur.money;
                 if (curRoom.type.equals("L")) {
-                    if (cur.index == nOfRoom) {
-                        ans = "Yes";
-                        break;
-                    } else {
-                        for (int next : curRoom.to) {
-                            int nextMoney = Math.max(cur.money, curRoom.value);
-                            if (visited[next] < nextMoney) {
-                                visited[next] = nextMoney;
-                                q.add(new Current(next, nextMoney));
-                            }
-                        }
+                    nextMoney = Math.max(cur.money, curRoom.value);
+                }
+                if (curRoom.type.equals("T") ) {
+                    if(cur.money < curRoom.value)
+                        continue;
+                    else {
+                        nextMoney = cur.money - curRoom.value;
                     }
                 }
-                // T인지
-                if (curRoom.type.equals("T") && cur.money >= curRoom.value) {
-                    if (cur.index == nOfRoom) {
-                        ans = "Yes";
-                        break;
-                    } else {
-                        for (int next : curRoom.to) {
-                            int nextMoney = cur.money - curRoom.value;
-                            if (visited[next] < nextMoney) {
-                                visited[next] = nextMoney;
-                                q.add(new Current(next, nextMoney));
-                            }
-                        }
+                if (cur.index == nOfRoom) {
+                    ans = "Yes";
+                    break;
+                }
+                for (int next : curRoom.to) {
+                    if (visited[next] < nextMoney) {
+                        visited[next] = nextMoney;
+                        q.add(new Current(next, nextMoney));
                     }
                 }
+
             }
             answer.append(ans).append("\n");
 
