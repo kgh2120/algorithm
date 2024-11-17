@@ -47,7 +47,7 @@ public class Main {
  				cnt++;
  				time = Math.max(time, t);
  			}
- 			res.append(cnt).append(" ").append(time).append("\n");
+ 			res.append(String.format("%d %d\n", cnt, time));
  		}
 		System.out.println(res);
  	}
