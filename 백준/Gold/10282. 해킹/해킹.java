@@ -1,80 +1,83 @@
 import java.util.*;
 import java.io.*;
 
+
 public class Main {
-
-    static public void main(String []args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int TC = Integer.parseInt(br.readLine());
-        StringBuilder sb = new StringBuilder();
-
-        for(int T = 0; T < TC; T++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int numberOfPC = Integer.parseInt(st.nextToken());
-            int numberOfDependencies = Integer.parseInt(st.nextToken());
-            int targetPC = Integer.parseInt(st.nextToken());
-
-            Edge[] graph = new Edge[numberOfPC+1];
-
-            boolean[] visited = new boolean[numberOfPC+1];
-
-            for(int i = 0; i< numberOfDependencies; i++){
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder answer = new StringBuilder();
+    
+    public static void main(String[] args) throws Exception {
+        // 코드를 작성해주세요
+        int tc = Integer.parseInt(br.readLine());
+        for(int t = 0; t <tc; t++){
+            st = new StringTokenizer(br.readLine());
+            int nOfPc = Integer.parseInt(st.nextToken());
+            int nOfDependencies = Integer.parseInt(st.nextToken());
+            int start = Integer.parseInt(st.nextToken());
+            
+            Edge [] graph = new Edge[nOfPc+1];
+            int[] dist = new int[nOfPc+1];
+            
+            for(int i = 0; i< nOfDependencies; i++){
                 st = new StringTokenizer(br.readLine());
-                int to = Integer.parseInt(st.nextToken());
+                
+                int to= Integer.parseInt(st.nextToken());
                 int from = Integer.parseInt(st.nextToken());
-                int weight = Integer.parseInt(st.nextToken());
-
-                graph[from] = new Edge(to,weight, graph[from]);
+                int cost = Integer.parseInt(st.nextToken());
+                
+                graph[from] = new Edge(to,cost,graph[from]);
+                
+                
             }
-
-            prim(graph, visited, targetPC, sb);
-        }
-
-        System.out.print(sb);
-
-    }
-
-    static void prim(Edge[] graph, boolean[] visited, int targetPC, StringBuilder sb){
-        Queue<Edge> pq = new PriorityQueue<>();
-        pq.add(new Edge(targetPC, 0, null));
-
-        int npc = 0;
-        int costTime = 0;
-
-        while(!pq.isEmpty()){
-            Edge e = pq.poll();
-
-            if(visited[e.to]) continue;
-            visited[e.to] = true;
-            npc++;
-            costTime = Math.max(costTime, e.weight);
-
-            for(Edge edge = graph[e.to]; edge != null; edge = edge.next){
-                if(visited[edge.to]) continue;
-                pq.add(new Edge(edge.to, costTime + edge.weight , null));
+            
+            Arrays.fill(dist, 10_0000_0000);
+            dist[start] = 0;
+            
+            Queue<Edge> pq = new PriorityQueue<>();
+            
+            pq.add(new Edge(start,0,null));
+            
+            while(!pq.isEmpty()){
+                Edge current = pq.poll();
+                
+                if(dist[current.to] < current.cost) continue;
+                
+                for(Edge e = graph[current.to]; e != null; e = e.next){
+                    if(dist[e.to] > e.cost + dist[current.to]){
+                        dist[e.to] = e.cost + dist[current.to];
+                        pq.add(new Edge(e.to, e.cost + dist[current.to], null));
+                    }
+                }
             }
+            
+            // 개수랑 숫자 세기
+            int max = -1;
+            int count = 0;
+            for(int i = 1; i<= nOfPc; i++){
+                if(dist[i] == 10_0000_0000) continue;
+                max = Math.max(max, dist[i]);
+                count++;
+            }
+            answer.append(count).append(" ").append(max).append("\n");
         }
-
-        sb.append(npc).append(" ").append(costTime).append("\n");
-
-
+        System.out.println(answer);
     }
-
+    
     static class Edge implements Comparable<Edge>{
         int to;
-        int weight;
+        int cost;
         Edge next;
-
-        public Edge(int t, int w, Edge e){
-            to = t;
-            weight = w;
-            next = e;
+        public Edge(int to, int cost, Edge next){
+            this.to = to;
+            this.cost= cost;
+            this.next = next;
         }
-
+        
         @Override
         public int compareTo(Edge o){
-            return Integer.compare(weight, o.weight);
+            return Integer.compare(this.cost, o.cost);
         }
     }
-
 }
