@@ -4,27 +4,31 @@
 
 ### 성능 요약
 
-메모리: 13964 KB, 시간: 140 ms
+메모리: 29884 KB, 시간: 192 ms
 
 ### 분류
 
 너비 우선 탐색, 깊이 우선 탐색, 그래프 이론, 그래프 탐색, 구현, 시뮬레이션
 
+### 제출 일자
+
+2024년 11월 19일 11:43:36
+
 ### 문제 설명
 
 <p>N×M의 모눈종이 위에 아주 얇은 치즈가 <그림 1>과 같이 표시되어 있다. 단, N 은 세로 격자의 수이고, M 은 가로 격자의 수이다. 이 치즈는 냉동 보관을 해야만 하는데 실내온도에 내어놓으면 공기와 접촉하여 천천히 녹는다. 그런데 이러한 모눈종이 모양의 치즈에서 각 치즈 격자(작 은 정사각형 모양)의 4변 중에서 적어도 2변 이상이 실내온도의 공기와 접촉한 것은 정확히 한시간만에 녹아 없어져 버린다. 따라서 아래 <그림 1> 모양과 같은 치즈(회색으로 표시된 부분)라면 C로 표시된 모든 치즈 격자는 한 시간 후에 사라진다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 208px; height: 171px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/a4998beb-104c-4e37-b3d7-fd91cd81464a/-/preview/" style="width: 208px; height: 171px;"></p>
 
 <p style="text-align: center;"><그림 1></p>
 
 <p><그림 2>와 같이 치즈 내부에 있는 공간은 치즈 외부 공기와 접촉하지 않는 것으로 가정한다. 그러므 로 이 공간에 접촉한 치즈 격자는 녹지 않고 C로 표시된 치즈 격자만 사라진다. 그러나 한 시간 후, 이 공간으로 외부공기가 유입되면 <그림 3>에서와 같이 C로 표시된 치즈 격자들이 사라지게 된다.</p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 208px; height: 171px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/e5d519ee-53ea-40a6-b970-710cca0db128/-/preview/" style="width: 208px; height: 171px;"></p>
 
 <p style="text-align: center;"><그림 2></p>
 
-<p style="text-align: center;"><img alt="" src="" style="width: 208px; height: 171px;"></p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/a00b876a-86dc-4a82-a030-603a9b1593cc/-/preview/" style="width: 208px; height: 171px;"></p>
 
 <p style="text-align: center;"><그림 3></p>
 

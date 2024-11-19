@@ -1,108 +1,125 @@
-import java.io.*;
 import java.util.*;
-import javax.swing.text.View;
-
+import java.io.*;
 
 /**
-
-    @author 규현
-    @since 2023-09-23
-    @url https://www.acmicpc.net/problem/2638
-    @level G3
-    @try
-    @performance
-    @category #
-    @note
-
-    이전 G4 치즈의 변형문제.
-    마찬가지로 BFS를 돌되, 이번엔 2번 접한 애들을 제거해주어야 한다.
-    이전 문제와 마찬가지로 가장자리에는 치즈가 놓이지 않음.
-    그럼 공기가 진행하면서, 공기인 경우 (0)은 그대로 지나치기.
-    흠... 두번 찍었다는 것을 어떻게 표현을 할 지..
-    매번 int배열로 visited를 체크하고, visited가 2가 되면 이미 탐색이 끝났다는 것으로 matrix의 값을 -1로 변형시키는 형태로 진행하면 어떨까..
-
-*/
+    
+    
+    추가 테케
+    
+    치즈가 하나도 없는 경우
+    3 3
+    0 0 0
+    0 0 0
+    0 0 0
+    
+    답 0
+    
+    치즈 1개 있는 경우
+    3 3
+    0 0 0
+    0 1 0
+    0 0 0
+    
+    답 1
+    
+**/
 public class Main {
-
+    
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-
     static int[][] matrix;
-    static int[][] visited;
-    static Queue<int[]> q;
-    static int n, m;
-    static int nOfC;
-    static final int VISITED = -1;
-    static int[][] deltas = {
-            {-1,0},{1,0},{0,-1},{0,1}
-    };
-
-    public static void main(String[] args) throws IOException {
+    static int n;
+    static int m;
+    static int cheeseCount;
+    static Queue<int[]> melted = new ArrayDeque<>();
+    
+    static int[][] deltas = {{-1,0}, {0,-1},{1,0},{0,1}};
+    
+    static final int CHEESE = 1;
+    static final int BLANK = 0;
+    
+    public static void main(String[] args) throws Exception {
+        // 코드를 작성해주세요
+        init();
+        int answer = solution();
+        System.out.println(answer);
+        
+    }
+    
+    static int solution(){
+        
+        int time = 0;
+        while(cheeseCount != 0){
+            // 녹을 애 찾기
+            findOutterCheese();
+            // 녹이기
+            melt();
+            time++;
+        }
+        return time;
+    }
+    
+    static void findOutterCheese(){
+        Queue<int[]> q = new ArrayDeque<>();
+        int[][] visited = new int[n][m];
+        
+        q.add(new int[]{0,0});
+        
+        while(!q.isEmpty()){
+            int[] current = q.poll();
+            
+            
+            for(int [] delta : deltas){
+                int nextRow = current[0] + delta[0];
+                int nextCol = current[1] + delta[1];
+                
+                if(isIn(nextRow, nextCol)){
+                    // 치즈인지 아닌지
+                    if(matrix[nextRow][nextCol] == CHEESE){
+                        if(++visited[nextRow][nextCol] == 2){
+                            melted.add(new int[]{nextRow,nextCol});
+                        }
+                    }
+                    else {
+                        if(++visited[nextRow][nextCol] == 1)
+                            q.add(new int[]{nextRow, nextCol});    
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+    
+    static void melt(){
+    
+        while(!melted.isEmpty()){
+            int[] cheese = melted.poll();
+            matrix[cheese[0]][cheese[1]] = BLANK;
+            cheeseCount--;
+        }
+    }
+    
+    static boolean isIn(int row, int col){
+        return row >= 0 && row < n && col >= 0 && col < m;
+    }
+    
+    static void init() throws Exception{
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-
+        
         matrix = new int[n][m];
-        visited = new int[n][m];
-        q = new ArrayDeque<>();
-        int time = 0;
-        for (int i = 0; i < n; i++) {
+        
+        for(int i = 0; i<n; i++){
             st = new StringTokenizer(br.readLine());
-            for (int j = 0; j < m; j++) {
-                int num = Integer.parseInt(st.nextToken());
-                matrix[i][j] = num;
-                if(num == 1) nOfC++;
+            for(int j = 0; j<m; j++){
+                int block = Integer.parseInt(st.nextToken());
+                matrix[i][j] = block;
+                if(block == CHEESE){
+                    cheeseCount++;
+                }       
             }
         }
-
-        if (nOfC == 0) {
-            time = 0;
-        }else{
-
-            q.add(new int[]{0,0});
-            matrix[0][0] = VISITED;
-
-            while(nOfC != 0){
-                time++;
-                bfs();
-            }
-        }
-        System.out.println(time);
-
     }
-    private static void bfs(){
-        Queue<int[]> next = new ArrayDeque<>();
-
-        while (!q.isEmpty()) {
-            int[] poll = q.poll();
-
-            for (int[] delta : deltas) {
-                int nr = poll[0] + delta[0];
-                int nc = poll[1] + delta[1];
-                if(canMove(nr,nc)){
-                    int num = matrix[nr][nc];
-                    if(num == 0){
-                        matrix[nr][nc] = VISITED;
-                        q.add(new int[]{nr,nc});
-                    }else{
-                        if(visited[nr][nc] >= 1){
-                            matrix[nr][nc] = VISITED;
-                            next.add(new int[]{nr,nc});
-                            nOfC--;
-                        }else{
-                            visited[nr][nc]++;
-                        }
-                    }
-                }
-            }
-        }
-        q = next;
-    }
-
-    private static boolean canMove(int row, int col){
-        return row >= 0 && row < n && col >= 0 && col < m && matrix[row][col] != VISITED;
-    }
-
-
-    
 }
