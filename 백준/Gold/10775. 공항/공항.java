@@ -15,19 +15,19 @@ import java.io.*;
     4
 
     4
-    
+
     하나밖에 못 박는 경우
-    
+
     4
     4
     1
     1
     1
-    1
-    
     1
 
-    
+    1
+
+
  */
 public class Main {
 
@@ -55,7 +55,7 @@ public class Main {
             if(parent == 0)
                 break;
 
-            parents[parent] = parent -1;
+            parents[parent] = find(parent -1);
             answer++;
         }
         System.out.println(answer);
