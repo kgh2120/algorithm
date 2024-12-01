@@ -1,197 +1,86 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
+
 
 public class Main {
 
-    static int[][] matrix;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
 
-    static Queue<Log> q = new LinkedList<>();
-    static int minTurn = Integer.MAX_VALUE;
-    static int targetRow;
-    static int targetCol;
+    static char[][] matrix;
+    static final int BLOCK = '1';
 
-    public void solution() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        targetRow = Integer.parseInt(st.nextToken());
-        targetCol = Integer.parseInt(st.nextToken());
+    static int [][][] dp;
+    static int n;
+    static int m;
 
-        matrix = new int[targetRow + 1][targetCol + 1];
-
-        for (int i = 1; i <= targetRow; i++) {
-            String[] blocks = br.readLine().split("");
-            int c = 1;
-            for (String block : blocks) {
-                matrix[i][c++] = Integer.parseInt(block);
-            }
-        }
-
-        if (targetRow == 1 && targetCol == 1) {
-            System.out.println(1);
-            return;
-        }
-
-
-        bfs();
-
-        System.out.println(minTurn == Integer.MAX_VALUE ? -1 : minTurn);
-
-    }
-
-    public void bfs() {
-        q.add(new Log(1, 1, 1, true));
-        while (!q.isEmpty()) {
-            Log log = q.poll();
-            findPath(log);
-        }
-    }
-
-    public void findPath(Log log){
-        // 4방
-        // 위
-        if (log.row - 1 > 0 && matrix[log.row - 1][log.col] >= 0) {
-            if (matrix[log.row - 1][log.col] == 1) {
-                if (log.canDestory) {
-                    q.add(new Log(log.row - 1, log.col, log.turn + 1, false));
-                    finish(log.row - 1, log.col, log.turn + 1);
-                }
-            } else {
-
-                boolean canDestory = log.canDestory;
-                if (matrix[log.row - 1][log.col] == 0) {
-                    q.add(new Log(log.row - 1, log.col, log.turn + 1, log.canDestory));
-                    finish(log.row-1, log.col,log.turn+1);
-                    matrix[log.row-1][log.col]= canDestory ? 2 : 3;
-                }
-                if (matrix[log.row -1 ][log.col] == 3) {
-                    if (canDestory) {
-                        q.add(new Log(log.row - 1, log.col, log.turn + 1, log.canDestory));
-                        finish(log.row-1, log.col,log.turn+1);
-                        matrix[log.row-1][log.col] = 2;
-                    }
-
-                }
-            }
-        }
-        // 아래
-        if (log.row + 1 <= targetRow && matrix[log.row + 1][log.col] >= 0) {
-            if (matrix[log.row + 1][log.col] == 1) {
-                if (log.canDestory) {
-                    q.add(new Log(log.row + 1, log.col, log.turn + 1, false));
-                    finish(log.row + 1, log.col, log.turn + 1);
-                }
-            } else {
-
-                boolean canDestory = log.canDestory;
-                if (matrix[log.row + 1][log.col] == 0) {
-                    q.add(new Log(log.row + 1, log.col, log.turn + 1, canDestory));
-                    finish(log.row+1, log.col,log.turn+1);
-                    matrix[log.row+1][log.col]  = canDestory ? 2 : 3;
-                }
-                if (matrix[log.row + 1][log.col] == 3) {
-                    if (canDestory) {
-                        q.add(new Log(log.row + 1, log.col, log.turn + 1, canDestory));
-                        finish(log.row+1, log.col,log.turn+1);
-                        matrix[log.row+1][log.col] = 2;
-                    }
-
-                }
-            }
-        }
-
-        // 좌
-        if (log.col - 1 > 0 && matrix[log.row][log.col - 1] >= 0) {
-            if (matrix[log.row][log.col - 1] == 1) {
-                if (log.canDestory) {
-                    q.add(new Log(log.row, log.col - 1, log.turn + 1, false));
-                    finish(log.row, log.col - 1, log.turn + 1);
-                }
-            } else {
-
-                boolean canDestory = log.canDestory;
-                if (matrix[log.row][log.col - 1] == 0) {
-                    q.add(new Log(log.row, log.col - 1, log.turn + 1, canDestory));
-                    finish(log.row, log.col-1,log.turn+1);
-                    matrix[log.row][log.col - 1] = canDestory ? 2 : 3;
-                }
-                if (matrix[log.row][log.col - 1] == 3) {
-                    if (canDestory) {
-                        q.add(new Log(log.row, log.col - 1, log.turn + 1, canDestory));
-                        finish(log.row, log.col-1,log.turn+1);
-                        matrix[log.row][log.col - 1] = 2;
-                    }
-
-                }
-
-            }
-        }
-
-        // 우
-        if (log.col + 1 <= targetCol&& matrix[log.row][log.col + 1]>= 0) {
-            if (matrix[log.row][log.col + 1] == 1) {
-                if (log.canDestory) {
-                    q.add(new Log(log.row, log.col + 1, log.turn + 1, false));
-                    finish(log.row, log.col + 1, log.turn + 1);
-                }
-            } else {
-                boolean canDestory = log.canDestory;
-                if (matrix[log.row][log.col + 1] == 0) {
-                    q.add(new Log(log.row, log.col + 1, log.turn + 1, canDestory));
-                    finish(log.row, log.col+1,log.turn+1);
-                    matrix[log.row][log.col + 1] = canDestory ? 2 : 3;
-                }
-                if (matrix[log.row][log.col + 1] == 3) {
-                    if (canDestory) {
-                        q.add(new Log(log.row, log.col + 1, log.turn + 1, canDestory));
-                        finish(log.row, log.col+1,log.turn+1);
-                        matrix[log.row][log.col + 1] = 2;
-                    }
-
-                }
-
-
-            }
-        }
-
-
-    }
-
-    public void finish(int r, int c, int turn){
-        if (r == targetRow && c == targetCol) {
-            minTurn = Math.min(minTurn, turn);
-            q.clear();
-
-
-        }
-    }
-
-
-    class Log {
-        private int row;
-        private int col;
-        private int turn;
-        private boolean canDestory;
-
-        public Log(int row, int col, int turn, boolean canDestory) {
-            this.row = row;
-            this.col = col;
-            this.turn = turn;
-            this.canDestory = canDestory;
-        }
-
-
-    }
-
+    static int[][] deltas = {
+            {-1,0}, {1,0}, {0,-1}, {0,1}
+    };
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        // 코드를 작성해주세요
+        init();
+
+        Queue<int[]> q = new ArrayDeque<>();
+
+        q.add(new int[]{0, 0, 0});
+        dp[0][0][0] = 1;
+        int turn = 1;
+        while (!q.isEmpty()) {
+            turn++;
+            int size = q.size();
+            while (size-- > 0) {
+                int[] cur = q.poll();
+
+                for (int[] delta : deltas) {
+                    int nr = cur[1] + delta[0];
+                    int nc = cur[2] + delta[1];
+
+                    if (isIn(nr, nc)) {
+                        int nextBlock = matrix[nr][nc];
+                        // 여기가 0이라면, 그리고 내가 더 짧다면 ㄱ
+                        if (nextBlock == '0' && dp[cur[0]][nr][nc] > turn) {
+                            dp[cur[0]][nr][nc] = turn;
+                            q.add(new int[]{cur[0], nr,nc});
+                        }
+                        // 여기가 1이라면 그리고 내가 0이라면, 그리고내가 더 짧다면
+                        if (nextBlock == '1' && cur[0] == 0 && dp[1][nr][nc] > turn) {
+                            dp[1][nr][nc] = turn;
+                            q.add(new int[]{1, nr,nc});
+                        }
+
+
+                    }
+                }
+            }
+
+        }
+
+        int result = Math.min(dp[1][n - 1][m - 1], dp[0][n - 1][m - 1]);
+        if(result == Integer.MAX_VALUE)
+            result = -1;
+
+        System.out.println(result);
+
+    }
+
+    private static void init() throws IOException {
+        st = new StringTokenizer(br.readLine());
+
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        dp = new int[2][n][m];
+        matrix = new char[n][];
+
+        for (int i = 0; i < n; i++) {
+            matrix[i] =  br.readLine().toCharArray();
+            Arrays.fill(dp[0][i], Integer.MAX_VALUE);
+            Arrays.fill(dp[1][i], Integer.MAX_VALUE);
+        }
+    }
+
+    static boolean isIn(int row, int col) {
+        return row >= 0 && row < n && col >= 0 && col < m;
     }
 }
-
-
-
-
-
