@@ -1,100 +1,75 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
 
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder answer = new StringBuilder();
-
-    static int[][] adjMatrix;
-
-    static final int FW_INITIAL_VALUE = 1_000_000_000;
-
-    static final String SUCCESS = "YES";
-    static final String FAIL = "NO";
+    private static final int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        int tc = Integer.parseInt(br.readLine());
+        int TC = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
 
-        while (tc-- > 0) {
-            init();
-            String ans = isCycled() ? SUCCESS : FAIL;
-            answer.append(ans).append("\n");
+        while (TC-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int M = Integer.parseInt(st.nextToken());
+            int W = Integer.parseInt(st.nextToken());
 
+            Edge[] edges = new Edge[(M << 1) + W];
+            for (int i = 0, idx = 0; i < M; ++i) {
+                st = new StringTokenizer(br.readLine());
+                int S = Integer.parseInt(st.nextToken());
+                int E = Integer.parseInt(st.nextToken());
+                int T = Integer.parseInt(st.nextToken());
+                edges[idx++] = new Edge(S, E, T);
+                edges[idx++] = new Edge(E, S, T);
+            }
+
+            for (int i = 0, idx = M << 1; i < W; ++i) {
+                st = new StringTokenizer(br.readLine());
+                int S = Integer.parseInt(st.nextToken());
+                int E = Integer.parseInt(st.nextToken());
+                int T = Integer.parseInt(st.nextToken());
+                edges[idx++] = new Edge(S, E, -T);
+            }
+            boolean negativeCycle = bellmanFord(N, M, edges, 1);
+            sb.append(negativeCycle ? "YES\n" : "NO\n");
         }
-
-        System.out.println(answer);
-
-
-
-
-
-
-
+        System.out.println(sb.toString());
+        br.close();
     }
 
-    private static boolean isCycled() {
+    private static boolean bellmanFord(int v, int e, Edge[] edges, int start) {
+        long[] distance = new long[v + 1];
+        Arrays.fill(distance, INF);
+        distance[start] = 0;
 
-        int numberOfVertex = adjMatrix.length-1;
-
-        for (int k = 1; k<=numberOfVertex; k++) {
-            for (int i = 1; i <= numberOfVertex ; i++) {
-                for (int j = 1; j <= numberOfVertex; j++) {
-//                    if(i == j) continue;
-
-                    if (adjMatrix[i][j] > adjMatrix[i][k] + adjMatrix[k][j]) {
-                        adjMatrix[i][j] = adjMatrix[i][k] + adjMatrix[k][j];
-                    }
-
+        for (int i = 0; i < v; ++i) {
+            boolean update = false;
+            for (Edge edge: edges) {
+                if (distance[edge.e] > distance[edge.s] + edge.time) {
+                    distance[edge.e] = distance[edge.s] + edge.time;
+                    update = true;
                 }
-
             }
-        }
 
-        for (int i = 1; i <= numberOfVertex ; i++) {
-            if(adjMatrix[i][i] < 0)
+            if (i == v - 1 && update) {
                 return true;
+            }
         }
         return false;
-
     }
 
+    private static class Edge {
+        int s, e, time;
 
-    private static void init() throws IOException {
-        st = new StringTokenizer(br.readLine());
-        int numberOfVertex = Integer.parseInt(st.nextToken());
-        int numberOfBridge = Integer.parseInt(st.nextToken());
-        int numberOfHole = Integer.parseInt(st.nextToken());
-
-        adjMatrix = new int[numberOfVertex+1][numberOfVertex+1];
-
-        for(int i = 1; i <= numberOfVertex; i++){
-            Arrays.fill(adjMatrix[i], FW_INITIAL_VALUE);
-            adjMatrix[i][i] = 0;
-        }
-        inputEdges(numberOfBridge,true);
-        inputEdges(numberOfHole,false);
-    }
-
-    static void inputEdges(int n, boolean isBridge) throws IOException {
-        while(n-->0){
-            st = new StringTokenizer(br.readLine());
-            int from = Integer.parseInt(st.nextToken());
-            int to = Integer.parseInt(st.nextToken());
-            int value = Integer.parseInt(st.nextToken());
-
-
-            if (isBridge) {
-                adjMatrix[from][to] = Math.min(adjMatrix[from][to], value);
-                adjMatrix[to][from] = Math.min(adjMatrix[to][from], value);
-                continue;
-            }
-            adjMatrix[from][to] = Math.min(adjMatrix[from][to], value * -1);
+        Edge(int s, int e, int time) {
+            this.s = s;
+            this.e = e;
+            this.time = time;
         }
     }
-
-
 }
