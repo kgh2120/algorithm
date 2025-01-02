@@ -1,68 +1,97 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringBuilder sb = new StringBuilder();
+/**
+ *
+ *  LCS 문제임. 시간제한이 0.4초이다.
+ *  N은 최대 1000글자
+ *  LCS에 대한 정확한 시간 복잡도가 생각나지는 않는데,
+ *  돌아가는 모양새가 A * B같은 느낌이라서 1000 * 1000은 10만이니
+ *  0.4초 이내에 돌아가지 않을까 싶다.
+ *  특이 사항으로 출력에서 LCS가 여러 개이면 아무거나 출력하고,
+ *  길이가0인 경우엔 출력하지 않는다고 한다.
+ *  이제보니 LCS 문장 자체를 출력해야 하는 문제였다.
+ *
+ *  일반적인 LCS라고 하면, 경우에 대해서 값을 리턴해주는 형태를 띈다.
+ *  그런데 최종적으로 값뿐만 아닌 형태도 가져야 한다면
+ *
+ */
+public class Main{
 
-    static StringTokenizer st;
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
 
+    static char[] firstWord;
+    static char[] secondWord;
 
     static Node[][] dp;
-    static String left;
-    static String right;
-    static Node blank = new Node('0',null,-1);
-    public static void main(String[] args) throws Exception {
 
-        left = br.readLine();
-        right = br.readLine();
-        dp = new Node[left.length()][right.length()];
-        LCS(left.length()-1, right.length()-1);
-        Node last = dp[left.length() - 1][right.length() - 1];
+    public static void main(String[] args) throws Exception{
+        firstWord = input.readLine().toCharArray();
+        secondWord = input.readLine().toCharArray();
 
+        dp = new Node[firstWord.length][secondWord.length];
 
-        System.out.println(last.n+1);
-        while (last.next != null) {
-            sb.append(last.v);
-            last = last.next;
-        }
-        System.out.println(sb.reverse());
+        Node result = lcs(0, 0);
+
+        StringBuilder answer = new StringBuilder();
+
+        answer.append(result.length).append("\n");
+
+        for(Word w = result.word; w != null; w = w.next)
+            answer.append(w.alphabet);
+
+        System.out.print(answer);
     }
 
-    private static Node LCS(int l, int r){
-        if(l < 0 || r < 0) return blank;
+    static Node lcs(int leftIndex, int rightIndex){
 
-
-        if(dp[l][r] != null) return dp[l][r];
-
-        // left.l == right.r 전에꺼 + 나
-        if (left.charAt(l) == right.charAt(r)) {
-            Node before = LCS(l - 1, r - 1);
-            Node cur = new Node(left.charAt(l), before, before.n+1);
-            dp[l][r] = cur;
-        }else {
-            Node left = LCS(l - 1, r);
-            Node right = LCS(l,r-1);
-
-            if (left.n > right.n) {
-                dp[l][r] = left;
-            }else
-                dp[l][r] = right;
+        if(leftIndex >= firstWord.length || rightIndex >= secondWord.length){
+            return new Node(0, null);
         }
-        return dp[l][r];
+
+        if(dp[leftIndex][rightIndex] != null){
+            return dp[leftIndex][rightIndex];
+        }
+
+        // 같은 경우
+        Node node = null;
+        if(firstWord[leftIndex] == secondWord[rightIndex]){
+            Node same = lcs(leftIndex + 1, rightIndex + 1);
+            node = new Node(same.length+1, new Word(secondWord[rightIndex], same.word));
+        } else {
+
+            Node left = lcs(leftIndex + 1, rightIndex);
+            Node right = lcs(leftIndex , rightIndex+1);
+
+            Node winner = null;
+
+            if (left.length >= right.length) {
+                winner = left;
+            } else {
+                winner = right;
+            }
+            node = winner;
+        }
+
+        return dp[leftIndex][rightIndex] = node;
     }
 
     static class Node{
-        char v;
-        Node next;
-        int n;
-
-        public Node(char v, Node next, int n) {
-            this.v = v;
-            this.next = next;
-            this.n = n;
+        int length;
+        Word word;
+        public Node(int length, Word word) {
+            this.length = length;
+            this.word = word;
         }
     }
 
+    static class Word{
+        char alphabet;
+        Word next;
 
+        public Word(char alphabet, Word next) {
+            this.alphabet = alphabet;
+            this.next = next;
+        }
+    }
 }
