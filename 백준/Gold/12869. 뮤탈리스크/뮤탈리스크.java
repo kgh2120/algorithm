@@ -1,91 +1,83 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-/*
-    12869 뮤탈
+public class Main {
 
-    뮤탈은 9 3 1 씩 데미지를 준다.
-
-    SCV는 1 ~ 3개가 있다.
-
-    가장 최소로 hit해서 전부 터트릴 수 있는 횟수를 찾아라.
-
-    scv의 체력은 60이하이다.
-
-    scv를 때리는 서순을 본다면 한 턴에 경우는 6가지가 발생한다 (scv가 3개라는 경우에서)
-     -> 1 2 3 / 1 3 2 / 2 1 3/ 2 3 1 / 3 1 2 / 3 2 1
-
-    3쿠션이 안터져서 9씩만 들어가는 상황에서 60 60 60이라고 하면 7 7 7대로 총 21대가 소모된다.
-    그럼 경우를 대충 나누면 6 ^ 21이다. 6 ^ 10 -> 2 ^ 10 * 3 ^10 인데 2 ^ 10 은 1024다. 3^ 10은 6만정도이다.
-    6 ^ 10은 그럼 10 ^ 7정도? 그럼 6 ^ 20은 10 ^ 14니까 큰일났다.
-
-
-
- */
-class Main {
-
-
-    public static final int INIT = -1;
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
-    static int[][][] dp;
+    static boolean[][][] visited;
+
 
     public static void main(String[] args) throws Exception {
+        // 코드를 작성해주세요
+        int n = Integer.parseInt(input.readLine());
 
-        int n = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine());
-        int[] temp = new int[3];
-        for (int i = 0; i < n; i++) {
-            temp[i] = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(input.readLine());
+
+        int [] arr = new int[3];
+        Arrays.fill(arr,1);
+        for(int i = 0; i<n; i++){
+            arr[i] = Integer.parseInt(st.nextToken()) + 1;
         }
 
-        Arrays.sort(temp);
+        visited = new boolean[arr[0]][arr[1]][arr[2]];
 
-        dp = new int[temp[0]+1][temp[1]+1][temp[2]+1];
+        // 이제 때리기
 
-        for (int[][] dd : dp) {
-            for (int[] ints : dd) {
-                Arrays.fill(ints, INIT);
-            }
-        }
+        Queue<int[]> mutal = new ArrayDeque<>();
 
-        System.out.println(dp(temp));
+        mutal.add(new int[]{arr[0]-1, arr[1]-1, arr[2] -1});
+
+        int turn = 0;
+        while(!mutal.isEmpty()){
+            int size = mutal.size();
+            turn++;
+            while(size-- > 0){
+
+                int[] scv = mutal.poll();
+
+                // 어디를 때릴지 고르기
+                for(int i = 0; i<3; i++){
+                    for(int j = 0;j<3; j++){
+                        if(i == j) continue;
+                        for(int k =0; k<3; k++){
+                            if(j == k || i == k) continue;
+                            // i -> 9 j -> 3; k -> 1
+                            // 1, 2, 3 
+                            int a = calcHp(scv[0], convertIndex(i) );
+                            int b = calcHp(scv[1], convertIndex(j));
+                            int c = calcHp(scv[2], convertIndex(k));
+
+                            if(visited[a][b][c]) continue;
+
+                            visited[a][b][c] = true;
+                            mutal.add(new int[]{a,b,c});
+
+                            if (a == 0 && b == 0 && c == 0) {
+                                System.out.println(turn);
+                                return;
+                            }
 
 
-    }
-
-    private static int dp(int [] arr){
-        if (arr[0] == 0 && arr[1] == 0 && arr[2] == 0) {
-            return 0;
-        }
-        if (dp[arr[0]][arr[1]][arr[2]] != INIT) {
-            return dp[arr[0]][arr[1]][arr[2]];
-        }
-
-        // 6개의 경우의수 중 가장 짧은 애 등록
-
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i <= 2; i++) {
-            for (int j = 0; j <= 2; j++) {
-                if(j == i) continue;
-                for (int k = 0; k <= 2; k++) {
-                    if(k == j || k == i) continue;
-                    int[] temp = {minus(arr[i], 9), minus(arr[j],3), minus(arr[k],1)};
-                    Arrays.sort(temp);
-                    min = Math.min(min, dp(temp));
-
+                        }
+                    }
                 }
+
             }
         }
-
-        return dp[arr[0]][arr[1]][arr[2]]  = 1 + min;
     }
 
-    private static int minus(int number, int degree) {
-        return Math.max(0, number - degree);
+    static int convertIndex(int i) {
+        switch (i) {
+            case 0: return 9;
+            case 1: return 3;
+            case 2: return 1;
+        }
+        return -1;
     }
 
+    static int calcHp(int hp, int damage){
+        return Math.max(0, hp-damage);
+    }
 }
