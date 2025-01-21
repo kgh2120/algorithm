@@ -1,99 +1,132 @@
 import java.util.*;
 import java.io.*;
 
+public class Main {
 
-class Main {
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
 
     static int n;
-    static int [] peoples;
-    static List<List<Integer>> adjList;
-//    static boolean [] selected;
-    static boolean[] visited;
+
+    static Node[] graph;
+
+    static int[] numberOfCitizen;
+
     static int min = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws Exception {
-        n = Integer.parseInt(br.readLine());
-        peoples = new int[n+1];
-//        selected = new boolean[n+1];
-        visited = new boolean[n+1];
-        st = new StringTokenizer(br.readLine());
-        for (int i = 1; i <= n ; i++) {
-            peoples[i] = Integer.parseInt(st.nextToken());
-        }
-        adjList = new ArrayList<>();
-        for (int i = 0; i <n+1 ; i++) {
-            adjList.add(new ArrayList<>());
-        }
-
-        for (int i = 1; i <= n; i++) {
-            st = new StringTokenizer(br.readLine());
-            int m = Integer.parseInt(st.nextToken());
-            for (int j = 0; j < m; j++) {
-                adjList.get(i).add(Integer.parseInt(st.nextToken()));
-            }
-        }
-
-        makeSubset(1, new boolean[n+1]);
+        // 코드를 작성해주세요
+        init();
+        comb(1, new boolean[n+1]);
 
         System.out.println(min == Integer.MAX_VALUE ? -1 : min);
 
+
     }
 
-    private static void makeSubset(int cnt, boolean[] selected ){
-        if (cnt == n+1) {
+    static void init() throws Exception{
+        n = Integer.parseInt(input.readLine());
 
-            Arrays.fill(visited,false);
-            int t = bfs(selected, true);
-            int f = bfs(selected, false);
+        st = new StringTokenizer(input.readLine());
 
-            if (isAllConnected()) {
-                if(t == -1 || f == -1) return;
-                min = Math.min(min,Math.abs(t-f));
+        numberOfCitizen = new int[n+1];
+        graph = new Node[n+1];
+
+        for(int i = 1; i<= n; i++){
+            numberOfCitizen[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for(int i =1 ;i<=n;i++){
+            st = new StringTokenizer(input.readLine());
+            int n = Integer.parseInt(st.nextToken());
+
+            while(n-->0){
+                int k = Integer.parseInt(st.nextToken());
+                graph[i] = new Node(k, graph[i]);
             }
+        }
+    }
+
+    static void comb(int index, boolean[] selected){
+        if(index == n+1){
+            boolean[] visited = new boolean[n+1];
+            int red = 0;
+            int blue = 0;
+            int k = 0;
+            for(int i = 1; i<= n; i++){
+                if(!selected[i]) continue;
+
+                // select 된 애들 중에서~
+                //
+                if(visited[i]) continue;
+                red += bfs(i, visited, true, selected);
+                k++;
+
+            }
+
+            for(int i = 1; i<= n; i++){
+                if(selected[i]) continue;
+
+                // select 된 애들 중에서~
+                //
+                if(visited[i]) continue;
+                blue += bfs(i, visited, false, selected);
+                k++;
+
+            }
+
+//            System.out.println(Arrays.toString(selected));
+//            System.out.println(k + " " + red + " " + blue);
+
+
+            if(k == 2){
+                min = Math.min(min, Math.abs(blue-red));
+            }
+
             return;
         }
 
-        selected[cnt] = true;
-        makeSubset(cnt+1, selected);
-        selected[cnt] = false;
-        makeSubset(cnt+1, selected);
-
-    }
-
-    private static boolean isAllConnected(){
-        for (int i = 1; i <= n ; i++) {
-            if(!visited[i]) return false;
+        for(int i = index; i<=n; i++){
+            selected[i] = true;
+            comb(i+1, selected);
+            selected[i] = false;
         }
-        return true;
     }
-    private static int bfs(boolean[] selected, boolean flag){
-        int sum = 0;
-        int first = findFirst(selected, flag);
-        if(first == -1) return -1;
+
+    static int bfs(int k, boolean[] visited, boolean redOrBlue, boolean[] selected){
         Queue<Integer> q = new ArrayDeque<>();
-        q.add(first);
-        visited[first] = true;
-        sum += peoples[first];
-        while (!q.isEmpty()) {
-            Integer poll = q.poll();
-            for (Integer i : adjList.get(poll)) {
-                if(visited[i] || selected[i] != flag) continue;
-                visited[i] = true;
-                q.add(i);
-                sum += peoples[i];
+        visited[k] = true;
+        q.add(k);
+        int total = 0;
+        total += numberOfCitizen[k];
+
+        while(!q.isEmpty()){
+            int c = q.poll();
+
+
+            for(Node n = graph[c]; n != null; n = n.next){
+                if(selected[n.to] != redOrBlue) continue;
+                if(visited[n.to]) continue;
+                q.add(n.to);
+                visited[n.to] = true;
+                total += numberOfCitizen[n.to];
             }
+
         }
-        return sum;
+
+        return total;
     }
 
-    private static int findFirst(boolean[] selected, boolean flag) {
-        for (int i = 1; i <= n ; i++) {
-            if(selected[i] == flag) return i;
+    static class Node{
+
+        int to;
+        Node next;
+
+        public Node(int to, Node next){
+
+            this.to = to;
+            this.next = next;
+
         }
-        return -1;
     }
 }
