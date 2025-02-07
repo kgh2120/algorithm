@@ -1,60 +1,42 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-    StringBuilder sb = new StringBuilder();
 
-
-    public void solution() throws Exception {
-      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int r = Integer.parseInt(st.nextToken());
-
-        long[] arrays = new long[n];
-        long max = Long.MIN_VALUE;
-        for (int i = 0; i < n; i++) {
-            arrays[i] = Long.parseLong(br.readLine());
-            max = Math.max(max, arrays[i]);
-        }
-        System.out.println(paramSearch(arrays,r,max));
-
-    }
-
-    public long paramSearch(long[] arrays, int nOfRequired, long max){
-
-        long l = 1L;
-        long r = max;
-
-        long maxLength = Long.MIN_VALUE;
-        while (l <= r) {
-            long mid = (l+r) >>> 1;
-            long nOfLan = 0L;
-            for (int i = 0; i < arrays.length; i++) {
-                nOfLan += arrays[i]/mid;
-            }
-
-
-
-            if (nOfRequired > nOfLan) {
-                r = mid - 1;
-            } else {
-                maxLength = Math.max(maxLength, mid);
-                l = mid + 1;
-            }
-        }
-        return maxLength;
-    }
-
-
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
 
     public static void main(String[] args) throws Exception {
-        new Main().solution();
+        // 코드를 작성해주세요
+        st = new StringTokenizer(input.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+        int[] arr = new int[n];
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i<n; i++){
+            int val = Integer.parseInt(input.readLine());
+            max = Math.max(max,val);
+            arr[i] = val;
+        }
+
+        long left = 1;
+        long right = max;
+
+        long ans = -1;
+        while(left <= right){
+            long mid = (left+right)/2;
+
+            long count = 0;
+            for(int wood : arr){
+                count += wood/mid;
+            }
+            // System.out.println(left + " " + right + " " + mid + " " + count);
+            if (count >= k) {
+                ans = Math.max(ans, mid);
+                left = mid + 1;
+            } else right = mid - 1;
+
+        }
+        System.out.println(ans);
     }
 }
-
-
-
-
-
