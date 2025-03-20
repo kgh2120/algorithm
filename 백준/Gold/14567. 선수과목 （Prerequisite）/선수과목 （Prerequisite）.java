@@ -1,75 +1,80 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-class Main {
-
+/*
+    
+    선수과목을 이수해야, 다음 과목을 이수할 수 있는 문제.
+    한번의 학기에서 모든 과목을 다 들을 수 있음.
+    
+    위상정렬 기본 문제같은 느낌임.
+    
+*/
+public class Main {
+    
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-
-    static List<Integer>[] adjList;
-    static int[] eCount;
-    static int[] hakgi;
-    static int v, e;
-
+    
+    
+    
     public static void main(String[] args) throws Exception {
-
+        // 코드를 작성해주세요
+        
         st = new StringTokenizer(br.readLine());
-        v = Integer.parseInt(st.nextToken());
-        e = Integer.parseInt(st.nextToken());
-        eCount = new int[v + 1];
-        adjList = new ArrayList[v+1];
-        hakgi = new int[v+1];
-
-        for (int i = 0; i < v+1; i++) {
-            adjList[i] = new ArrayList<>();
-        }
-
-        for (int i = 0; i < e; i++) {
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+        
+        int [] score = new int[n+1];
+        int [] childs = new int[n+1];
+        
+        Edge[] edges = new Edge[n+1];
+        
+        while(m-- > 0){
             st = new StringTokenizer(br.readLine());
-            int f = Integer.parseInt(st.nextToken());
-            int t = Integer.parseInt(st.nextToken());
-            eCount[t]++;
-            adjList[f].add(t);
+            int from = Integer.parseInt(st.nextToken());
+            int to = Integer.parseInt(st.nextToken());
+            
+            edges[from] = new Edge(to, edges[from]);
+            childs[to]++;
         }
-
-
-        topologySort();
-
-
-        for (int i = 1; i < v+1; i++) {
-            sb.append(hakgi[i]).append(" ");
+        
+        Queue<Integer> subjects = new ArrayDeque<>();
+        for(int i = 1; i<=n; i++){
+            if(childs[i] == 0)
+                subjects.add(i);
         }
-
-        System.out.println(sb);
-
-
-    }
-
-    private static void topologySort() {
-        Queue<Integer> q = new ArrayDeque<>();
-        for (int i = 1; i <= v; i++) {
-            if(eCount[i] == 0)
-                q.add(i);
-        }
-
-        int cnt = 0;
-        while (!q.isEmpty()) {
-            cnt++;
-            int size = q.size();
-
-            while (size-- > 0) {
-                Integer e = q.poll();
-                hakgi[e] = cnt;
-                for (Integer edge : adjList[e]) {
-                    eCount[edge]--;
-                    if(eCount[edge] == 0)
-                        q.add(edge);
+        
+        int level = 0;
+        
+        while(!subjects.isEmpty()){
+            level++;
+            int size = subjects.size();
+            while(size-->0){
+                int subject = subjects.poll();
+                score[subject] = level;
+                
+                for(Edge e = edges[subject]; e != null; e = e.next){
+                    if(--childs[e.to] == 0){
+                        subjects.add(e.to);
+                    }
                 }
             }
-
-
+        }
+        
+        StringBuilder answer = new StringBuilder();
+        for(int i = 1; i<=n; i++)
+            answer.append(score[i]).append(" ");
+            
+        System.out.println(answer);
+        
+        
+    }
+    static class Edge{
+        int to;
+        Edge next;
+        
+        public Edge(int to, Edge next){
+            this.to = to;
+            this.next = next;
         }
     }
-
 }
