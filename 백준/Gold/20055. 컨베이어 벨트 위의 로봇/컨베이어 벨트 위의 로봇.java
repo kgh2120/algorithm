@@ -1,210 +1,152 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-/*
-    20055 컨베이너 벨트 위의 로봇
+/**
 
-    주어진 벨트는 2n의 길이를 갖는다.
-
-    각 벨트는 오른쪽으로 회전하는데, 2n의 위치에서는 1로 돌아간다.
-
-    로봇은 n 위치에 오면 내린다.
-
-    각 턴마다 다음과 같은 행동을 반복한다
-    1. 벨트는 오른쪽으로 한칸씩 이동한다. (로봇도 함께 이동)
-    2. 첫번째 로봇부터 이동가능 하다면 한칸씩 이동한다. 이동할 수 없다면 가만히 있는다.
-     2-1 이동 조건은 다음 벨트에 로봇이 없고, 내구도가 1이상이어야 한다.
-    3. 올리는 위치(index 0)에 내구도가 0이 아니라면 로봇을 올리낟.
-    4. 내구도 0의 개수가 k개가 되면 종료한다.
-
-    벨트 길이 N : 1 <= N <= 100
-    각 벨트의 내구도 : 1 <= a <= 1000
+ 동작 순서
+ 1. 벨트가 시계방향으로 회전함.
+ 2. 놓인 순서대로 로봇이 시계방향으로 이동함.(가능하면)
+ 다음 위치에 로봇이 있거나, 내구도가 0 이 아니라면 이동
+ 3. 시작 위치에 로봇 올리기(내구도가 0이 아니라면)
+ 4. 종료조건 체크(내구도 0인 칸 개수 체크)
 
 
-    일단 다 돌리는 거로 풀어보자.
+ 우선은.. 로봇 순서 체크해줘야함. -> 리스트로 관리
+ 칸은 배열로 관리해주고, 배열 이동에 대해서는 포인터로 시작, 끝 위치만 조정해주면서 원형 배열처럼 쓰면 될듯함.
 
-    벨트 전체를 돌리고, 로봇이 다음 벨트로 이동할 수 있는지를 체크하려면
-    벨트 -> 로봇, 로봇 -> 벨트 의 양방향 연관관계가 필요해보임.
+ 로봇은 칸 인덱스만 가지고 있으면 될듯.
 
-    벨트 인덱스를 한칸씩 조정하고, n번 위치에 로봇이 있다면 삭제해줌. -> 그런데 어떻게?? 리스트 순회하면서 찾아..? 아니면 로봇 linkedlist를 만들어서
-    끊어줘??
+ **/
 
-    아니면 로봇마다 번호를 부여해서 꺼내??
- */
 public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
     static StringTokenizer st;
 
-    static Robot head;
-    static Robot tail;
+    static Block[] belt;
+    static int startIdx;
 
     static int n;
-    static Block[] blocks;
-    static int nOfZeroBlock = 0;
-    static int nOfRobot = 0;
+    static int k;
 
     public static void main(String[] args) throws Exception {
+        // 코드를 작성해주세요
 
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
-
-
-        blocks = new Block[2 * n];
+        k = Integer.parseInt(st.nextToken());
 
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < 2 * n; i++) {
-            blocks[i] = new Block(Integer.parseInt(st.nextToken()), i);
+        belt = new Block[n*2];
+        List<Robot> robots = new ArrayList<>();
+        for(int i = 0; i<n*2; i++){
+            belt[i] = new Block(Integer.parseInt(st.nextToken()));
         }
 
+        int numberOfZeroBelt = 0;
 
-
-        int turn = 0;
-        while (nOfZeroBlock < k) {
-            turn++;
-            // rotate
-
-            // n check
-            // robot move
-            // n check
-            // load robot
-            rotate();
-            nCheck();
-            moveRobot();
-            nCheck();
-            loadRobot();
-        }
-        System.out.println(turn);
-
-
-    }
-    static void moveRobot(){
-
-        Robot robot = head;
-
-        while (robot != null) {
-            int nextIndex = nextIndex(robot.block.index);
-            if (blocks[nextIndex].canMove()) {
-                robot.move(blocks[nextIndex]);
-                if(blocks[nextIndex].hp == 0)
-                    nOfZeroBlock++;
+        int level = 0;
+        int endIdx;
+        while(numberOfZeroBelt < k){
+            level++;
+            // 벨트 이동
+            startIdx = rotateBelt(startIdx);
+            endIdx = moveForward(startIdx + n - 2);
+            // 이동 후 라스트 벨트에 있는 로봇은 삭제.
+            Block lastBlock = belt[endIdx];
+            if(lastBlock.hasRobot()){
+                lastBlock.deleteRobot();
             }
-            robot = robot.next;
+            // 로봇 이동
+            for(Robot robot : robots){
+                if(robot.isDeleted) continue;
+
+                int nextIdx = moveForward(robot.blockIndex);
+                if(belt[nextIdx].hasRobot() || belt[nextIdx].health <= 0) continue;
+
+
+                belt[robot.blockIndex].deleteRobot();
+                belt[nextIdx].registerRobot(robot);
+                robot.blockIndex = nextIdx;
+
+                belt[nextIdx].health--;
+            }
+
+            if(lastBlock.hasRobot()){
+                lastBlock.deleteRobot();
+            }
+
+            for(int i = robots.size()-1; i>=0; i--){
+                Robot robot = robots.get(i);
+                if (robot.isDeleted) {
+                    robots.remove(i);
+
+                }
+            }
+            // 로봇 올리기
+            if(belt[startIdx].health > 0){
+                Robot newRobot = new Robot(startIdx);
+                belt[startIdx].registerRobot(newRobot);
+                robots.add(newRobot);
+                belt[startIdx].health--;
+            }
+
+            // 카운팅 후 종료
+            numberOfZeroBelt = 0;
+            for (Block block : belt) {
+                if(block.health <= 0)
+                    numberOfZeroBelt++;
+            }
         }
+        System.out.println(level);
+
+
+    }
+    static int moveForward(int index){
+        return (index+1) % (2*n);
     }
 
-    static int nextIndex(int index){
-        if(++index == blocks.length)
-            return 0;
-        return index;
+    static int rotateBelt(int index){
+        if(index == 0)
+            return 2*n-1;
+        return index-1;
     }
 
-    static void loadRobot() {
-        if (!blocks[0].canLoad()) {
-         return;
+    static class Robot{
+        int blockIndex;
+        boolean isDeleted;
+
+
+        public Robot(int index){
+            this.blockIndex = index;
         }
 
-        if (--blocks[0].hp == 0) {
-            nOfZeroBlock++;
-        }
-
-        tail = new Robot(blocks[0], tail);
-        blocks[0].robot = tail;
-        nOfRobot++;
-        if (head == null) {
-            head = tail;
+        public void deleted(){
+            this.isDeleted = true;
+            this.blockIndex = -1;
         }
     }
-
-    static void nCheck() {
-        if (blocks[n - 1].robot != null) {
-            deleteRobot(blocks[n - 1].robot);
-        }
-    }
-
-    private static void deleteRobot(Robot robot) {
-        if (robot == head)
-            head = robot.next;
-        if (robot == tail)
-            tail = robot.prev;
-        robot.deleted();
-        nOfRobot--;
-    }
-
-    static void rotate() {
-
-        int length = blocks.length;
-        Block last = blocks[length - 1];
-
-        for (int i = length - 1; i >= 1; i--) {
-            blocks[i] = blocks[i - 1];
-            blocks[i].index = i;
-        }
-        blocks[0] = last;
-        last.index = 0;
-    }
-
-    static class Block {
-        int hp;
-        int index;
+    static class Block{
+        int health;
         Robot robot;
 
-        public Block(int hp, int index) {
-            this.hp = hp;
-            this.index = index;
+
+        public Block(int health){
+            this.health = health;
         }
 
-        public boolean canMove() {
-            return robot == null && hp > 0;
+        public boolean hasRobot(){
+            return robot != null;
         }
 
-
-        public boolean canLoad() {
-            return hp > 0;
+        public void deleteRobot(){
+            this.robot.deleted();
+            this.robot = null;
         }
-
-        @Override
-        public String toString() {
-            return "Block{" +
-                    "hp=" + hp +
-                    ", index=" + index +
-                    ", robot=" + robot +
-                    '}';
+        public void registerRobot(Robot robot){
+            this.robot = robot;
+            robot.isDeleted = false;
         }
-    }
-
-    static class Robot {
-        Block block;
-        Robot prev;
-        Robot next;
-
-        public Robot(Block block, Robot prev) {
-            this.block = block;
-            if (prev != null) {
-                this.prev = prev;
-                prev.next = this;
-            }
-
-        }
-
-        public void deleted() {
-
-            if (prev != null)
-                prev.next = next;
-            if (next != null)
-                next.prev = prev;
-            this.block.robot = null;
-        }
-
-        public void move(Block block) {
-            this.block.robot = null;
-            this.block = block;
-            block.robot = this;
-            block.hp--;
-        }
-
     }
 }
