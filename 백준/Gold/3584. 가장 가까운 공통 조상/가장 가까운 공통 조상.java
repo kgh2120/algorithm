@@ -1,57 +1,66 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
-class Main {
+
+
+public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
 
+    static int n;
+    static int[] trees;
 
+    public static void main(String[] args) throws IOException {
 
+        int tc = Integer.parseInt(br.readLine());
+        StringBuilder answer = new StringBuilder();
+        while(tc-- > 0) {
 
-    public static void main(String[] args) throws Exception {
+            n = Integer.parseInt(br.readLine());
+            trees = new int[n+1];
 
-        int T = Integer.parseInt(br.readLine());
-
-        StringBuilder sb = new StringBuilder();
-        loop: for (int t = 0; t < T; t++) {
-            int n = Integer.parseInt(br.readLine());
-
-            int[] parents = new int[n + 1];
-            for (int i = 0; i < n-1; i++) {
+            for (int i = 0; i < n - 1; i++) {
                 st = new StringTokenizer(br.readLine());
-                int p = Integer.parseInt(st.nextToken());
-                int c = Integer.parseInt(st.nextToken());
-                parents[c] = p;
+                int parent = Integer.parseInt(st.nextToken());
+                int child = Integer.parseInt(st.nextToken());
+                trees[child] = parent;
             }
 
-            // 구할 녀석
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            for (int alpha = a; alpha != 0 ; alpha  = parents[alpha]) {
+            int aDepth = calcDepth(a);
+            int bDepth = calcDepth(b);
 
-                for (int beta = b; beta != 0 ; beta  = parents[beta]) {
-
-                    if (alpha == beta) {
-                        sb.append(alpha)
-                                .append("\n");
-                        continue loop;
-                    }
-                }
+            while(aDepth > bDepth){
+                a = trees[a];
+                aDepth = calcDepth(a);
             }
+            while(aDepth < bDepth){
+                b = trees[b];
+                bDepth = calcDepth(b);
+            }
+
+            // 이제 높이 똑같음
+            while (a != b) {
+                a = trees[a];
+                b = trees[b];
+            }
+            answer.append(a).append("\n");
         }
-
-        System.out.println(sb);
-
+        System.out.print(answer);
 
     }
 
 
 
-
+    private static int calcDepth(int tree){
+        if(trees[tree] == 0){
+            return 1;
+        }
+        return calcDepth(trees[tree]) + 1;
+    }
 
 }
