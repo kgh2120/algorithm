@@ -1,32 +1,7 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
-
-
-/**
-
-    @author 규현
-    @since 2023-10-02
-    @url https://www.acmicpc.net/problem/14891
-    @level G5
-    @try 1
-    @performance 11648KB, 84ms
-    @category # 구현, 시뮬레이션
-    @note
-
-    톱니바퀴를 구현하는 문제
-    톱니바퀴의 각 톱니는 N,S 상태로 놓인다.
-    톱니바퀴가 시계방향 혹은 시계 반대방향로 회전시킨다.
-    회전시킬 때 맞물려있는 다른 톱니바퀴의 톱니가 서로 다른 극을 가지고 있다면, 회전 톱니의 반대 방향으로 회전한다.
-
-    회전 명령이 끝난 후, 12시 방향에 있는 톱니의 극에 따라서 점수를 부여한다.
-
-    각 톱니바퀴는 총 4개가 있으며, 자신의 좌,우의 상태를 알아야한다.
-
-    각 톱니는 총 8개가 있으며, 회전을 해야 하기 때문에, 자신의 좌,우 상태를 알아야한다.
-
-*/
 
 public class Main {
 
@@ -34,131 +9,109 @@ public class Main {
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
 
-    static Chain head;
-    static Chain[] chains;
 
-    public static void main(String[] args) throws Exception {
-        setChains();
-        action();
-        System.out.println(getScore());
-    }
+    public static void main(String[] args) throws Exception{
 
-    private static void action() throws IOException {
-        int nOfCommand = Integer.parseInt(br.readLine());
-        for (int i = 0; i < nOfCommand; i++) {
-            st = new StringTokenizer(br.readLine());
-            int index = Integer.parseInt(st.nextToken());
-            chains[index-1].rotate(Integer.parseInt(st.nextToken()) != 1);
-        }
-    }
+        Chain[] chains = new Chain[4];
 
-    private static void setChains() throws IOException {
-        head = null;
-        Chain prev = null;
-        chains = new Chain[4];
         for (int i = 0; i < 4; i++) {
+            LinkedList<Boolean> list = new LinkedList<>();
+            for(char c : br.readLine().toCharArray()) {
+                list.add(c == '1');
+            }
+            chains[i] = new Chain(list);
 
-            Chain chain = new Chain(br.readLine());
-            if(i == 0)
-                head = chain;
-            if(prev != null)
-                prev.setNextChain(chain);
-            prev = chain;
-            chains[i] = chain;
-        }
-    }
-
-
-
-    private static int getScore(){
-        int total = 0;
-        int score =1;
-        while (head != null) {
-            if(head.head.value == 1)
-                total += score;
-            score *= 2;
-            head = head.next;
-        }
-        return total;
-    }
-
-    static class Node{
-        int value;
-        Node next;
-        Node prev;
-
-
-        public Node(int value, Node prev) {
-            this.value = value;
-            if (prev != null) {
-                this.prev = prev;
-                prev.next = this;
+            if (i - 1 >= 0) {
+                chains[i].left = chains[i - 1];
+                chains[i - 1].right = chains[i];
             }
         }
+
+
+        int n = Integer.parseInt(br.readLine());
+
+        while (n-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int index = Integer.parseInt(st.nextToken()) -1;
+            int order = Integer.parseInt(st.nextToken());
+
+            if (order == 1) {
+                chains[index].rotateRight();
+            } else {
+                chains[index].rotateLeft();
+            }
+
+        }
+
+        int score = 0;
+        for (int i = 0; i <4 ; i++) {
+            if (chains[i].head()) {
+                score += (int) Math.pow(2,i);
+            }
+        }
+
+        System.out.print(score);
+
+
+
     }
 
     static class Chain{
 
-        Node head;
-        Chain next;
-        Chain prev;
+        LinkedList<Boolean> chains;
+        Chain left;
+        Chain right;
 
-        public Chain(String arr){
-            setNodes(arr.toCharArray());
-        }
-        public void setNextChain(Chain next){
-            this.next = next;
-            next.prev = this;
+        public Chain(LinkedList<Boolean> chains) {
+            this.chains = chains;
         }
 
-        private void setNodes(char[] arr){
-            Node temp = new Node(arr[0]-'0',null);
-            head = temp;
+        public void rotateRight(){
+            // 선전파
+            propagateLeft(true);
+            propagateRight(true);
+            turnRight(chains);
+        }
 
-            for (int i = 1; i < arr.length; i++) {
-                head = new Node(arr[i]-'0',head);
+        private void turnRight(LinkedList<Boolean> chains) {
+            chains.addFirst(chains.pollLast());
+        }
+
+        public void rotateLeft(){
+            propagateLeft(false);
+            propagateRight(false);
+            turnLeft(chains);
+        }
+
+        private void turnLeft(LinkedList<Boolean> chains) {
+            chains.addLast(chains.pollFirst());
+        }
+
+        private void propagateRight(boolean isRight){
+            if (right != null && chains.get(2) != right.chains.get(6)) {
+                right.propagateRight(!isRight);
+                if(isRight)
+                    turnLeft(right.chains);
+                else
+                    turnRight(right.chains);
             }
-            temp.prev = head;
-            head.next = temp;
-            head = temp;
         }
-        private int getRightNodeValue(){
-            return head.next.next.value;
-        }
-        private int getLeftNodeValue(){
-            return head.prev.prev.value;
-        }
-        // rotate Left is head = head.next;
-        // rotate right is head = head.prev;
-        public void rotate(boolean d){
-//             if my 2 == next.6 next.rotate !d
-
-            propagateRight(!d);
-            propagateLeft(!d);
-            // if my 6 == prev.2 prev.rotate !d
-            switchHead(d);
-        }
-
-        private void switchHead(boolean d) {
-            if (d) {
-                head = head.next;
-            }else
-                head = head.prev;
-        }
-
-        private void propagateLeft(boolean propagation) {
-            if (prev != null && getLeftNodeValue() != prev.getRightNodeValue()) {
-                prev.propagateLeft(!propagation);
-                prev.switchHead(propagation);
+        private void propagateLeft(boolean isRight){
+            if (left != null && left.chains.get(2) != chains.get(6)) {
+                left.propagateLeft(!isRight);
+                if(isRight)
+                    turnLeft(left.chains);
+                else
+                    turnRight(left.chains);
             }
         }
 
-        private void propagateRight(boolean propagation) {
-            if (next != null && getRightNodeValue() != next.getLeftNodeValue()) {
-                next.propagateRight(!propagation);
-                next.switchHead(propagation);
-            }
+        public boolean head(){
+            return chains.get(0);
         }
+
     }
+
+
 
 }
