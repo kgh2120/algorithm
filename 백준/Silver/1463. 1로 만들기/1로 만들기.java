@@ -1,39 +1,64 @@
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 
 public class Main {
 
-
-
-    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder output = new StringBuilder();
+    static StringBuilder sb = new StringBuilder();
 
 
     public static void main(String[] args) throws Exception {
+        int x = Integer.parseInt(br.readLine());
+        int[] dp = new int[x + 1];
+        final int INIT = 100_001;
+        Arrays.fill(dp, INIT);
+        dp[x] = 0;
 
-        int n = Integer.parseInt(input.readLine());
-        int [] dp = new int[n+1];
-        Arrays.fill(dp, 10_0000_0000);
-        dp[n] = 0;
+        Queue<Integer> q = new ArrayDeque<>();
 
-        for (int i = n; i > 1 ; i--) {
+        q.add(x);
+        int turn = 0;
+        while(!q.isEmpty()) {
+            turn++;
+            int size = q.size();
+            while (size-- > 0) {
+                int cur = q.poll();
 
-            if (i % 3 == 0) {
-                dp[i/3] = Math.min(dp[i/3] , dp[i] + 1);
+                if (cur == 1) {
+                    q.clear();
+                    break;
+                }
+
+                if (cur % 3 == 0 && dp[cur / 3] > turn) {
+                    dp[cur/3] = turn;
+                    q.add(cur/3);
+                }
+
+                if (cur % 2 == 0 && dp[cur / 2] > turn) {
+                    dp[cur/2] = turn;
+                    q.add(cur/2);
+                }
+
+                if (dp[cur - 1] > turn) {
+                    dp[cur-1] = turn;
+                    q.add(cur - 1);
+                }
+
+
             }
-            if (i % 2 == 0) {
-                dp[i/2] = Math.min(dp[i/2], dp[i] + 1);
-            }
-            dp[i-1] = Math.min(dp[i-1], dp[i]+1);
         }
-      
+
         System.out.println(dp[1]);
+
+
     }
+
 
 
 
