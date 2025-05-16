@@ -1,123 +1,82 @@
 import java.io.BufferedReader;
-    import java.io.InputStreamReader;
-    import java.util.*;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
-    public class Main {
-        public static void main(String[] args) throws Exception {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            int n = Integer.parseInt(br.readLine());
 
-            if (n == 1) {
-                System.out.println(0);
-                System.out.println(1);
-            }
+public class Main {
 
-            Queue<Node> q = new ArrayDeque<>();
-            List<Integer> historyArray = new ArrayList<>();
-            List<Integer> parents =new ArrayList<>();
-            boolean[] visited = new boolean[100_0001];
-            parents.add(-1);
-            historyArray.add(n);
-            visited[n] = true;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static StringBuilder sb = new StringBuilder();
 
-            int parentIndex = 0;
-            int index = 1;
-            if (n % 3 == 0 ) {
-                int nn = n / 3;
-                if (!visited[nn]) {
-                    historyArray.add(nn);
-                    parents.add(parentIndex);
-                    q.add(new Node(nn, index++));
-                    visited[nn] = true;
+
+    public static void main(String[] args) throws Exception {
+        int x = Integer.parseInt(br.readLine());
+        int[] dp = new int[x + 1];
+        int [] parents = new int[x + 1];
+        final int INIT = 100_001;
+        Arrays.fill(dp, INIT);
+        Arrays.fill(parents, INIT);
+        dp[x] = 0;
+        parents[x] = 0;
+
+        Queue<Integer> q = new ArrayDeque<>();
+
+        q.add(x);
+        int turn = 0;
+        while(!q.isEmpty()) {
+            turn++;
+            int size = q.size();
+            while (size-- > 0) {
+                int cur = q.poll();
+
+                if (cur == 1) {
+                    q.clear();
+                    break;
                 }
-            }
-            if (n % 2 == 0) {
-                int nn = n / 2;
-                if (!visited[nn]) {
-                    historyArray.add(nn);
-                    parents.add(parentIndex);
-                    q.add(new Node(nn, index++));
-                    visited[nn] = true;
+
+                if (cur % 3 == 0 && dp[cur / 3] > turn) {
+                    dp[cur/3] = turn;
+                    q.add(cur/3);
+                    parents[cur/3] = cur;
                 }
-            }
-            int nn = n-1;
-            if (!visited[nn]) {
-                historyArray.add(nn);
-                parents.add(parentIndex);
-                q.add(new Node(nn, index++));
-                visited[nn] = true;
-            }
 
-
-            StringBuilder answer = new StringBuilder();
-            int turn = 0;
-            while (!q.isEmpty()) {
-                turn++;
-                int size = q.size();
-                while (size-- > 0) {
-                    Node node = q.poll();
-                    int cur = node.currentValue;
-                    int nodeIndex = node.index;
-                    if (node.currentValue == 1) {
-                        answer.append(turn).append("\n");
-                        logHistory(nodeIndex, parents, historyArray, answer);
-                        System.out.println(answer);
-
-
-                        return;
-                    }
-
-                    if (cur % 3 == 0) {
-                        int cc = cur / 3;
-                        if (!visited[cc]) {
-                            historyArray.add(cc);
-                            parents.add(nodeIndex);
-                            q.add(new Node(cc, index++));
-                            visited[cc] = true;
-                        }
-                    }
-                    if (cur % 2 == 0) {
-                        int cc = cur / 2;
-                        if (!visited[cc]) {
-                            historyArray.add(cc);
-                            parents.add(nodeIndex);
-                            q.add(new Node(cc, index++));
-                            visited[cc] = true;
-                        }
-                    }
-                    int ccc = cur - 1;
-                    if (ccc > 0 && !visited[ccc]) {
-                        historyArray.add(ccc);
-                        parents.add(nodeIndex);
-                        q.add(new Node(ccc, index++));
-                        visited[ccc] = true;
-                    }
+                if (cur % 2 == 0 && dp[cur / 2] > turn) {
+                    dp[cur/2] = turn;
+                    q.add(cur/2);
+                    parents[cur/2] = cur;
                 }
+
+                if (dp[cur - 1] > turn) {
+                    dp[cur-1] = turn;
+                    q.add(cur - 1);
+                    parents[cur-1] = cur;
+                }
+
+
             }
-
-
-
         }
 
-        static void logHistory(int index, List<Integer> parents,List<Integer> history, StringBuilder answer){
-            if (index == -1) {
-                return;
-            }
-            int parentIndex = parents.get(index);
-            logHistory(parentIndex,parents,history,answer);
-            answer.append(history.get(index)).append(" ");
+        findParent(1, parents);
+        System.out.println(dp[1]);
+        System.out.println(sb);
 
-        }
-
-
-        static class Node{
-            int currentValue;
-            int index;
-
-            public Node(int currentValue, int index) {
-                this.currentValue = currentValue;
-                this.index = index;
-            }
-        }
 
     }
+
+    private static void findParent(int x, int [] parents){
+        if(parents[x] == 0){
+            sb.append(x).append(" ");
+            return;
+        }
+        findParent(parents[x], parents);
+        sb.append(x).append(" ");
+    }
+
+
+
+
+}
