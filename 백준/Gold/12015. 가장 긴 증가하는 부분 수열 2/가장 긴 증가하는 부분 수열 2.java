@@ -1,44 +1,50 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
+
+
 public class Main {
+
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
 
-    static StringTokenizer st;
+
+    static int[] arr;
+    static int[]dp;
 
 
     public static void main(String[] args) throws Exception {
 
         int n = Integer.parseInt(br.readLine());
-        int[] arr = new int[n];
-        int[] lis = new int[n];
-        Arrays.fill(lis, Integer.MAX_VALUE);
-
+        arr = new int[n];
+        dp = new int[n];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        
         st = new StringTokenizer(br.readLine());
+        int maxIndex = -1;
+
         for (int i = 0; i < n; i++) {
             arr[i] = Integer.parseInt(st.nextToken());
-        }
-        lis[0] = arr[0];
 
-        for (int i = 0; i < n; i++) {
-            int index = Arrays.binarySearch(lis, arr[i]);
-            if(index >= 0) continue;
-            index = - (index+1);
-            if(lis[index] > arr[i]) lis[index] = arr[i];
-
-        }
-
-        int i;
-        for (i = 0; i < n; i++) {
-            if (lis[i] == Integer.MAX_VALUE) {
-                break;
+            int idx = Arrays.binarySearch(dp, arr[i]);
+            if (idx < 0) {
+                idx = -idx - 1;
             }
+            dp[idx] = arr[i];
+            maxIndex = Math.max(maxIndex, idx);
         }
-        System.out.println(i);
+        
+        System.out.println(maxIndex+1);
+       
+        
+
 
 
     }
+
+
 
 
 }
