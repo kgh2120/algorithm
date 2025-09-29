@@ -1,57 +1,39 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-
-/**
- * - @author 규현
- * - @since 2024-03-16
- * - @limit memory :  time :
- * - @performance
- * - @category
- * - @note
- */
 public class Main {
-
+    
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-    static int min = Integer.MAX_VALUE;
-
+    
+    static int[][] fibo = new int[41][2];
+    
     public static void main(String[] args) throws Exception {
-
-        int T = Integer.parseInt(br.readLine());
-
-        Node[] f = new Node[41];
-
-        f[0] = new Node(1, 0);
-        f[1] = new Node(0, 1);
-
-        for (int i = 2; i <= 40 ; i++) {
-            f[i] = new Node(f[i-1].countOfZero + f[i-2].countOfZero, f[i-1].countOfOne + f[i-2].countOfOne);
+        // 코드를 작성해주세요
+        int n = Integer.parseInt(br.readLine());
+        
+        
+        fibo[0][0] = 1;
+        fibo[1][1] = 1;
+        fibo[2][0] = 1;
+        fibo[2][1] = 1;
+        
+        for(int i = 3; i<= 40; i++){
+            fibo[i][0] = fibo[i-1][0] + fibo[i-2][0];
+            fibo[i][1] = fibo[i-1][1] + fibo[i-1][0];
         }
-
-        for (int i = 0; i < T; i++) {
-            int index = Integer.parseInt(br.readLine());
-            Node node = f[index];
-            sb.append(node.countOfZero).append(" ").append(node.countOfOne).append("\n");
+        
+        StringBuilder sb = new StringBuilder();
+        while(n-->0){
+            
+            
+            int k = Integer.parseInt(br.readLine());
+            
+            sb.append(fibo[k][0]).append(" ").append(fibo[k][1]).append("\n");
+            
         }
-        System.out.println(sb);
+        
+        System.out.print(sb);
+        
+        
     }
-
-
-    static class Node{
-        int countOfZero;
-        int countOfOne;
-
-        public Node(int countOfZero, int countOfOne) {
-            this.countOfZero = countOfZero;
-            this.countOfOne = countOfOne;
-        }
-    }
-
-
-
-
-
 }
