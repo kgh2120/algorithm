@@ -1,97 +1,90 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
-
-/**
- * - @author 규현
- * - @since 2024-03-16
- * - @limit memory :  time :
- * - @performance
- * - @category
- * - @note
- */
 public class Main {
-
+    
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-
-    static int[][] deltas = {
-            {-1,0},
-            {1,0},
-            {0,1},
-            {0,-1}
-    };
-
+    
+    static boolean [][] matrix;
+    static boolean [][] visited;
+    static int[][] deltas = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+    
     static int r;
     static int c;
-
-
+    
     public static void main(String[] args) throws Exception {
-
-        int T = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < T; i++) {
-
+        // 코드를 작성해주세요
+        
+        int tc = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        
+        
+        while(tc-->0){
+            
             st = new StringTokenizer(br.readLine());
-
              r = Integer.parseInt(st.nextToken());
-             c = Integer.parseInt(st.nextToken());
-            int k = Integer.parseInt(st.nextToken());
-
-            boolean[][] matrix = new boolean[r][c];
-
-            for (int j = 0; j < k; j++) {
+            c = Integer.parseInt(st.nextToken());
+            int k = Integer.parseInt(st.nextToken());      
+            
+            
+            matrix = new boolean[r][c];
+            visited = new boolean[r][c];
+            
+            while(k-->0){
                 st = new StringTokenizer(br.readLine());
-                matrix[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = true;
-            }
+                
+                int row = Integer.parseInt(st.nextToken());
+                int col = Integer.parseInt(st.nextToken());
+                
+                matrix[row][col] = true;
+                
+            }     
+            
+            
 
             int count = 0;
-
-            for (int a = 0; a < r; a++) {
-                for (int b = 0; b < c; b++) {
-                    if(!matrix[a][b]) continue;
+            for(int i = 0; i<r; i++){
+                for(int j = 0; j< c; j++){
+                    if(visited[i][j] || !matrix[i][j]) continue;
+                    bfs(i, j);
                     count++;
-                    bfs(a,b,matrix);
                 }
             }
-
+            
+            
             sb.append(count).append("\n");
-
+            
         }
-
-        System.out.println(sb);
-
+        
+        System.out.print(sb);
+        
     }
-
-    private static void bfs(int a, int b, boolean[][] matrix) {
+    
+    static void bfs(int startRow, int startCol){
         Queue<int[]> q = new ArrayDeque<>();
-        q.add(new int[]{a,b});
-        matrix[a][b] = false;
-
-        while (!q.isEmpty()) {
-            int[] poll = q.poll();
-
-            for (int[] delta : deltas) {
-                int nr = poll[0] + delta[0];
-                int nc = poll[1] + delta[1];
-
-                if (isIn(nr, nc) && matrix[nr][nc]) {
-                    matrix[nr][nc] = false;
-                    q.add(new int[]{nr, nc});
+        q.add(new int[]{startRow, startCol});
+        visited[startRow][startCol] = true;
+        
+        while(!q.isEmpty()){
+            
+            int[] pos = q.poll();
+            
+            for(int [] delta : deltas){
+                int nr = delta[0] + pos[0];
+                int nc = delta[1] + pos[1];
+                
+                if(isIn(nr,nc) && matrix[nr][nc] && !visited[nr][nc]){
+                    visited[nr][nc] = true;
+                    q.add(new int[]{nr,nc});
                 }
             }
+            
+            
         }
-
-
     }
-
-    static boolean isIn(int row, int col) {
+    
+    static boolean isIn(int row, int col){
         return row >= 0 && row < r && col >= 0 && col < c;
     }
-
-
 }
