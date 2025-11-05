@@ -1,63 +1,57 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
+
 public class Main {
-    
+
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    
-    static boolean[] visited;
-    static int min = Integer.MAX_VALUE;
-    
+
     public static void main(String[] args) throws Exception {
         // 코드를 작성해주세요
         st = new StringTokenizer(br.readLine());
+
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
-        
-        visited = new boolean[10_0001];
-        
-        if(n >= k){
-            System.out.println(n-k);
-            return;
-        }
-        
-        visited[n] = true;
+
         Queue<Integer> q = new ArrayDeque<>();
+        boolean [] visited = new boolean[100001];
+        visited[n] = true;
         q.add(n);
+
         int turn = 0;
         while(!q.isEmpty()){
             int size = q.size();
-            
-            while(size-->0){
-                
-                
-                int current = q.poll();
-           
-               
-              
-                if(current >= k){
-                  
-                    min = Math.min(min, turn + current-k);
-                    continue;
+
+            while(size -- > 0){
+
+                int cur = q.poll();
+                if(cur == k){
+                    System.out.println(turn);
+                    return;
                 }
-                
-                // -1
-                action(current-1, q);
-                // +1
-                action(current+1, q);
-                // *2
-                action(current*2, q);
-        
+
+
+                findPath(cur -1, visited, q);
+                findPath(cur + 1, visited, q);
+                findPath(cur * 2 , visited, q);
+
+
             }
             turn++;
+
+
+
+
         }
-        
-        System.out.println(min);
+
     }
-    static void action(int next, Queue<Integer>q){
-        if(next < 0 || next > 100000) return;
-        if(visited[next]) return;
-        visited[next] = true;
-        q.add(next);
+
+    static void findPath(int nextStep, boolean [] visited, Queue<Integer> q){
+
+        if(nextStep < 0 || nextStep >= visited.length || visited[nextStep]) return;
+        q.add(nextStep);
+        visited[nextStep] = true;
+
+
     }
 }
