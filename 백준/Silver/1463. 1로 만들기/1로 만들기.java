@@ -1,65 +1,54 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.io.*;
 
+/**
+    어떻게 보면 최단 경로와 비슷한 케이스이다.
+    무조건 감소하는 경우지만, 특정 케이스에서는 /2보다 -1 /3이 더 멀리 갈 수 있음.
+    BFS형태로 동작하면서 turn내에 1에 도달하는 것이 가장 짧을 것.
+    다만 visited체크를 해주면서, 이미 true에 다시 도달하면 그건 큐에 안넣도록 써보자.
+**/
 
 public class Main {
-
+    
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
-
-
+    
+    
+    
     public static void main(String[] args) throws Exception {
-        int x = Integer.parseInt(br.readLine());
-        int[] dp = new int[x + 1];
-        final int INIT = 100_001;
-        Arrays.fill(dp, INIT);
-        dp[x] = 0;
-
+        // 코드를 작성해주세요
+        int n = Integer.parseInt(br.readLine());
+        
         Queue<Integer> q = new ArrayDeque<>();
-
-        q.add(x);
+        boolean [] visited = new boolean[n+1];
+        q.add(n);
+        visited[n] = true;
+        
         int turn = 0;
-        while(!q.isEmpty()) {
-            turn++;
-            int size = q.size();
-            while (size-- > 0) {
-                int cur = q.poll();
-
-                if (cur == 1) {
-                    q.clear();
-                    break;
+        while(!q.isEmpty()){
+            int size = q.size();        
+            while(size-->0){
+                Integer location = q.poll();                
+                
+                if(location == 1){
+                    System.out.println(turn);
+                    return;
                 }
-
-                if (cur % 3 == 0 && dp[cur / 3] > turn) {
-                    dp[cur/3] = turn;
-                    q.add(cur/3);
-                }
-
-                if (cur % 2 == 0 && dp[cur / 2] > turn) {
-                    dp[cur/2] = turn;
-                    q.add(cur/2);
-                }
-
-                if (dp[cur - 1] > turn) {
-                    dp[cur-1] = turn;
-                    q.add(cur - 1);
-                }
-
-
+                
+                action(location, 3, visited, q);
+                action(location,2, visited, q);
+                q.add(location-1);
+                
             }
+            turn++;
         }
-
-        System.out.println(dp[1]);
-
-
+        
     }
-
-
-
-
+    
+    private static void action(int cur, int number, boolean [] visited, Queue<Integer> q){
+        
+        if(cur % number == 0 && !visited[cur/number] ){
+            visited[cur/number] = true;
+            q.add(cur/number);
+        }        
+    }
 }
